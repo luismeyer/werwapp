@@ -16,8 +16,9 @@
 					class="tab flex-1"
 					class:tab-active={$locale === l}
 					value={l}
-					on:click={() => ($locale = l)}>{$t(l)}
-                </button>
+					on:click={() => ($locale = l)}
+					>{$t(l)}
+				</button>
 			{/each}
 		</div>
 		<div class="dropdown w-full flex-1">
