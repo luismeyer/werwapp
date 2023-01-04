@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { gameStore } from '../lib/stores/gamestore';
 	import { Player, CrossFade } from 'tone';
+	import { songData } from '$lib/songs/songdata';
+	import type { Song } from '$lib/songs/song';
 
 	let crossFade: CrossFade;
 	let dayTone: Player;
@@ -34,11 +36,11 @@
 		crossFade = new CrossFade().toDestination();
 
 		dayTone = new Player();
-		await dayTone.load('/day.mp3');
+		await dayTone.load('api/songs?url=' + getRandomSong(songData.daySongs));
 		dayTone.loop = true;
 
 		nightTone = new Player();
-		await nightTone.load('/night.mp3');
+		await nightTone.load('api/songs?url=' + getRandomSong(songData.nightSongs));
 		nightTone.loop = true;
 
 		// bind day to 0
@@ -71,6 +73,12 @@
 		await fadeSongs('day');
 
 		nightTone.stop();
+	};
+
+	const getRandomSong = (songs: Song[]): string => {
+		const song = songs[Math.ceil(Math.random() * (songs.length - 1))];
+		console.log(song);
+		return song.internalUrl;
 	};
 
 	$: handleBtnClick =
