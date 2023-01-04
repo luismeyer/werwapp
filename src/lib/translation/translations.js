@@ -7,15 +7,17 @@ export default {
 		'role.werwolf.name': 'werwolf',
 		'role.vilagehoe.name': 'vilagehoe',
 		'role.witch.name': 'witch',
-		'gamestate.night': 'Night',
-		'gamestate.day': 'Day',
+		night: 'night',
+		day: 'day',
 		game: 'Game',
 		settings: 'Settings',
 		en: 'english',
 		de: 'german',
-		'game.name': 'Werwolf',
+		'game.name': 'Werwapp',
 		'settings.discribtion': 'Here you can edit your game settings.',
-		'settings.toggel_themes': 'Automatic collor scheme'
+		'settings.toggel_themes': 'Automatic collor scheme',
+		counter: 'turn',
+		state: 'state'
 	},
 
 	de: {
@@ -26,14 +28,16 @@ export default {
 		'role.werwolf.name': 'Werwolf',
 		'role.vilagehoe.name': 'Dorfmatratze',
 		'role.witch.name': 'Hexe',
-		'gamestate.night': 'Nacht',
-		'gamestate.day': 'Tag',
+		night: 'Nacht',
+		day: 'Tag',
 		game: 'Spiel',
 		settings: 'Einstellungen',
 		'settings.discribtion': 'Hier kannst du deine Spieleinstellungen bearbeiten.',
 		'settings.toggel_themes': 'Dynamischer Farbschemawechsel',
 		en: 'Englisch',
 		de: 'Deutsch',
-		'game.name': 'Werwolf'
+		'game.name': 'Werwapp',
+		counter: 'Runde',
+		state: 'Status'
 	}
 };
