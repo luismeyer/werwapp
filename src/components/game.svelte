@@ -3,7 +3,7 @@
 	import { Player, CrossFade } from 'tone';
 	import { songData } from '$lib/songs/songdata';
 	import type { Song } from '$lib/songs/song';
-	import { t, locale, locales } from '../lib/translation/i18n';
+	import { t } from '../lib/translation/i18n';
 
 	let crossFade: CrossFade;
 	let dayTone: Player;
@@ -122,7 +122,11 @@
 </div>
 
 <div class="flex justify-center py-20">
-	<button data-toggle-theme="garden,night" disabled={isFading} on:click={handleBtnClick} class="btn btn-primary"
+	<button
+		data-toggle-theme="night, garden"
+		disabled={isFading}
+		on:click={handleBtnClick}
+		class="btn btn-primary"
 		>{$gameStore.nightCount === 0
 			? 'Beginne die erste Nacht'
 			: $gameStore.gamestate === 'day'
@@ -144,4 +148,3 @@
 		</div>
 	</div>
 </a>
-
