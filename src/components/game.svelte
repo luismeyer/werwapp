@@ -3,6 +3,7 @@
 	import { Player, CrossFade } from 'tone';
 	import { songData } from '$lib/songs/songdata';
 	import type { Song } from '$lib/songs/song';
+	import { t, locale, locales } from '../lib/translation/i18n';
 
 	let crossFade: CrossFade;
 	let dayTone: Player;
@@ -105,16 +106,30 @@
 	};
 </script>
 
-<p>{$gameStore.gamestate}</p>
-<p>{$gameStore.nightCount}</p>
+<div class="flex justify-around py-10">
+	<div class="stats bg-base-300 border-base-300 border md:w-1/2">
+		<div class="stat">
+			<div class="stat-title">{$t('counter')}</div>
+			<div class="stat-value">{$gameStore.nightCount}</div>
+		</div>
+	</div>
+	<div class="stats bg-base-300 border-base-300 border md:w-1/2">
+		<div class="stat">
+			<div class="stat-title">{$t('state')}</div>
+			<div class="stat-value">{$t($gameStore.gamestate)}</div>
+		</div>
+	</div>
+</div>
 
-<button disabled={isFading} on:click={handleBtnClick} class="btn btn-primary"
-	>{$gameStore.nightCount === 0
-		? 'Beginne die erste Nacht'
-		: $gameStore.gamestate === 'day'
-		? 'Beginne die Nacht'
-		: 'Beginne den Tag'}</button
->
+<div class="flex justify-center py-20">
+	<button disabled={isFading} on:click={handleBtnClick} class="btn btn-primary"
+		>{$gameStore.nightCount === 0
+			? 'Beginne die erste Nacht'
+			: $gameStore.gamestate === 'day'
+			? 'Beginne die Nacht'
+			: 'Beginne den Tag'}</button
+	>
+</div>
 
 <a
 	class="toast toast-top toast-center"
@@ -129,3 +144,4 @@
 		</div>
 	</div>
 </a>
+
