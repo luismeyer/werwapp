@@ -10,7 +10,8 @@ export function createGameStateStore() {
 
 	return {
 		subscribe,
-        toggleGameState: () => update(currentState => ({...currentState, gamestate: currentState.gamestate === 'day' ? 'night' : 'day'})),
+        setDay: () => update(currentState => ({...currentState, gamestate: 'day'})),
+        setNight: () => update(currentState => ({...currentState, gamestate: 'night', nightCount: currentState.nightCount + 1})),
 		reset: () => set({
             state: 'setup',
             gamestate: 'night',
