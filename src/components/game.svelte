@@ -1,28 +1,24 @@
 <script lang="ts">
 	import { gameStore } from '../lib/stores/gamestore';
-	import { Player, CrossFade } from 'tone';
+	import type { Player, CrossFade } from 'tone';
 	import { songData } from '$lib/songs/songdata';
 	import type { Song } from '$lib/songs/song';
 	import { t } from '../lib/translation/i18n';
+	import { onMount } from 'svelte';
 
-	let crossFade: CrossFade;
-	let dayTone: Player;
-	let nightTone: Player;
+	export let crossFade: CrossFade;
+	export let dayTone: Player;
+	export let nightTone: Player;
 
-	let isFading = false;
+	let isDisabled = true;
 
 	let toastVisible = false;
 	let currentSong: Song;
 
-	$: handleBtnClick =
-		$gameStore.nightCount === 0
-			? startFirstNight
-			: $gameStore.gamestate === 'day'
-			? startNight
-			: startDay;
+	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 
 	const fadeSongs = (target: 'day' | 'night') => {
-		isFading = true;
+		isDisabled = true;
 		const internal = target === 'night' ? 1 : 0;
 
 		return new Promise((res) => {
@@ -33,36 +29,32 @@
 
 				if (crossFade.fade.value === internal) {
 					clearInterval(interval);
-					isFading = false;
+					isDisabled = false;
 					res(true);
 				}
 			}, 50);
 		});
 	};
 
-	const startFirstNight = async () => {
+	onMount(async () => {
+		if ($gameStore.nightCount > 0) {
+			isDisabled = false;
+			return;
+		}
+
 		console.log('TURN UP THE MUSIC');
-		crossFade = new CrossFade().toDestination();
 
-		dayTone = new Player();
-
-		nightTone = new Player();
 		const nightSong = getRandomSong(songData.nightSongs);
 		await nightTone.load('api/songs?url=' + nightSong.internalUrl);
+
 		showToast(nightSong);
-		nightTone.loop = true;
-
-		// bind day to 0
-		dayTone.connect(crossFade.a);
-
-		// bind night to 1
-		nightTone.connect(crossFade.b);
-
-		crossFade.fade.value = 1;
 
 		nightTone.start();
+
 		gameStore.setNight();
-	};
+
+		isDisabled = false;
+	});
 
 	const startNight = async () => {
 		const newSong = getRandomSong(songData.nightSongs);
@@ -121,19 +113,14 @@
 	</div>
 </div>
 
-<div class="flex justify-center py-20">
-	<button
-		data-toggle-theme="night, garden"
-		disabled={isFading}
-		on:click={handleBtnClick}
-		class="btn btn-primary"
-		>{$gameStore.nightCount === 0
-			? 'Beginne die erste Nacht'
-			: $gameStore.gamestate === 'day'
-			? 'Beginne die Nacht'
-			: 'Beginne den Tag'}</button
-	>
-</div>
+<button
+	data-toggle-theme="night, garden"
+	disabled={isDisabled}
+	on:click={handleBtnClick}
+	class="btn btn-primary"
+>
+	{$gameStore.gamestate === 'day' ? 'Beginne die Nacht' : 'Beginne den Tag'}
+</button>
 
 <a
 	class="toast toast-top toast-center"
