@@ -8,9 +8,17 @@
 	let dayTone: Player;
 	let nightTone: Player;
 
-	let fadeValue = 1;
-
 	let isFading = false;
+
+	let toastVisible = false;
+	let currentSong: Song;
+
+	$: handleBtnClick =
+		$gameStore.nightCount === 0
+			? startFirstNight
+			: $gameStore.gamestate === 'day'
+			? startNight
+			: startDay;
 
 	const fadeSongs = (target: 'day' | 'night') => {
 		isFading = true;
@@ -36,11 +44,11 @@
 		crossFade = new CrossFade().toDestination();
 
 		dayTone = new Player();
-		await dayTone.load('api/songs?url=' + getRandomSong(songData.daySongs));
-		dayTone.loop = true;
 
 		nightTone = new Player();
-		await nightTone.load('api/songs?url=' + getRandomSong(songData.nightSongs));
+		const nightSong = getRandomSong(songData.nightSongs);
+		await nightTone.load('api/songs?url=' + nightSong.internalUrl);
+		showToast(nightSong);
 		nightTone.loop = true;
 
 		// bind day to 0
@@ -49,46 +57,52 @@
 		// bind night to 1
 		nightTone.connect(crossFade.b);
 
-		crossFade.fade.value = fadeValue;
+		crossFade.fade.value = 1;
 
 		nightTone.start();
 		gameStore.setNight();
 	};
 
 	const startNight = async () => {
+		const newSong = getRandomSong(songData.nightSongs);
+		await nightTone.load('api/songs?url=' + newSong.internalUrl);
+
 		gameStore.setNight();
 
 		nightTone.start();
 
 		await fadeSongs('night');
+		showToast(newSong);
 
 		dayTone.stop();
 	};
 
 	const startDay = async () => {
+		const newSong = getRandomSong(songData.daySongs);
+		await dayTone.load('api/songs?url=' + newSong.internalUrl);
+
 		gameStore.setDay();
 
 		dayTone.start();
 
 		await fadeSongs('day');
 
+		showToast(newSong);
+
 		nightTone.stop();
 	};
 
-	const getRandomSong = (songs: Song[]): string => {
-		const song = songs[Math.ceil(Math.random() * (songs.length - 1))];
-		console.log(song);
-		return song.internalUrl;
+	const getRandomSong = (songs: Song[]): Song => {
+		const song = songs[Math.round(Math.random() * (songs.length - 1))];
+		return song;
 	};
 
-	$: handleBtnClick =
-		$gameStore.nightCount === 0
-			? startFirstNight
-			: $gameStore.gamestate === 'day'
-			? startNight
-			: startDay;
+	const showToast = (song: Song) => {
+		currentSong = song;
+		toastVisible = true;
 
-	console.log($gameStore.gamestate);
+		setTimeout(() => (toastVisible = false), 5000);
+	};
 </script>
 
 <p>{$gameStore.gamestate}</p>
@@ -101,3 +115,17 @@
 		? 'Beginne die Nacht'
 		: 'Beginne den Tag'}</button
 >
+
+<a
+	class="toast toast-top toast-center"
+	class:hidden={!toastVisible}
+	target="_blank"
+	rel="noreferrer"
+	href={currentSong?.songPage}
+>
+	<div class="alert">
+		<div>
+			<span>{currentSong?.title} von {currentSong?.artist}</span>
+		</div>
+	</div>
+</a>
