@@ -46,7 +46,9 @@
 <main class="px-8 pt-8">
 	{#if activeTab === 0}
 		{#if !crossFade || !dayTone || !nightTone}
-			<button on:click={startGame} class="btn btn-primary">Start Game</button>
+			<div class="flex justify-center items-center">
+				<button on:click={startGame} class="btn btn-primary">Start Game</button>
+			</div>
 		{:else}
 			<Game {crossFade} {dayTone} {nightTone} />
 		{/if}
