@@ -20,3 +20,4 @@ symlink-from
 !.yarn/releases
 !.yarn/plugins
 .pnp.*
+build
