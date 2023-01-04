@@ -1,18 +1,16 @@
-
-
 <script lang="ts">
-	import { onMount } from 'svelte'
-	import { themeChange } from 'theme-change'
-	
-	// NOTE: the element that is using one of the theme attributes must be in the DOM on mount
-	onMount(() => {
-	  themeChange(false)
-	  // 👆 false parameter is required for svelte
-	})
-	import { t, locale, locales } from '../lib/translation/i18n';
+	import { onMount } from 'svelte';
+	import { themeChange } from 'theme-change';
+	import { t } from '../lib/translation/i18n';
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
 	import '../app.css';
+
+	// NOTE: the element that is using one of the theme attributes must be in the DOM on mount
+	onMount(() => {
+		themeChange(false);
+		// 👆 false parameter is required for svelte
+	});
 
 	let tabs = ['game', 'settings'];
 	let activeTab = 0;
@@ -33,11 +31,10 @@
 	</div>
 </main>
 
-
 <div class="btm-nav">
 	{#each tabs as tab, index}
-		<button on:click={() => (activeTab = index)} class:active={index === activeTab}
-			>{$t(tab)}</button
-		>
+		<button on:click={() => (activeTab = index)} class:active={index === activeTab}>
+			{$t(tab)}
+		</button>
 	{/each}
 </div>

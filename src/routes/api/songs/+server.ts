@@ -1,4 +1,3 @@
-import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
 /** @type {import('./$types').RequestHandler} */
