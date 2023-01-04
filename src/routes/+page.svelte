@@ -1,16 +1,19 @@
 <script lang="ts">
-	import { t, locale, locales } from "../lib/translation/i18n";
+	import { t, locale, locales } from '../lib/translation/i18n';
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
 
-    import '../app.css';
+	import '../app.css';
 
-let tabs = [  "game.game",
-      "game.settings"];
-
-	let activeTab = 0;
+	let tabs = ['game', 'settings'];
+	let activeTab = 1;
 </script>
 
+<header>
+	<div class="flex justify-around">
+		<h1 class="text-2xl font-bold">{$t('game.name')}</h1>
+	</div>
+</header>
 
 {#if activeTab === 0}
 	<Game />
@@ -18,17 +21,10 @@ let tabs = [  "game.game",
 	<Settings />
 {/if}
 
-<p>
-    <select bind:value={$locale}>
-      {#each locales as l}
-        <option value={l}>{l}</option>
-      {/each}
-    </select>
-</p>
-
-
 <div class="btm-nav">
 	{#each tabs as tab, index}
-		<button on:click={() => (activeTab = index)} class:active={index === activeTab}></button>
+		<button on:click={() => (activeTab = index)} class:active={index === activeTab}
+			>{$t(tab)}</button
+		>
 	{/each}
 </div>
