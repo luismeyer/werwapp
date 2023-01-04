@@ -5,6 +5,15 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@babel/runtime@npm:^7.20.6":
+  version: 7.20.7
+  resolution: "@babel/runtime@npm:7.20.7"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 4629ce5c46f06cca9cfb9b7fc00d48003335a809888e2b91ec2069a2dcfbfef738480cff32ba81e0b7c290f8918e5c22ddcf2b710001464ee84ba62c7e32a3a3
+  languageName: node
+  linkType: hard
+
 "@esbuild/android-arm64@npm:0.16.13":
   version: 0.16.13
   resolution: "@esbuild/android-arm64@npm:0.16.13"
@@ -708,6 +717,16 @@ __metadata:
   version: 1.1.0
   resolution: "assertion-error@npm:1.1.0"
   checksum: fd9429d3a3d4fd61782eb3962ae76b6d08aa7383123fca0596020013b3ebd6647891a85b05ce821c47d1471ed1271f00b0545cf6a4326cf2fc91efcc3b0fbecf
+  languageName: node
+  linkType: hard
+
+"automation-events@npm:^4.0.25":
+  version: 4.0.25
+  resolution: "automation-events@npm:4.0.25"
+  dependencies:
+    "@babel/runtime": ^7.20.6
+    tslib: ^2.4.1
+  checksum: 1ff4e0cd9746ebcfc29117a115e855d7ab2f9f7ba2932634042dde12d395f6411efb9bc6b87959bb5ba31a4424de65752da9874fa505cff81e9780ca48c5a60a
   languageName: node
   linkType: hard
 
@@ -2660,6 +2679,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.13.11":
+  version: 0.13.11
+  resolution: "regenerator-runtime@npm:0.13.11"
+  checksum: 27481628d22a1c4e3ff551096a683b424242a216fee44685467307f14d58020af1e19660bf2e26064de946bad7eff28950eae9f8209d55723e2d9351e632bbb4
+  languageName: node
+  linkType: hard
+
 "regexpp@npm:^3.2.0":
   version: 3.2.0
   resolution: "regexpp@npm:3.2.0"
@@ -2941,6 +2967,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"standardized-audio-context@npm:^25.3.29":
+  version: 25.3.36
+  resolution: "standardized-audio-context@npm:25.3.36"
+  dependencies:
+    "@babel/runtime": ^7.20.6
+    automation-events: ^4.0.25
+    tslib: ^2.4.1
+  checksum: 6d64aa873576b1fe47bd4bed8a3551d3ac469f95eaab4dd665a8dea9b68d94f4aac7207ff22bcc358ee2675937528a37400af304bd525a5d1fc9d2a4bbbe05d8
+  languageName: node
+  linkType: hard
+
 "streamsearch@npm:^1.1.0":
   version: 1.1.0
   resolution: "streamsearch@npm:1.1.0"
@@ -3200,6 +3237,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tone@npm:^14.7.77":
+  version: 14.8.49
+  resolution: "tone@npm:14.8.49"
+  dependencies:
+    standardized-audio-context: ^25.3.29
+    tslib: ^2.3.1
+  checksum: ffc0d81f77e9030b5c5074b690f415a72be415edcda5ef01768de1ed89a7176392759ae1aae1cd70c5540da5616754b9c17fdf2a25c1d85dcb0ff64d9cac99c6
+  languageName: node
+  linkType: hard
+
 "totalist@npm:^3.0.0":
   version: 3.0.0
   resolution: "totalist@npm:3.0.0"
@@ -3214,7 +3261,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.1":
+"tslib@npm:^2.3.1, tslib@npm:^2.4.1":
   version: 2.4.1
   resolution: "tslib@npm:2.4.1"
   checksum: 19480d6e0313292bd6505d4efe096a6b31c70e21cf08b5febf4da62e95c265c8f571f7b36fcc3d1a17e068032f59c269fab3459d6cd3ed6949eafecf64315fca
@@ -3443,6 +3490,7 @@ __metadata:
     svelte: ^3.54.0
     svelte-check: ^2.9.2
     tailwindcss: ^3.2.4
+    tone: ^14.7.77
     tslib: ^2.4.1
     typescript: ^4.9.3
     vite: ^4.0.0

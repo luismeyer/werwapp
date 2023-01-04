@@ -36,6 +36,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"daisyui": "^2.46.1"
+		"daisyui": "^2.46.1",
+		"tone": "^14.7.77"
 	}
 }

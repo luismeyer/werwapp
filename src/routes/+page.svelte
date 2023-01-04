@@ -5,7 +5,7 @@
     import '../app.css';
 
 let tabs = ['Spiel', 'Einstellungen'];
-let activeTab = 1;
+let activeTab = 0;
 
 </script>
 
