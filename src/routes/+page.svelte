@@ -2,11 +2,10 @@
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
 
-    import '../app.css';
+	import '../app.css';
 
-let tabs = ['Spiel', 'Einstellungen'];
-let activeTab = 0;
-
+	let tabs = ['Spiel', 'Einstellungen'];
+	let activeTab = 0;
 </script>
 
 {#if activeTab === 0}
@@ -14,7 +13,6 @@ let activeTab = 0;
 {:else if activeTab === 1}
 	<Settings />
 {/if}
-
 
 <div class="btm-nav">
 	{#each tabs as tab, index}
