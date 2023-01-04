@@ -1,2 +1,23 @@
-<h1 class="text-3xl font-bold underline">Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import Game from '../components/game.svelte';
+	import Settings from '../components/settings.svelte';
+
+    import '../app.css';
+
+let tabs = ['Spiel', 'Einstellungen'];
+let activeTab = 1;
+
+</script>
+
+{#if activeTab === 0}
+	<Game />
+{:else if activeTab === 1}
+	<Settings />
+{/if}
+
+
+<div class="btm-nav">
+	{#each tabs as tab, index}
+		<button on:click={() => (activeTab = index)} class:active={index === activeTab}>{tab}</button>
+	{/each}
+</div>
