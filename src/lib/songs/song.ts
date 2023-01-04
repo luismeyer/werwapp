@@ -1,6 +1,7 @@
 export type Song = {
 	title: string;
 	internalUrl: string;
+	songPage: string;
 	artist: string;
 };
 
