@@ -38,6 +38,7 @@
 	"type": "module",
 	"dependencies": {
 		"daisyui": "^2.46.1",
+		"theme-change": "^2.2.0",
 		"tone": "^14.7.77"
 	}
 }

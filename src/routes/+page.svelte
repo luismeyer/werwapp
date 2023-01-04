@@ -1,8 +1,17 @@
+
+
 <script lang="ts">
+	import { onMount } from 'svelte'
+	import { themeChange } from 'theme-change'
+	
+	// NOTE: the element that is using one of the theme attributes must be in the DOM on mount
+	onMount(() => {
+	  themeChange(false)
+	  // 👆 false parameter is required for svelte
+	})
 	import { t, locale, locales } from '../lib/translation/i18n';
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
-
 	import '../app.css';
 
 	let tabs = ['game', 'settings'];
@@ -23,6 +32,7 @@
 		{/if}
 	</div>
 </main>
+
 
 <div class="btm-nav">
 	{#each tabs as tab, index}

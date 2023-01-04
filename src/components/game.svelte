@@ -122,7 +122,7 @@
 </div>
 
 <div class="flex justify-center py-20">
-	<button disabled={isFading} on:click={handleBtnClick} class="btn btn-primary"
+	<button data-toggle-theme="garden,night" disabled={isFading} on:click={handleBtnClick} class="btn btn-primary"
 		>{$gameStore.nightCount === 0
 			? 'Beginne die erste Nacht'
 			: $gameStore.gamestate === 'day'
