@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export function createGame() {
+export function createGameStateStore() {
 	const { subscribe, set, update } = writable<GameState>({
         state: 'setup',
         gamestate: 'night',
@@ -19,6 +19,8 @@ export function createGame() {
         })
 	};
 }
+
+export const gameStore = createGameStateStore();
 
 
 export type GameState = {
