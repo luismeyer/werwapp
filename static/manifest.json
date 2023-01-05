@@ -1,0 +1,8 @@
+{
+	"name": "Werwapp",
+	"short_name": "Werwapp",
+	"description": "Your Werwolf app",
+	"display": "standalone",
+	"orientation": "portrait-primary",
+	"start_url": "/"
+}
