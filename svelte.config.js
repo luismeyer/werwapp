@@ -1,4 +1,4 @@
-import { adapter } from 'sveltekit-adapter-aws';
+import adapter from '@sveltejs/adapter-node';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -8,9 +8,7 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
-		adapter: adapter({
-			autoDeploy: Boolean(process.env.DEPLOY)
-		})
+		adapter: adapter({ out: 'build' })
 	}
 };
 
