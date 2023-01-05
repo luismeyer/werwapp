@@ -375,17 +375,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-auto@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@sveltejs/adapter-auto@npm:1.0.0"
-  dependencies:
-    import-meta-resolve: ^2.2.0
-  peerDependencies:
-    "@sveltejs/kit": ^1.0.0
-  checksum: e335ece5790091bf656b85085f9cecb730083dd402398424ed3ecb9024278fc4b5345ec9b0a640f1de67156eeb98898036adc81e0d32728fef51ad3c4ce864c1
-  languageName: node
-  linkType: hard
-
 "@sveltejs/adapter-node@npm:^1.0.0":
   version: 1.0.0
   resolution: "@sveltejs/adapter-node@npm:1.0.0"
@@ -1928,13 +1917,6 @@ __metadata:
     parent-module: ^1.0.0
     resolve-from: ^4.0.0
   checksum: 2cacfad06e652b1edc50be650f7ec3be08c5e5a6f6d12d035c440a42a8cc028e60a5b99ca08a77ab4d6b1346da7d971915828f33cdab730d3d42f08242d09baa
-  languageName: node
-  linkType: hard
-
-"import-meta-resolve@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "import-meta-resolve@npm:2.2.0"
-  checksum: 35a012c07bdaaed907ad150021b47a4bd8b2c77c88f02a2c5a15a5cb5c146072a94b6633cc528eaccf187bca12196c0fb2ff44a54b3b2a03bcf200511b3f1e50
   languageName: node
   linkType: hard
 
@@ -3624,7 +3606,6 @@ __metadata:
   resolution: "werwapp@workspace:."
   dependencies:
     "@playwright/test": ^1.28.1
-    "@sveltejs/adapter-auto": ^1.0.0
     "@sveltejs/adapter-node": ^1.0.0
     "@sveltejs/kit": ^1.0.0
     "@typescript-eslint/eslint-plugin": ^5.45.0
