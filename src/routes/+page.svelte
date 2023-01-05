@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { t } from '$lib/translation/i18n';
 	import { onMount } from 'svelte';
 	import { themeChange } from 'theme-change';
-	import { t } from '../lib/translation/i18n';
+	import { CrossFade, Player, start } from 'tone';
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
+
 	import '../app.css';
-	import { CrossFade, Player } from 'tone';
 
 	// NOTE: the element that is using one of the theme attributes must be in the DOM on mount
 	onMount(() => {
@@ -21,15 +22,17 @@
 	let nightTone: Player;
 
 	const startGame = async () => {
+		await start();
+
 		crossFade = new CrossFade().toDestination();
+
 		dayTone = new Player();
-		nightTone = new Player();
-
-		nightTone.loop = true;
-
+		dayTone.loop = true;
 		// bind day to 0
 		dayTone.connect(crossFade.a);
 
+		nightTone = new Player();
+		nightTone.loop = true;
 		// bind night to 1
 		nightTone.connect(crossFade.b);
 

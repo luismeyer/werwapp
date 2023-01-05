@@ -7,6 +7,7 @@
 <div class="text-base-content/70 my-4 text-xs">
 	{$t('settings.discribtion')}
 </div>
+
 <div class="tabs tabs-boxed items-center">
 	{#each locales as l}
 		<button
@@ -18,6 +19,7 @@
 		</button>
 	{/each}
 </div>
+
 <div class="dropdown w-full flex-1">
 	<div class="form-control">
 		<label class="label cursor-pointer">
@@ -26,15 +28,16 @@
 				checked={true}
 				type="checkbox"
 				class="toggle toggle-primary"
-				on:change={(e) => themeStore.setAutoSwitching(e.target.checked)}
+				on:change={(e) => themeStore.setAutoSwitching(e.target?.checked)}
 			/>
 		</label>
 	</div>
+
 	<p>Theme</p>
 	<select
 		value={$themeStore.lightTheme}
 		class="tabs tabs-boxed items-center"
-		on:change={(e) => themeStore.setLightTheme(e.target.value)}
+		on:change={(e) => themeStore.setLightTheme(e.target?.value)}
 	>
 		{#each themes as theme}
 			<option value={theme}>
@@ -42,12 +45,13 @@
 			</option>
 		{/each}
 	</select>
+
 	{#if $themeStore.autoSwitching}
 		<p>Night Theme</p>
 		<select
 			value={$themeStore.darkTheme}
 			class="tabs tabs-boxed items-center"
-			on:change={(e) => themeStore.setDarkTheme(e.target.value)}
+			on:change={(e) => themeStore.setDarkTheme(e.target?.value)}
 		>
 			{#each themes as theme}
 				<option value={theme}>
@@ -56,6 +60,7 @@
 			{/each}
 		</select>
 	{/if}
+
 	<div class="form-control">
 		<label class="label cursor-pointer">
 			<span class="label-text">Enable time travel</span>
