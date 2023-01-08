@@ -1,8 +1,12 @@
 <script lang="ts">
-	import { t } from '$lib/translation/i18n';
 	import { onMount } from 'svelte';
 	import { themeChange } from 'theme-change';
 	import { CrossFade, Player, start } from 'tone';
+
+	import { loadRandomSong, type Song } from '$lib/songs/song';
+	import { songData } from '$lib/songs/songdata';
+	import { t } from '$lib/translation/i18n';
+
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
 
@@ -18,26 +22,36 @@
 	let activeTab = 0;
 
 	let crossFade: CrossFade;
-	let dayTone: Player;
-	let nightTone: Player;
+	let dayPlayer: Player;
+	let nightPlayer: Player;
+
+	let firstSong: Song;
+
+	let gameStarted = false;
+
+	onMount(async () => {
+		crossFade = new CrossFade({ fade: 1 }).toDestination();
+
+		dayPlayer = new Player({ loop: true });
+
+		// bind day to 0
+		dayPlayer.connect(crossFade.a);
+
+		nightPlayer = new Player({ loop: true });
+
+		// bind night to 1
+		nightPlayer.connect(crossFade.b);
+
+		firstSong = await loadRandomSong(songData.nightSongs, nightPlayer);
+	});
 
 	const startGame = async () => {
 		await start();
 
-		crossFade = new CrossFade().toDestination();
-
-		dayTone = new Player();
-		dayTone.loop = true;
-		// bind day to 0
-		dayTone.connect(crossFade.a);
-
-		nightTone = new Player();
-		nightTone.loop = true;
-		// bind night to 1
-		nightTone.connect(crossFade.b);
-
-		crossFade.fade.value = 1;
+		gameStarted = true;
 	};
+
+	$: buttonLabel = firstSong ? 'Start das Spiel' : 'erster Song wird geladen...';
 </script>
 
 <header>
@@ -48,12 +62,14 @@
 
 <main class="px-8 pt-8">
 	{#if activeTab === 0}
-		{#if !crossFade || !dayTone || !nightTone}
+		{#if !gameStarted}
 			<div class="flex justify-center items-center">
-				<button on:click={startGame} class="btn btn-primary">Start Game</button>
+				<button disabled={!firstSong} on:click={startGame} class="btn btn-primary">
+					{buttonLabel}
+				</button>
 			</div>
 		{:else}
-			<Game {crossFade} {dayTone} {nightTone} />
+			<Game {firstSong} {crossFade} {dayPlayer} {nightPlayer} />
 		{/if}
 	{:else if activeTab === 1}
 		<Settings />

@@ -1,39 +1,27 @@
 <script lang="ts">
-	import { gameStore } from '$lib/stores/gamestore';
-	import type { Player, CrossFade } from 'tone';
-	import { songData } from '$lib/songs/songdata';
-	import type { Song } from '$lib/songs/song';
-	import { t } from '$lib/translation/i18n';
 	import { onMount } from 'svelte';
+	import type { CrossFade, Player } from 'tone';
+
+	import { fadeSongs, loadRandomSong, type Song } from '$lib/songs/song';
+	import { songData } from '$lib/songs/songdata';
+	import { gameStore } from '$lib/stores/gamestore';
 	import { themeStore } from '$lib/stores/theme';
+	import { t } from '$lib/translation/i18n';
 
 	export let crossFade: CrossFade;
-	export let dayTone: Player;
-	export let nightTone: Player;
+	export let dayPlayer: Player;
+	export let nightPlayer: Player;
+
+	export let firstSong: Song;
 
 	let isDisabled = true;
 
 	let toastVisible = false;
+
 	let currentSong: Song;
+	let nextSong: Song;
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
-
-	const fadeSongs = (target: 'day' | 'night') => {
-		const internal = target === 'night' ? 1 : 0;
-
-		return new Promise((res) => {
-			const interval = setInterval(() => {
-				const modifier = internal === 1 ? 0.01 : -0.01;
-
-				crossFade.fade.value = parseFloat((crossFade.fade.value + modifier).toFixed(2));
-
-				if (crossFade.fade.value === internal) {
-					clearInterval(interval);
-					res(true);
-				}
-			}, 50);
-		});
-	};
 
 	onMount(async () => {
 		if ($gameStore.nightCount > 0) {
@@ -41,67 +29,56 @@
 			return;
 		}
 
-		console.log('TURN UP THE MUSIC');
+		currentSong = firstSong;
+		showToast();
 
-		const nightSong = getRandomSong(songData.nightSongs);
-		await nightTone.load('api/songs?url=' + nightSong.internalUrl);
-
-		showToast(nightSong);
-
-		nightTone.start();
+		// start the music
+		nightPlayer.start();
 
 		gameStore.setNight();
 
 		isDisabled = false;
+
+		// load next day song
+		nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
 	});
 
-	const startNight = async () => {
+	const startNextPhase = async (nextPhase: 'night' | 'day') => {
+		const currentPlayer = nextPhase === 'day' ? nightPlayer : dayPlayer;
+		const nextPlayer = nextPhase === 'day' ? dayPlayer : nightPlayer;
+
 		isDisabled = true;
 
-		const newSong = getRandomSong(songData.nightSongs);
-		await nightTone.load('api/songs?url=' + newSong.internalUrl);
+		currentSong = nextSong;
+		showToast();
 
-		gameStore.setNight();
+		nextPlayer.start();
 
-		nightTone.start();
+		await fadeSongs(nextPhase, crossFade);
 
-		await fadeSongs('night');
-		showToast(newSong);
-
-		dayTone.stop();
+		currentPlayer.stop();
 
 		isDisabled = false;
+	};
+
+	const startNight = async () => {
+		await startNextPhase('night');
+
+		gameStore.setNight();
+		nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
 	};
 
 	const startDay = async () => {
-		isDisabled = true;
-
-		const newSong = getRandomSong(songData.daySongs);
-		await dayTone.load('api/songs?url=' + newSong.internalUrl);
+		await startNextPhase('day');
 
 		gameStore.setDay();
-
-		dayTone.start();
-
-		await fadeSongs('day');
-
-		showToast(newSong);
-
-		nightTone.stop();
-
-		isDisabled = false;
+		nextSong = await loadRandomSong(songData.nightSongs, nightPlayer);
 	};
 
-	const getRandomSong = (songs: Song[]): Song => {
-		const song = songs[Math.round(Math.random() * (songs.length - 1))];
-		return song;
-	};
-
-	const showToast = (song: Song) => {
-		currentSong = song;
+	const showToast = () => {
 		toastVisible = true;
 
-		setTimeout(() => (toastVisible = false), 5000);
+		setTimeout(() => (toastVisible = false), 2000);
 	};
 </script>
 
