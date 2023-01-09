@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { t, locale, locales } from '../lib/translation/i18n';
+	import { t, locale } from '../lib/translation/i18n';
 	import { themes, themeStore } from '../lib/stores/theme';
+	import { locales } from '$lib/translation/translations';
 </script>
 
 <div class="text-xl font-extrabold">{$t('settings')}</div>
@@ -15,7 +16,8 @@
 			class:tab-active={$locale === l}
 			value={l}
 			on:click={() => ($locale = l)}
-			>{$t(l)}
+		>
+			{$t(l)}
 		</button>
 	{/each}
 </div>

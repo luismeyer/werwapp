@@ -3321,13 +3321,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"theme-change@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "theme-change@npm:2.2.0"
-  checksum: 552b03564dda9fcc12cf07693a7a4d6b21b5be701403ce6972a118ed9aa06d707a3e4dd2df625e1e2e4b94387dd1fab64638c5aa32c4c0ab175b0cdec9d24619
-  languageName: node
-  linkType: hard
-
 "tiny-glob@npm:^0.2.9":
   version: 0.2.9
   resolution: "tiny-glob@npm:0.2.9"
@@ -3445,11 +3438,11 @@ __metadata:
 
 "typescript@patch:typescript@*#~builtin<compat/typescript>, typescript@patch:typescript@^4.9.3#~builtin<compat/typescript>":
   version: 4.9.4
-  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=ad5954"
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=d73830"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1caaea6cb7f813e64345190fddc4e6c924d0b698ab81189b503763c4a18f7f5501c69362979d36e19c042d89d936443e768a78b0675690b35eb663d19e0eae71
+  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
   languageName: node
   linkType: hard
 
@@ -3621,7 +3614,6 @@ __metadata:
     svelte: ^3.54.0
     svelte-check: ^2.9.2
     tailwindcss: ^3.2.4
-    theme-change: ^2.2.0
     tone: ^14.7.77
     tslib: ^2.4.1
     typescript: ^4.9.3
