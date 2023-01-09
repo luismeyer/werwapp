@@ -8,7 +8,7 @@ export type Translations = {
 	'role.witch.name': string;
 	'game.name': string;
 	'settings.discribtion': string;
-	'settings.toggel_themes': string;
+	'settings.theme.toggle': string;
 	night: string;
 	day: string;
 	game: string;
@@ -42,7 +42,7 @@ export const translations: I18n = {
 		de: 'German',
 		'game.name': 'Werwapp',
 		'settings.discribtion': 'Here you can edit your game settings.',
-		'settings.toggel_themes': 'Automatic color scheme',
+		'settings.theme.toggle': 'Automatic color scheme',
 		counter: 'turn',
 		state: 'state'
 	},
@@ -59,7 +59,7 @@ export const translations: I18n = {
 		game: 'Spiel',
 		settings: 'Einstellungen',
 		'settings.discribtion': 'Hier kannst du deine Spieleinstellungen bearbeiten.',
-		'settings.toggel_themes': 'Dynamischer Farbschemawechsel',
+		'settings.theme.toggle': 'Dynamischer Farbschemawechsel',
 		en: 'Englisch',
 		de: 'Deutsch',
 		'game.name': 'Werwapp',

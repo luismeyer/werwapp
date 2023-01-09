@@ -9,7 +9,7 @@
 	{$t('settings.discribtion')}
 </div>
 
-<div class="tabs tabs-boxed items-center">
+<div class="tabs tabs-boxed items-center mb-1">
 	{#each locales as l}
 		<button
 			class="tab flex-1"
@@ -22,38 +22,23 @@
 	{/each}
 </div>
 
-<div class="dropdown w-full flex-1">
-	<div class="form-control">
-		<label class="label cursor-pointer">
-			<span class="label-text">{$t('settings.toggel_themes')}</span>
-			<input
-				checked={true}
-				type="checkbox"
-				class="toggle toggle-primary"
-				on:change={(e) => themeStore.setAutoSwitching(e.target?.checked)}
-			/>
-		</label>
-	</div>
+<label class="label cursor-pointer">
+	<span class="label-text">{$t('settings.theme.toggle')}</span>
+	<input
+		checked={$themeStore.autoSwitching}
+		type="checkbox"
+		class="toggle toggle-primary"
+		on:change={(e) => themeStore.setAutoSwitching(e.currentTarget.checked)}
+	/>
+</label>
 
-	<p>Theme</p>
-	<select
-		value={$themeStore.lightTheme}
-		class="tabs tabs-boxed items-center"
-		on:change={(e) => themeStore.setLightTheme(e.target?.value)}
-	>
-		{#each themes as theme}
-			<option value={theme}>
-				{theme}
-			</option>
-		{/each}
-	</select>
-
-	{#if $themeStore.autoSwitching}
-		<p>Night Theme</p>
+<label class="label grid grid-cols-3 gap-4">
+	<div class="flex flex-col gap-1">
+		<span class="label-text">Theme</span>
 		<select
 			value={$themeStore.darkTheme}
-			class="tabs tabs-boxed items-center"
-			on:change={(e) => themeStore.setDarkTheme(e.target?.value)}
+			class="tabs tabs-boxed items-center cursor-pointer"
+			on:change={(e) => themeStore.setDarkTheme(e.currentTarget.value)}
 		>
 			{#each themes as theme}
 				<option value={theme}>
@@ -61,12 +46,22 @@
 				</option>
 			{/each}
 		</select>
-	{/if}
-
-	<div class="form-control">
-		<label class="label cursor-pointer">
-			<span class="label-text">Enable time travel</span>
-			<input type="checkbox" class="toggle toggle-secondary" />
-		</label>
 	</div>
-</div>
+
+	{#if $themeStore.autoSwitching}
+		<div class="flex flex-col gap-1">
+			<span class="label-text">Light Theme</span>
+			<select
+				value={$themeStore.lightTheme}
+				class="tabs tabs-boxed items-center cursor-pointer"
+				on:change={(e) => themeStore.setLightTheme(e.currentTarget.value)}
+			>
+				{#each themes as theme}
+					<option value={theme}>
+						{theme}
+					</option>
+				{/each}
+			</select>
+		</div>
+	{/if}
+</label>
