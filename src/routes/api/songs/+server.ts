@@ -9,8 +9,9 @@ export async function GET({ url }: RequestEvent) {
 
 	if (fs.existsSync(songPath)) {
 		// Serve song from internal cache
-
 		const blob = fs.readFileSync(songPath);
+
+		console.log('Serving mp3 from cache');
 
 		const response = new Response(blob);
 		response.headers.append('cache-control', 'public, max-age=31536000');
@@ -25,6 +26,8 @@ export async function GET({ url }: RequestEvent) {
 		if (!fs.existsSync('./tmp')) {
 			fs.mkdirSync('./tmp');
 		}
+
+		console.log('Saving mp3 into cache', songPath);
 
 		fs.writeFile(songPath, buffer, (err) => {
 			if (err) {

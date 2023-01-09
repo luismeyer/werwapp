@@ -17,12 +17,17 @@ export const getRandomSong = (songs: Song[]): Song => {
 	return song;
 };
 
+const FadeSteps = 0.01;
+const FadeInterval = 60;
+
+export const FadeDuration = (1 / FadeSteps) * FadeInterval;
+
 export const fadeSongs = (target: 'day' | 'night', crossFade: CrossFade) => {
 	const internal = target === 'night' ? 1 : 0;
 
 	return new Promise((res) => {
 		const interval = setInterval(() => {
-			const modifier = internal === 1 ? 0.01 : -0.01;
+			const modifier = internal === 1 ? FadeSteps : -FadeSteps;
 
 			crossFade.fade.value = parseFloat((crossFade.fade.value + modifier).toFixed(2));
 
@@ -30,7 +35,7 @@ export const fadeSongs = (target: 'day' | 'night', crossFade: CrossFade) => {
 				clearInterval(interval);
 				res(true);
 			}
-		}, 50);
+		}, FadeInterval);
 	});
 };
 
