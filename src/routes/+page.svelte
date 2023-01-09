@@ -50,7 +50,10 @@
 
 	$: buttonLabel = firstSong ? 'Start das Spiel' : 'erster Song wird geladen...';
 
-	$: currentTheme = $gameStore.gamestate === 'day' ? $themeStore.lightTheme : $themeStore.darkTheme;
+	$: currentTheme =
+		$themeStore.autoSwitching && $gameStore.gamestate === 'day'
+			? $themeStore.lightTheme
+			: $themeStore.darkTheme;
 </script>
 
 <div style="width: 100vw; height: 100vh" data-theme={currentTheme}>
