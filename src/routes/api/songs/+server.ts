@@ -11,7 +11,10 @@ export async function GET({ url }: RequestEvent) {
 		// Serve song from internal cache
 
 		const blob = fs.readFileSync(songPath);
-		return new Response(blob);
+
+		const response = new Response(blob);
+		response.headers.append('cache-control', 'public, max-age=31536000');
+		return response;
 	} else {
 		// Request song and save it.
 
@@ -29,6 +32,8 @@ export async function GET({ url }: RequestEvent) {
 			}
 		});
 
-		return new Response(blob);
+		const response = new Response(blob);
+		response.headers.append('cache-control', 'public, max-age=31536000');
+		return response;
 	}
 }
