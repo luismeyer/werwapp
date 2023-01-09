@@ -5,8 +5,8 @@
 	import { fadeSongs, loadRandomSong, type Song } from '$lib/songs/song';
 	import { songData } from '$lib/songs/songdata';
 	import { gameStore } from '$lib/stores/gamestore';
-	import { themeStore } from '$lib/stores/theme';
 	import { t } from '$lib/translation/i18n';
+	import SunAndMoon from './sunAndMoon.svelte';
 
 	export let crossFade: CrossFade;
 	export let dayPlayer: Player;
@@ -14,18 +14,18 @@
 
 	export let firstSong: Song;
 
-	let isDisabled = true;
+	let isSongFading = true;
 
 	let toastVisible = false;
 
-	let currentSong: Song;
-	let nextSong: Song;
+	let currentSong: Song | undefined;
+	let nextSong: Song | undefined;
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 
 	onMount(async () => {
 		if ($gameStore.nightCount > 0) {
-			isDisabled = false;
+			isSongFading = false;
 			return;
 		}
 
@@ -37,7 +37,7 @@
 
 		gameStore.setNight();
 
-		isDisabled = false;
+		isSongFading = false;
 
 		// load next day song
 		nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
@@ -47,9 +47,10 @@
 		const currentPlayer = nextPhase === 'day' ? nightPlayer : dayPlayer;
 		const nextPlayer = nextPhase === 'day' ? dayPlayer : nightPlayer;
 
-		isDisabled = true;
+		isSongFading = true;
 
 		currentSong = nextSong;
+		nextSong = undefined;
 		showToast();
 
 		nextPlayer.start();
@@ -58,7 +59,7 @@
 
 		currentPlayer.stop();
 
-		isDisabled = false;
+		isSongFading = false;
 	};
 
 	const startNight = async () => {
@@ -80,6 +81,8 @@
 
 		setTimeout(() => (toastVisible = false), 2000);
 	};
+
+	$: isDisabled = isSongFading || !nextSong;
 </script>
 
 <div class="flex justify-around py-10">
@@ -99,14 +102,7 @@
 </div>
 
 <div class="flex justify-center">
-	<button
-		data-set-theme={$gameStore.gamestate === 'day' ? $themeStore.darkTheme : $themeStore.lightTheme}
-		on:click={handleBtnClick}
-		disabled={isDisabled}
-		class="btn btn-primary"
-	>
-		{$gameStore.gamestate === 'day' ? 'Beginne die Nacht' : 'Beginne den Tag'}
-	</button>
+	<SunAndMoon disabled={isDisabled} handleStateChange={handleBtnClick} />
 </div>
 
 <a

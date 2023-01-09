@@ -56,17 +56,17 @@
 			: $themeStore.darkTheme;
 </script>
 
-<div style="width: 100vw; height: 100vh" data-theme={currentTheme}>
+<div class="content" data-theme={currentTheme}>
 	<header>
 		<div class="flex justify-around py-5">
 			<h1 class="text-5xl font-bold">{$t('game.name')}</h1>
 		</div>
 	</header>
 
-	<main class="px-8 pt-8">
+	<main class="px-8 relative overflow-hidden">
 		{#if activeTab === 0}
 			{#if !gameStarted}
-				<div class="flex justify-center items-center">
+				<div class="h-full flex justify-center items-center">
 					<button disabled={!firstSong} on:click={startGame} class="btn btn-primary">
 						{buttonLabel}
 					</button>
@@ -78,12 +78,21 @@
 			<Settings />
 		{/if}
 	</main>
-
-	<div class="btm-nav">
-		{#each tabs as tab, index}
-			<button on:click={() => (activeTab = index)} class:active={index === activeTab}>
-				{$t(tab)}
-			</button>
-		{/each}
-	</div>
 </div>
+
+<div class="btm-nav">
+	{#each tabs as tab, index}
+		<button on:click={() => (activeTab = index)} class:active={index === activeTab}>
+			{$t(tab)}
+		</button>
+	{/each}
+</div>
+
+<style>
+	.content {
+		display: grid;
+		width: 100vw;
+		height: calc(100vh - 4rem);
+		grid-template-rows: auto 1fr;
+	}
+</style>
