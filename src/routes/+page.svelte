@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { themeChange } from 'theme-change';
 	import { CrossFade, Player, start } from 'tone';
 
 	import { loadRandomSong, type Song } from '$lib/songs/song';
 	import { songData } from '$lib/songs/songdata';
+	import { gameStore } from '$lib/stores/gamestore';
+	import { themeStore } from '$lib/stores/theme';
 	import { t } from '$lib/translation/i18n';
 
 	import Game from '../components/game.svelte';
@@ -12,13 +13,9 @@
 
 	import '../app.css';
 
-	// NOTE: the element that is using one of the theme attributes must be in the DOM on mount
-	onMount(() => {
-		themeChange(false);
-		// 👆 false parameter is required for svelte
-	});
+	type Tab = 'game' | 'settings';
 
-	let tabs = ['game', 'settings'];
+	let tabs: Tab[] = ['game', 'settings'];
 	let activeTab = 0;
 
 	let crossFade: CrossFade;
@@ -52,34 +49,38 @@
 	};
 
 	$: buttonLabel = firstSong ? 'Start das Spiel' : 'erster Song wird geladen...';
+
+	$: currentTheme = $gameStore.gamestate === 'day' ? $themeStore.lightTheme : $themeStore.darkTheme;
 </script>
 
-<header>
-	<div class="flex justify-around py-5">
-		<h1 class="text-5xl font-bold">{$t('game.name')}</h1>
-	</div>
-</header>
+<div style="width: 100vw; height: 100vh" data-theme={currentTheme}>
+	<header>
+		<div class="flex justify-around py-5">
+			<h1 class="text-5xl font-bold">{$t('game.name')}</h1>
+		</div>
+	</header>
 
-<main class="px-8 pt-8">
-	{#if activeTab === 0}
-		{#if !gameStarted}
-			<div class="flex justify-center items-center">
-				<button disabled={!firstSong} on:click={startGame} class="btn btn-primary">
-					{buttonLabel}
-				</button>
-			</div>
-		{:else}
-			<Game {firstSong} {crossFade} {dayPlayer} {nightPlayer} />
+	<main class="px-8 pt-8">
+		{#if activeTab === 0}
+			{#if !gameStarted}
+				<div class="flex justify-center items-center">
+					<button disabled={!firstSong} on:click={startGame} class="btn btn-primary">
+						{buttonLabel}
+					</button>
+				</div>
+			{:else}
+				<Game {firstSong} {crossFade} {dayPlayer} {nightPlayer} />
+			{/if}
+		{:else if activeTab === 1}
+			<Settings />
 		{/if}
-	{:else if activeTab === 1}
-		<Settings />
-	{/if}
-</main>
+	</main>
 
-<div class="btm-nav">
-	{#each tabs as tab, index}
-		<button on:click={() => (activeTab = index)} class:active={index === activeTab}>
-			{$t(tab)}
-		</button>
-	{/each}
+	<div class="btm-nav">
+		{#each tabs as tab, index}
+			<button on:click={() => (activeTab = index)} class:active={index === activeTab}>
+				{$t(tab)}
+			</button>
+		{/each}
+	</div>
 </div>

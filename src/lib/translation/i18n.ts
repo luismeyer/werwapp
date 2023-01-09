@@ -1,10 +1,9 @@
 import { derived, writable } from 'svelte/store';
-import translations from './translations';
+import { type Locale, translations, type Translations } from './translations';
 
-export const locale = writable('en');
-export const locales = Object.keys(translations);
+export const locale = writable<Locale>('en');
 
-function translate(locale, key, vars) {
+function translate(locale: Locale, key: keyof Translations, vars: Record<string, string>) {
 	// Let's throw some errors if we're trying to use keys/locales that don't exist.
 	// We could improve this by using Typescript and/or fallback values.
 	if (!key) throw new Error('no key provided to $t()');
@@ -27,6 +26,6 @@ function translate(locale, key, vars) {
 export const t = derived(
 	locale,
 	($locale) =>
-		(key, vars = {}) =>
+		(key: keyof Translations, vars = {}) =>
 			translate($locale, key, vars)
 );

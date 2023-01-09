@@ -1,11 +1,20 @@
 import { writable } from 'svelte/store';
+import { browser } from '$app/environment';
+
+const THEME_STORAGE_KEY = 'theme';
 
 export function createThemeStore() {
-	const { subscribe, set, update } = writable<ThemeData>({
+	const storageString = browser && localStorage.getItem(THEME_STORAGE_KEY);
+
+	const defaultData = {
 		lightTheme: 'light',
 		darkTheme: 'dark',
 		autoSwitching: true
-	});
+	};
+
+	const { subscribe, update } = writable<ThemeData>(
+		storageString ? JSON.parse(storageString) : defaultData
+	);
 
 	return {
 		subscribe,
@@ -14,17 +23,18 @@ export function createThemeStore() {
 		setDarkTheme: (newTheme: string) =>
 			update((currentState) => ({ ...currentState, darkTheme: newTheme })),
 		setAutoSwitching: (mode: boolean) =>
-			update((currentState) => ({ ...currentState, autoSwitching: mode })),
-		reset: () =>
-			set({
-				lightTheme: 'light',
-				darkTheme: 'dark',
-				autoSwitching: true
-			})
+			update((currentState) => ({ ...currentState, autoSwitching: mode }))
 	};
 }
 
 export const themeStore = createThemeStore();
+
+themeStore.subscribe((value) => {
+	if (browser) {
+		localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(value));
+	}
+});
+
 export const themes = [
 	'light',
 	'dark',
