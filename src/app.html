@@ -12,12 +12,18 @@
 				/* time = FadeDuration / 2 */
 				transition: background-color 3s ease, fill 3s ease, border 3s ease;
 			}
+
+			.content {
+				max-width: 500px;
+				margin: auto;
+				display: contents;
+			}
 		</style>
 
 		%sveltekit.head%
 	</head>
 
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+		<div class="content">%sveltekit.body%</div>
 	</body>
 </html>

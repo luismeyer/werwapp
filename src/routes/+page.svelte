@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { CrossFade, Player, start } from 'tone';
 
-	import { loadRandomSong, type Song } from '$lib/songs/song';
+	import { loadRandomSong } from '$lib/songs/song';
 	import { songData } from '$lib/songs/songdata';
 	import { gameStore } from '$lib/stores/gamestore';
 	import { themeStore } from '$lib/stores/theme';
@@ -10,6 +10,7 @@
 
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
+	import Forest from '../components/forest.svelte';
 
 	import '../app.css';
 
@@ -78,9 +79,11 @@
 			<Settings />
 		{/if}
 	</main>
+
+	<Forest />
 </div>
 
-<div class="btm-nav">
+<div class="btm-nav navigation">
 	{#each tabs as tab, index}
 		<button on:click={() => (activeTab = index)} class:active={index === activeTab}>
 			{$t(tab)}
@@ -88,11 +91,21 @@
 	{/each}
 </div>
 
+<div class="safe-area" />
+
 <style>
 	.content {
 		display: grid;
 		width: 100vw;
-		height: calc(100vh - 4rem);
+		/* Substract height of bottom nav */
+		min-height: calc(100vh - 5rem);
 		grid-template-rows: auto 1fr;
+	}
+
+	.navigation {
+		max-width: 500px;
+		margin: auto;
+		/* Safe space for mobile devices with home bar */
+		bottom: 1rem;
 	}
 </style>
