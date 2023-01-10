@@ -78,36 +78,46 @@
 	$: isDisabled = $gameStore.fading || !$gameStore.nextSong;
 </script>
 
-<div class="flex justify-around py-10">
-	<div class="stats bg-base-300 border-base-300 border md:w-1/2">
-		<div class="stat">
-			<div class="stat-title">{$t('counter')}</div>
-			<div class="stat-value">{$gameStore.nightCount}</div>
+<div class="container">
+	<div class="flex justify-around py-10">
+		<div class="stats bg-base-300 border-base-300 border md:w-1/2">
+			<div class="stat">
+				<div class="stat-title">{$t('counter')}</div>
+				<div class="stat-value">{$gameStore.nightCount}</div>
+			</div>
+		</div>
+
+		<div class="stats bg-base-300 border-base-300 border md:w-1/2">
+			<div class="stat">
+				<div class="stat-title">{$t('state')}</div>
+				<div class="stat-value">{$t($gameStore.gamestate)}</div>
+			</div>
 		</div>
 	</div>
 
-	<div class="stats bg-base-300 border-base-300 border md:w-1/2">
-		<div class="stat">
-			<div class="stat-title">{$t('state')}</div>
-			<div class="stat-value">{$t($gameStore.gamestate)}</div>
-		</div>
-	</div>
-</div>
-
-<div class="flex justify-center">
 	<SunAndMoon disabled={isDisabled} handleStateChange={handleBtnClick} />
+
+	<a
+		class="toast toast-top toast-center w-9/12"
+		class:hidden={!toastVisible}
+		target="_blank"
+		rel="noreferrer"
+		href={$gameStore.currentSong?.songPage}
+	>
+		<div class="alert">
+			<div>
+				<span>{$gameStore.currentSong?.title} von {$gameStore.currentSong?.artist}</span>
+			</div>
+		</div>
+	</a>
 </div>
 
-<a
-	class="toast toast-top toast-center w-9/12"
-	class:hidden={!toastVisible}
-	target="_blank"
-	rel="noreferrer"
-	href={$gameStore.currentSong?.songPage}
->
-	<div class="alert">
-		<div>
-			<span>{$gameStore.currentSong?.title} von {$gameStore.currentSong?.artist}</span>
-		</div>
-	</div>
-</a>
+<style>
+	.container {
+		display: grid;
+		grid-template-rows: auto 1fr;
+		height: 100%;
+		width: 100%;
+		margin: auto;
+	}
+</style>
