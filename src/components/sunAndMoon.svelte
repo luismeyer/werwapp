@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { FadeDuration } from '$lib/songs/song';
+	import { gameStore } from '$lib/stores/gamestore';
 
 	export let disabled: boolean;
 	export let handleStateChange: () => void;
 
 	let running: boolean;
 
-	let current: 'sun' | 'moon' = 'moon';
+	let current: 'sun' | 'moon' = $gameStore.gamestate === 'day' ? 'sun' : 'moon';
 
 	$: animationStateClass = running ? 'running' : 'paused';
 
@@ -28,7 +29,7 @@
 
 <button on:click={handleClick} {disabled}>
 	<svg
-		class={`${moonAnimationClass} ${animationStateClass} circle`}
+		class={`${moonAnimationClass} ${animationStateClass} icon`}
 		xmlns="http://www.w3.org/2000/svg"
 		width="192"
 		height="192"
@@ -43,7 +44,7 @@
 
 <button on:click={handleClick} {disabled}>
 	<svg
-		class={`${sunAnimationClass} ${animationStateClass} circle`}
+		class={`${sunAnimationClass} ${animationStateClass} icon`}
 		xmlns="http://www.w3.org/2000/svg"
 		width="192"
 		height="192"
@@ -57,7 +58,7 @@
 </button>
 
 <style>
-	.circle {
+	.icon {
 		position: absolute;
 		top: 700px;
 		bottom: 0;
@@ -65,15 +66,18 @@
 		right: 0;
 		overflow: hidden;
 		margin: auto;
+		fill: hsl(var(--p));
 	}
 
 	.in-animation {
 		transform: translate(0px, 400px);
+		/* time = FadeDuration */
 		animation: cirlceIn 6s ease infinite;
 	}
 
 	.out-animation {
 		transform: translate(0px, -400px);
+		/* time = FadeDuration */
 		animation: circleOut 6s ease infinite;
 	}
 
@@ -104,7 +108,7 @@
 	}
 
 	.sun {
-		animation: selfRotating 12s linear infinite;
+		animation: sun 6s linear infinite;
 		transform-origin: 50% 50%;
 	}
 
@@ -129,11 +133,11 @@
 		}
 
 		30% {
-			transform: rotate(20deg);
+			transform: rotate(-10deg);
 		}
 
 		60% {
-			transform: rotate(-10deg);
+			transform: rotate(20deg);
 		}
 
 		100% {

@@ -22,8 +22,6 @@
 	let dayPlayer: Player;
 	let nightPlayer: Player;
 
-	let firstSong: Song;
-
 	let gameStarted = false;
 
 	onMount(async () => {
@@ -39,7 +37,9 @@
 		// bind night to 1
 		nightPlayer.connect(crossFade.b);
 
-		firstSong = await loadRandomSong(songData.nightSongs, nightPlayer);
+		const firstSong = await loadRandomSong(songData.nightSongs, nightPlayer);
+
+		gameStore.updateGame({ currentSong: firstSong });
 	});
 
 	const startGame = async () => {
@@ -48,7 +48,7 @@
 		gameStarted = true;
 	};
 
-	$: buttonLabel = firstSong ? 'Start das Spiel' : 'erster Song wird geladen...';
+	$: buttonLabel = $gameStore.currentSong ? 'Start das Spiel' : 'erster Song wird geladen...';
 
 	$: currentTheme =
 		$themeStore.autoSwitching && $gameStore.gamestate === 'day'
@@ -67,12 +67,12 @@
 		{#if activeTab === 0}
 			{#if !gameStarted}
 				<div class="h-full flex justify-center items-center">
-					<button disabled={!firstSong} on:click={startGame} class="btn btn-primary">
+					<button disabled={!$gameStore.currentSong} on:click={startGame} class="btn btn-primary">
 						{buttonLabel}
 					</button>
 				</div>
 			{:else}
-				<Game {firstSong} {crossFade} {dayPlayer} {nightPlayer} />
+				<Game {crossFade} {dayPlayer} {nightPlayer} />
 			{/if}
 		{:else if activeTab === 1}
 			<Settings />

@@ -12,24 +12,15 @@
 	export let dayPlayer: Player;
 	export let nightPlayer: Player;
 
-	export let firstSong: Song;
-
-	let isSongFading = true;
-
 	let toastVisible = false;
-
-	let currentSong: Song | undefined;
-	let nextSong: Song | undefined;
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 
 	onMount(async () => {
 		if ($gameStore.nightCount > 0) {
-			isSongFading = false;
 			return;
 		}
 
-		currentSong = firstSong;
 		showToast();
 
 		// start the music
@@ -37,20 +28,18 @@
 
 		gameStore.setNight();
 
-		isSongFading = false;
-
 		// load next day song
-		nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
+		const nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
+
+		gameStore.updateGame({ nextSong });
 	});
 
 	const startNextPhase = async (nextPhase: 'night' | 'day') => {
 		const currentPlayer = nextPhase === 'day' ? nightPlayer : dayPlayer;
 		const nextPlayer = nextPhase === 'day' ? dayPlayer : nightPlayer;
 
-		isSongFading = true;
+		gameStore.updateGame({ fading: true, currentSong: $gameStore.nextSong, nextSong: undefined });
 
-		currentSong = nextSong;
-		nextSong = undefined;
 		showToast();
 
 		nextPlayer.start();
@@ -59,21 +48,25 @@
 
 		currentPlayer.stop();
 
-		isSongFading = false;
+		gameStore.updateGame({ fading: false });
 	};
 
 	const startNight = async () => {
+		gameStore.setNight();
+
 		await startNextPhase('night');
 
-		gameStore.setNight();
-		nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
+		const nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
+		gameStore.updateGame({ nextSong });
 	};
 
 	const startDay = async () => {
+		gameStore.setDay();
+
 		await startNextPhase('day');
 
-		gameStore.setDay();
-		nextSong = await loadRandomSong(songData.nightSongs, nightPlayer);
+		const nextSong = await loadRandomSong(songData.nightSongs, nightPlayer);
+		gameStore.updateGame({ nextSong });
 	};
 
 	const showToast = () => {
@@ -82,7 +75,7 @@
 		setTimeout(() => (toastVisible = false), 2000);
 	};
 
-	$: isDisabled = isSongFading || !nextSong;
+	$: isDisabled = $gameStore.fading || !$gameStore.nextSong;
 </script>
 
 <div class="flex justify-around py-10">
@@ -110,11 +103,11 @@
 	class:hidden={!toastVisible}
 	target="_blank"
 	rel="noreferrer"
-	href={currentSong?.songPage}
+	href={$gameStore.currentSong?.songPage}
 >
 	<div class="alert">
 		<div>
-			<span>{currentSong?.title} von {currentSong?.artist}</span>
+			<span>{$gameStore.currentSong?.title} von {$gameStore.currentSong?.artist}</span>
 		</div>
 	</div>
 </a>
