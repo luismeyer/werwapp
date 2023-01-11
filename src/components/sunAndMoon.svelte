@@ -66,7 +66,7 @@
 <style>
 	.icon {
 		position: absolute;
-		top: calc(100vh / 2 + 25%);
+		top: calc(100dvh / 2 + 25%);
 		margin: auto;
 		left: 0;
 		right: 0;
@@ -99,19 +99,19 @@
 
 	@keyframes cirlceIn {
 		0% {
-			transform: rotate(0deg) translate(0px, calc(100vh / 2)) rotate(0deg);
+			transform: rotate(0deg) translate(0px, calc(100dvh / 2)) rotate(0deg);
 		}
 		100% {
-			transform: rotate(180deg) translate(0px, calc(100vh / 2)) rotate(-180deg);
+			transform: rotate(180deg) translate(0px, calc(100dvh / 2)) rotate(-180deg);
 		}
 	}
 
 	@keyframes circleOut {
 		0% {
-			transform: rotate(0deg) translate(0px, calc(-100vh / 2)) rotate(0deg);
+			transform: rotate(0deg) translate(0px, calc(-100dvh / 2)) rotate(0deg);
 		}
 		100% {
-			transform: rotate(180deg) translate(0px, calc(-100vh / 2)) rotate(-180deg);
+			transform: rotate(180deg) translate(0px, calc(-100dvh / 2)) rotate(-180deg);
 		}
 	}
 

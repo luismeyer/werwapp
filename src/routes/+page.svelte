@@ -98,7 +98,7 @@
 		display: grid;
 		width: 100vw;
 		/* Substract height of bottom nav */
-		min-height: calc(100vh - 5rem);
+		min-height: calc(100dvh - 5rem);
 		grid-template-rows: auto 1fr;
 	}
 
