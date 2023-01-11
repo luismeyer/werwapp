@@ -103,7 +103,6 @@
 	}
 
 	.navigation {
-		max-width: 500px;
 		margin: auto;
 		/* Safe space for mobile devices with home bar */
 		bottom: 1rem;
