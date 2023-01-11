@@ -5,9 +5,9 @@
 
 <style>
 	#forest {
-		background-image: url(forest.png);
-		width: 100%;
-		height: 187px;
-		background-repeat: repeat-x;
+		background-image: url('forest.svg');
+		height: 70px;
+		background-repeat: no-repeat;
+		background-position-x: 50%;
 	}
 </style>
