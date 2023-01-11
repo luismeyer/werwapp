@@ -1,4 +1,13 @@
 <script lang="ts">
 </script>
 
-<img src="/forest.png" alt="forest" />
+<div id="forest" />
+
+<style>
+	#forest {
+		background-image: url(forest.png);
+		width: 100%;
+		height: 187px;
+		background-repeat: repeat-x;
+	}
+</style>
