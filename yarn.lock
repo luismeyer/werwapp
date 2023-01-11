@@ -513,6 +513,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/string-similarity@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@types/string-similarity@npm:4.0.0"
+  checksum: e530b8c1254ae3318662baaa71e5d42938c900dd6d3486a358f188dfe0d6f14c2342ad48f363db9851230ab51e17460de7a6569038c022815ade6d4bbe78f46f
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/eslint-plugin@npm:^5.45.0":
   version: 5.48.0
   resolution: "@typescript-eslint/eslint-plugin@npm:5.48.0"
@@ -3109,6 +3116,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"string-similarity@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "string-similarity@npm:4.0.4"
+  checksum: 797b41b24e1eb6b3b0ab896950b58c295a19a82933479c75f7b5279ffb63e0b456a8c8d10329c02f607ca1a50370e961e83d552aa468ff3b0fa15809abc9eff7
+  languageName: node
+  linkType: hard
+
 "string-width@npm:^1.0.2 || 2 || 3 || 4, string-width@npm:^4.2.3":
   version: 4.2.3
   resolution: "string-width@npm:4.2.3"
@@ -3601,6 +3615,7 @@ __metadata:
     "@playwright/test": ^1.28.1
     "@sveltejs/adapter-node": ^1.0.0
     "@sveltejs/kit": ^1.0.0
+    "@types/string-similarity": ^4.0.0
     "@typescript-eslint/eslint-plugin": ^5.45.0
     "@typescript-eslint/parser": ^5.45.0
     autoprefixer: ^10.4.13
@@ -3611,6 +3626,7 @@ __metadata:
     postcss: ^8.4.20
     prettier: ^2.8.0
     prettier-plugin-svelte: ^2.8.1
+    string-similarity: ^4.0.4
     svelte: ^3.54.0
     svelte-check: ^2.9.2
     tailwindcss: ^3.2.4
