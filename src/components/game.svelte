@@ -79,20 +79,13 @@
 </script>
 
 <div class="container">
-	<div class="flex justify-around py-10">
-		<div class="stats bg-base-300 border-base-300 border md:w-1/2">
-			<div class="stat">
-				<div class="stat-title">{$t('counter')}</div>
-				<div class="stat-value">{$gameStore.nightCount}</div>
-			</div>
-		</div>
-
-		<div class="stats bg-base-300 border-base-300 border md:w-1/2">
-			<div class="stat">
-				<div class="stat-title">{$t('state')}</div>
-				<div class="stat-value">{$t($gameStore.gamestate)}</div>
-			</div>
-		</div>
+	<div
+		class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content w-fit justify-self-center"
+	>
+		<span class="countdown font-mono text-5xl">
+			<span style={`--value:${$gameStore.nightCount};`} />
+		</span>
+		{$t('counter')}
 	</div>
 
 	<SunAndMoon disabled={isDisabled} handleStateChange={handleBtnClick} />

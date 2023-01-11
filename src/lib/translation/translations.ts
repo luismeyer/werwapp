@@ -43,7 +43,7 @@ export const translations: I18n = {
 		'game.name': 'Werwapp',
 		'settings.discribtion': 'Here you can edit your game settings.',
 		'settings.theme.toggle': 'Automatic color scheme',
-		counter: 'turn',
+		counter: 'Nacht',
 		state: 'state'
 	},
 	de: {
@@ -63,7 +63,7 @@ export const translations: I18n = {
 		en: 'Englisch',
 		de: 'Deutsch',
 		'game.name': 'Werwapp',
-		counter: 'Runde',
+		counter: 'Night',
 		state: 'Status'
 	}
 };

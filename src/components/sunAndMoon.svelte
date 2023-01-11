@@ -62,7 +62,7 @@
 <style>
 	.icon {
 		position: absolute;
-		top: calc(100vh / 2);
+		top: calc(100vh / 2 + 25%);
 		margin: auto;
 		left: 0;
 		right: 0;

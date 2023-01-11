@@ -57,7 +57,7 @@
 			: $themeStore.darkTheme;
 </script>
 
-<div class="content" data-theme={currentTheme}>
+<div class="content theme" data-theme={currentTheme}>
 	<header>
 		<div class="flex justify-around py-5">
 			<h1 class="text-5xl font-bold">{$t('game.name')}</h1>
