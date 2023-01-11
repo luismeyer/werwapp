@@ -52,21 +52,23 @@
 	};
 
 	const startNight = async () => {
+		loadRandomSong(songData.daySongs, dayPlayer).then((nextSong) =>
+			gameStore.updateGame({ nextSong })
+		);
+
 		gameStore.setNight();
 
 		await startNextPhase('night');
-
-		const nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
-		gameStore.updateGame({ nextSong });
 	};
 
 	const startDay = async () => {
+		loadRandomSong(songData.nightSongs, nightPlayer).then((nextSong) =>
+			gameStore.updateGame({ nextSong })
+		);
+
 		gameStore.setDay();
 
 		await startNextPhase('day');
-
-		const nextSong = await loadRandomSong(songData.nightSongs, nightPlayer);
-		gameStore.updateGame({ nextSong });
 	};
 
 	const showToast = () => {
