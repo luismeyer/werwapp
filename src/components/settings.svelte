@@ -2,6 +2,7 @@
 	import { t, locale } from '../lib/translation/i18n';
 	import { themes, themeStore } from '../lib/stores/theme';
 	import { locales } from '$lib/translation/translations';
+	import Support from './support.svelte';
 </script>
 
 <div class="text-xl font-extrabold">{$t('settings')}</div>
@@ -21,6 +22,19 @@
 		</button>
 	{/each}
 </div>
+
+<label for="qa-modal" class="label cursor-pointer">
+	<span class="label-text">{$t('settings.qa')}</span>
+	<label for="qa-modal" class="btn btn-sm">{$t('settings.support')}</label>
+</label>
+
+<input type="checkbox" id="qa-modal" class="modal-toggle" />
+<label for="qa-modal" class="modal cursor-pointer ">
+	<label class="modal-box relative" for="">
+		<label for="qa-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+		<Support />
+	</label>
+</label>
 
 <label class="label cursor-pointer">
 	<span class="label-text">{$t('settings.theme.toggle')}</span>
@@ -65,3 +79,11 @@
 		</div>
 	{/if}
 </label>
+
+<style>
+	.modal-box {
+		height: 30rem;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+	}
+</style>
