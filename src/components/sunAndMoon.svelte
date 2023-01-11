@@ -14,6 +14,10 @@
 	$: moonAnimationClass = current === 'moon' ? 'out-animation' : 'in-animation';
 	$: sunAnimationClass = current === 'sun' ? 'out-animation' : 'in-animation';
 
+	$: disabledClass = disabled ? 'disabled' : '';
+
+	console.log(disabledClass);
+
 	const handleClick = () => {
 		handleStateChange();
 
@@ -28,9 +32,9 @@
 </script>
 
 <div class="w-full h-full relative">
-	<button on:click={handleClick} {disabled}>
+	<button class="button" on:click={handleClick} {disabled}>
 		<svg
-			class={`${moonAnimationClass} ${animationStateClass} icon`}
+			class={`${moonAnimationClass} ${animationStateClass} icon ${disabledClass}`}
 			xmlns="http://www.w3.org/2000/svg"
 			width="192"
 			height="192"
@@ -45,7 +49,7 @@
 
 	<button on:click={handleClick} {disabled}>
 		<svg
-			class={`${sunAnimationClass} ${animationStateClass} icon`}
+			class={`${sunAnimationClass} ${animationStateClass} icon ${disabledClass}`}
 			xmlns="http://www.w3.org/2000/svg"
 			width="192"
 			height="192"
@@ -67,6 +71,12 @@
 		left: 0;
 		right: 0;
 		fill: hsl(var(--p));
+		/* time = FadeDuration */
+		transition: opacity 1s ease, fill 6s ease;
+	}
+
+	.disabled {
+		opacity: 0.5;
 	}
 
 	.in-animation {
