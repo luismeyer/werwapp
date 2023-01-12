@@ -1,12 +1,16 @@
 <script lang="ts">
 </script>
 
-<div id="forest" />
+<div id="forest" class="forest" />
 
 <style>
-	#forest {
-		background-image: url('forest.svg');
+	.forest {
+		position: fixed;
+		background-image: url('./forest.svg');
+		/* Place on top edge of bottom nav */
+		bottom: 4rem;
 		height: 70px;
+		width: 100vw;
 		background-repeat: no-repeat;
 		background-position-x: 50%;
 	}
