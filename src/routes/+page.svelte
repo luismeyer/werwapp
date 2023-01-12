@@ -100,6 +100,7 @@
 		/* Substract height of bottom nav */
 		min-height: calc(100dvh - 5rem);
 		grid-template-rows: auto 1fr;
+		position: relative;
 	}
 
 	.navigation {
