@@ -12,8 +12,10 @@ export type Songs = {
 	nightSongs: Song[];
 };
 
-export const getRandomSong = (songs: Song[]): Song => {
-	const song = songs[Math.round(Math.random() * (songs.length - 1))];
+export const getRandomSong = (songs: Song[], excludedSong: Song | undefined): Song => {
+	const playableSongs = songs.length > 1 ? songs.filter((s) => s !== excludedSong) : songs;
+
+	const song = playableSongs[Math.round(Math.random() * (songs.length - 1))];
 	return song;
 };
 
@@ -39,8 +41,19 @@ export const fadeSongs = (target: 'day' | 'night', crossFade: CrossFade) => {
 	});
 };
 
-export const loadRandomSong = async (songs: Song[], player: Player) => {
-	const song = getRandomSong(songs);
+/**
+ * Loads a new random song into the buffer that was not played in the last round.
+ * @param songs	Songs to choose a random from.
+ * @param excludedSong Song that gets excluded from the searchable songs.
+ * @param player Player that will load the song.
+ * @returns
+ */
+export const loadRandomSong = async (
+	songs: Song[],
+	excludedSong: Song | undefined,
+	player: Player
+) => {
+	const song = getRandomSong(songs, excludedSong);
 
 	const buffer = new Buffer();
 	await buffer.load('api/songs?url=' + song.internalUrl);

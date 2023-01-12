@@ -29,7 +29,7 @@
 		gameStore.setNight();
 
 		// load next day song
-		const nextSong = await loadRandomSong(songData.daySongs, dayPlayer);
+		const nextSong = await loadRandomSong(songData.daySongs, undefined, dayPlayer);
 
 		gameStore.updateGame({ nextSong });
 	});
@@ -38,7 +38,11 @@
 		const currentPlayer = nextPhase === 'day' ? nightPlayer : dayPlayer;
 		const nextPlayer = nextPhase === 'day' ? dayPlayer : nightPlayer;
 
-		gameStore.updateGame({ fading: true, currentSong: $gameStore.nextSong, nextSong: undefined });
+		gameStore.updateGame({
+			fading: true,
+			currentSong: $gameStore.nextSong,
+			nextSong: undefined
+		});
 
 		showToast();
 
@@ -52,7 +56,7 @@
 	};
 
 	const startNight = async () => {
-		loadRandomSong(songData.daySongs, dayPlayer).then((nextSong) =>
+		loadRandomSong(songData.daySongs, $gameStore.currentSong, dayPlayer).then((nextSong) =>
 			gameStore.updateGame({ nextSong })
 		);
 
@@ -62,7 +66,7 @@
 	};
 
 	const startDay = async () => {
-		loadRandomSong(songData.nightSongs, nightPlayer).then((nextSong) =>
+		loadRandomSong(songData.nightSongs, $gameStore.currentSong, nightPlayer).then((nextSong) =>
 			gameStore.updateGame({ nextSong })
 		);
 
