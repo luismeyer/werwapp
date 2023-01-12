@@ -38,7 +38,7 @@
 		// bind night to 1
 		nightPlayer.connect(crossFade.b);
 
-		const firstSong = await loadRandomSong(songData.nightSongs, nightPlayer);
+		const firstSong = await loadRandomSong(songData.nightSongs, undefined, nightPlayer);
 
 		gameStore.updateGame({ currentSong: firstSong });
 	});
