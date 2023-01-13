@@ -5,7 +5,7 @@
 	import { loadRandomSong } from '$lib/songs/song';
 	import { songData } from '$lib/songs/songdata';
 	import { gameStore } from '$lib/stores/gamestore';
-	import { themeStore } from '$lib/stores/theme';
+
 	import { t } from '$lib/translation/i18n';
 
 	import Game from '../components/game.svelte';
@@ -50,14 +50,9 @@
 	};
 
 	$: buttonLabel = $gameStore.currentSong ? 'Start das Spiel' : 'erster Song wird geladen...';
-
-	$: currentTheme =
-		$themeStore.autoSwitching && $gameStore.gamestate === 'day'
-			? $themeStore.lightTheme
-			: $themeStore.darkTheme;
 </script>
 
-<div class="content theme" data-theme={currentTheme}>
+<div class="content">
 	<header>
 		<div class="flex justify-around py-5">
 			<h1 class="text-5xl font-bold">{$t('game.name')}</h1>
@@ -83,15 +78,13 @@
 	<Forest />
 </div>
 
-<div class="btm-nav navigation">
+<div class="btm-nav navigation theme">
 	{#each tabs as tab, index}
-		<button on:click={() => (activeTab = index)} class:active={index === activeTab}>
+		<button class="theme" on:click={() => (activeTab = index)} class:active={index === activeTab}>
 			{$t(tab)}
 		</button>
 	{/each}
 </div>
-
-<div class="safe-area" />
 
 <style>
 	.content {
