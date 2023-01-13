@@ -6,7 +6,7 @@
 <style>
 	.forest {
 		position: fixed;
-		background-image: url('./forest.svg');
+		background-image: url('/forest.svg');
 		/* Place on top edge of bottom nav */
 		bottom: 4rem;
 		height: 70px;
