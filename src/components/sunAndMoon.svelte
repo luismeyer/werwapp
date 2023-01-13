@@ -16,8 +16,6 @@
 
 	$: disabledClass = disabled ? 'disabled' : '';
 
-	console.log(disabledClass);
-
 	const handleClick = () => {
 		handleStateChange();
 
@@ -27,7 +25,9 @@
 			running = false;
 
 			current = current === 'moon' ? 'sun' : 'moon';
-		}, FadeDuration);
+			// substract 100 so the switch happens before the animation would reset.
+			// otherwise there is a flicker on IOS
+		}, FadeDuration - 100);
 	};
 </script>
 
