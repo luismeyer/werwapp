@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { gameStore } from '$lib/stores/gamestore';
-	import { t } from '$lib/translation/i18n';
+	import { gameStore } from '$lib/stores/game';
+	import { t } from '$lib/stores/i18n';
 
 	import SunAndMoon from './sunAndMoon.svelte';
 	import { playerStore } from '$lib/stores/player';

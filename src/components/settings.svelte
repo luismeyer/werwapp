@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { t, locale } from '../lib/translation/i18n';
+	import { t, i18nStore } from '../lib/stores/i18n';
 	import { themes, themeStore } from '../lib/stores/theme';
-	import { locales } from '$lib/translation/translations';
+	import { locales } from '$lib/translations/translations';
 	import Support from './support.svelte';
 
 	const themeNameInUpper = (name: string) => name[0].toUpperCase() + name.slice(1);
@@ -16,9 +16,9 @@
 	{#each locales as l}
 		<button
 			class="tab flex-1"
-			class:tab-active={$locale === l}
+			class:tab-active={$i18nStore === l}
 			value={l}
-			on:click={() => ($locale = l)}
+			on:click={() => i18nStore.updateLocale(l)}
 		>
 			{$t(l)}
 		</button>

@@ -6,7 +6,7 @@
 	import { songData } from '$lib/songdata';
 	import { playerStore } from '$lib/stores/player';
 
-	import { t } from '$lib/translation/i18n';
+	import { t } from '$lib/stores/i18n';
 
 	import Forest from '../components/forest.svelte';
 	import Game from '../components/game.svelte';

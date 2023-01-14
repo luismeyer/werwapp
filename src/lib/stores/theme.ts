@@ -1,6 +1,6 @@
 import { get, writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import { gameStore } from './gamestore';
+import { gameStore } from './game';
 
 const THEME_STORAGE_KEY = 'theme';
 
