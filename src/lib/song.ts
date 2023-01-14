@@ -1,4 +1,5 @@
-import { type CrossFade, type Player, Buffer } from 'tone';
+import { playerStore } from '$lib/stores/player';
+import { get } from 'svelte/store';
 
 export type Song = {
 	title: string;
@@ -15,7 +16,12 @@ export type Songs = {
 export const getRandomSong = (songs: Song[], excludedSong: Song | undefined): Song => {
 	const playableSongs = songs.length > 1 ? songs.filter((s) => s !== excludedSong) : songs;
 
-	const song = playableSongs[Math.round(Math.random() * (songs.length - 1))];
+	const song = playableSongs[Math.floor(Math.random() * playableSongs.length)];
+
+	if (!song) {
+		throw new Error('No new song');
+	}
+
 	return song;
 };
 
@@ -24,8 +30,13 @@ const FadeInterval = 60;
 
 export const FadeDuration = (1 / FadeSteps) * FadeInterval;
 
-export const fadeSongs = (target: 'day' | 'night', crossFade: CrossFade) => {
+export const fadeSongs = (target: 'day' | 'night') => {
+	const { crossFade } = get(playerStore);
 	const internal = target === 'night' ? 1 : 0;
+
+	if (!crossFade) {
+		throw new Error('Fading without crossfade');
+	}
 
 	return new Promise((res) => {
 		const interval = setInterval(() => {
@@ -48,17 +59,17 @@ export const fadeSongs = (target: 'day' | 'night', crossFade: CrossFade) => {
  * @param player Player that will load the song.
  * @returns
  */
-export const loadRandomSong = async (
+export const loadNextRandomSong = async (
 	songs: Song[],
-	excludedSong: Song | undefined,
-	player: Player
+	target: 'day' | 'night',
+	excludedSong?: Song
 ) => {
+	const { dayPlayer, nightPlayer } = get(playerStore);
+	const player = target === 'day' ? dayPlayer : nightPlayer;
+
 	const song = getRandomSong(songs, excludedSong);
 
-	const buffer = new Buffer();
-	await buffer.load('api/songs?url=' + song.internalUrl);
+	await player?.load('api/songs?url=' + song.internalUrl);
 
-	player.buffer = buffer;
-
-	return song;
+	playerStore.update({ nextSong: song });
 };

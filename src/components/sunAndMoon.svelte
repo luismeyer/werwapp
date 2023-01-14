@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FadeDuration } from '$lib/songs/song';
+	import { FadeDuration } from '$lib/song';
 	import { gameStore } from '$lib/stores/gamestore';
 
 	export let disabled: boolean;

@@ -1,35 +1,26 @@
-import type { Song } from '$lib/songs/song';
 import { writable } from 'svelte/store';
 
-export type GameState = {
+export type GameStore = {
 	state: 'setup' | 'game' | 'finished';
 	gamestate: 'day' | 'night';
 	nightCount: number;
 	roles: Role[];
-	fading: boolean;
-	currentSong?: Song;
-	nextSong?: Song;
 };
 
 type Role = 'villager' | 'armor' | 'visionary' | 'witch' | 'werwolf' | 'villagehoe' | 'hunter';
 
 export function createGameStateStore() {
-	const { subscribe, set, update } = writable<GameState>({
+	const { subscribe, set, update } = writable<GameStore>({
 		state: 'setup',
 		gamestate: 'night',
 		nightCount: 0,
-		roles: [],
-		fading: false
+		roles: []
 	});
 
-	const setDay = () => {
-		update((currentState) => ({ ...currentState, gamestate: 'day' }));
-	};
-
-	const setNight = () => {
+	const setState = (gamestate: GameStore['gamestate']) => {
 		update((currentState) => ({
 			...currentState,
-			gamestate: 'night',
+			gamestate,
 			nightCount: currentState.nightCount + 1
 		}));
 	};
@@ -39,19 +30,17 @@ export function createGameStateStore() {
 			state: 'setup',
 			gamestate: 'night',
 			nightCount: 0,
-			fading: false,
 			roles: []
 		});
 	};
 
-	const updateGame = (input: Partial<GameState>) => {
+	const updateGame = (input: Partial<GameStore>) => {
 		update((currentState) => ({ ...currentState, ...input }));
 	};
 
 	return {
 		subscribe,
-		setDay,
-		setNight,
+		setState,
 		updateGame,
 		reset
 	};

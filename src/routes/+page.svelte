@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { CrossFade, Player, start } from 'tone';
+	import { start } from 'tone';
 
-	import { loadRandomSong } from '$lib/songs/song';
-	import { songData } from '$lib/songs/songdata';
-	import { gameStore } from '$lib/stores/gamestore';
+	import { loadNextRandomSong } from '$lib/song';
+	import { songData } from '$lib/songdata';
+	import { playerStore } from '$lib/stores/player';
 
 	import { t } from '$lib/translation/i18n';
 
+	import Forest from '../components/forest.svelte';
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
-	import Forest from '../components/forest.svelte';
 
 	import '../app.css';
 
@@ -19,28 +19,14 @@
 	let tabs: Tab[] = ['game', 'settings'];
 	let activeTab = 0;
 
-	let crossFade: CrossFade;
-	let dayPlayer: Player;
-	let nightPlayer: Player;
-
 	let gameStarted = false;
 
+	$: ({ nextSong, currentSong } = $playerStore);
+
 	onMount(async () => {
-		crossFade = new CrossFade({ fade: 1 }).toDestination();
+		await loadNextRandomSong(songData.nightSongs, 'night');
 
-		dayPlayer = new Player({ loop: true });
-
-		// bind day to 0
-		dayPlayer.connect(crossFade.a);
-
-		nightPlayer = new Player({ loop: true });
-
-		// bind night to 1
-		nightPlayer.connect(crossFade.b);
-
-		const firstSong = await loadRandomSong(songData.nightSongs, undefined, nightPlayer);
-
-		gameStore.updateGame({ currentSong: firstSong });
+		playerStore.update({ currentSong: nextSong, nextSong: undefined });
 	});
 
 	const startGame = async () => {
@@ -49,7 +35,7 @@
 		gameStarted = true;
 	};
 
-	$: buttonLabel = $gameStore.currentSong ? $t('game.start') : $t('game.load');
+	$: buttonLabel = currentSong ? $t('game.start') : $t('game.load');
 </script>
 
 <div class="content">
@@ -63,12 +49,12 @@
 		{#if activeTab === 0}
 			{#if !gameStarted}
 				<div class="h-full flex justify-center items-center">
-					<button disabled={!$gameStore.currentSong} on:click={startGame} class="btn btn-primary">
+					<button disabled={!$playerStore.currentSong} on:click={startGame} class="btn btn-primary">
 						{buttonLabel}
 					</button>
 				</div>
 			{:else}
-				<Game {crossFade} {dayPlayer} {nightPlayer} />
+				<Game />
 			{/if}
 		{:else if activeTab === 1}
 			<Settings />

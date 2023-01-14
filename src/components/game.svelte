@@ -1,20 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { CrossFade, Player } from 'tone';
 
-	import { fadeSongs, loadRandomSong, type Song } from '$lib/songs/song';
-	import { songData } from '$lib/songs/songdata';
 	import { gameStore } from '$lib/stores/gamestore';
 	import { t } from '$lib/translation/i18n';
-	import SunAndMoon from './sunAndMoon.svelte';
 
-	export let crossFade: CrossFade;
-	export let dayPlayer: Player;
-	export let nightPlayer: Player;
+	import SunAndMoon from './sunAndMoon.svelte';
+	import { playerStore } from '$lib/stores/player';
+	import { startFirstNightPhase, startNextGamePhase } from '$lib/game';
 
 	let toastVisible = false;
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
+
+	$: ({ currentSong } = $playerStore);
 
 	onMount(async () => {
 		if ($gameStore.nightCount > 0) {
@@ -23,56 +21,19 @@
 
 		showToast();
 
-		// start the music
-		nightPlayer.start();
-
-		gameStore.setNight();
-
-		// load next day song
-		const nextSong = await loadRandomSong(songData.daySongs, undefined, dayPlayer);
-
-		gameStore.updateGame({ nextSong });
+		startFirstNightPhase();
 	});
 
-	const startNextPhase = async (nextPhase: 'night' | 'day') => {
-		const currentPlayer = nextPhase === 'day' ? nightPlayer : dayPlayer;
-		const nextPlayer = nextPhase === 'day' ? dayPlayer : nightPlayer;
-
-		gameStore.updateGame({
-			fading: true,
-			currentSong: $gameStore.nextSong,
-			nextSong: undefined
-		});
+	const startNight = async () => {
+		await startNextGamePhase('night');
 
 		showToast();
-
-		nextPlayer.start();
-
-		await fadeSongs(nextPhase, crossFade);
-
-		currentPlayer.stop();
-
-		gameStore.updateGame({ fading: false });
-	};
-
-	const startNight = async () => {
-		loadRandomSong(songData.daySongs, $gameStore.currentSong, dayPlayer).then((nextSong) =>
-			gameStore.updateGame({ nextSong })
-		);
-
-		gameStore.setNight();
-
-		await startNextPhase('night');
 	};
 
 	const startDay = async () => {
-		loadRandomSong(songData.nightSongs, $gameStore.currentSong, nightPlayer).then((nextSong) =>
-			gameStore.updateGame({ nextSong })
-		);
+		await startNextGamePhase('day');
 
-		gameStore.setDay();
-
-		await startNextPhase('day');
+		showToast();
 	};
 
 	const showToast = () => {
@@ -81,7 +42,7 @@
 		setTimeout(() => (toastVisible = false), 2000);
 	};
 
-	$: isDisabled = $gameStore.fading || !$gameStore.nextSong;
+	$: isDisabled = $playerStore.fading || !$playerStore.nextSong;
 </script>
 
 <div class="container">
@@ -101,11 +62,11 @@
 		class:hidden={!toastVisible}
 		target="_blank"
 		rel="noreferrer"
-		href={$gameStore.currentSong?.songPage}
+		href={currentSong?.songPage}
 	>
 		<div class="alert">
 			<div>
-				<span>{$gameStore.currentSong?.title} von {$gameStore.currentSong?.artist}</span>
+				<span>{currentSong?.title} von {currentSong?.artist}</span>
 			</div>
 		</div>
 	</a>
