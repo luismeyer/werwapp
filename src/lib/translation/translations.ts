@@ -24,6 +24,8 @@ export type Translations = {
 	'support.play': string;
 	'support.no': string;
 	'support.welcome': string;
+	'game.load': string;
+	'game.start': string;
 };
 
 export type Locale = 'en' | 'de';
@@ -60,7 +62,9 @@ export const translations: I18n = {
 			'If you are on an Iphone you have to deactivate the silent mode. Otherwise have you tried turning it off and on again?',
 		'support.play':
 			'To use this App you just have to click on either the moon or sun to change the current Phase. The music will change automatically',
-		'support.no': 'I have no answer to this'
+		'support.no': 'I have no answer to this',
+		'game.load': 'The first song is loading...',
+		'game.start': 'Start the game'
 	},
 	de: {
 		'role.hunter.name': 'Jäger',
@@ -89,6 +93,8 @@ export const translations: I18n = {
 			'Wenn du ein Iphone hast musst du den Stummmodus deaktivieren. An sonsten hast du versucht dein Gerät neu zu start?',
 		'support.play':
 			'Um zu spielen muss du nur entweder auf den Mond oder die Sonne klicken um die aktuelle Phase zu ändern. Dann wechselt die Musik automatisch',
-		'support.no': 'Darauf habe ich keine antwort'
+		'support.no': 'Darauf habe ich keine antwort',
+		'game.load': 'Der erste song wird geladen...',
+		'game.start': 'Starte das spiel'
 	}
 };

@@ -49,7 +49,7 @@
 		gameStarted = true;
 	};
 
-	$: buttonLabel = $gameStore.currentSong ? 'Start das Spiel' : 'erster Song wird geladen...';
+	$: buttonLabel = $gameStore.currentSong ? $t('game.start') : $t('game.load');
 </script>
 
 <div class="content">
