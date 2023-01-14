@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { start } from 'tone';
 
-	import { loadNextRandomSong } from '$lib/song';
+	import { loadNextRandomSongForPhase } from '$lib/song';
 	import { t } from '$lib/stores/i18n';
 	import { playerStore } from '$lib/stores/player';
 
@@ -20,12 +20,12 @@
 
 	let gameStarted = false;
 
-	$: ({ nextSong, currentSong } = $playerStore);
+	$: ({ nextPhaseSong, currentPhaseSong } = $playerStore);
 
 	onMount(async () => {
-		await loadNextRandomSong('night');
+		await loadNextRandomSongForPhase('night');
 
-		playerStore.update({ currentSong: nextSong, nextSong: undefined });
+		playerStore.update({ currentPhaseSong: nextPhaseSong, nextPhaseSong: undefined });
 	});
 
 	const startGame = async () => {
@@ -34,7 +34,7 @@
 		gameStarted = true;
 	};
 
-	$: buttonLabel = currentSong ? $t('game.start') : $t('game.load');
+	$: buttonLabel = currentPhaseSong ? $t('game.start') : $t('game.load');
 </script>
 
 <div class="content">
@@ -48,7 +48,11 @@
 		{#if activeTab === 0}
 			{#if !gameStarted}
 				<div class="h-full flex justify-center items-center">
-					<button disabled={!$playerStore.currentSong} on:click={startGame} class="btn btn-primary">
+					<button
+						disabled={!$playerStore.currentPhaseSong}
+						on:click={startGame}
+						class="btn btn-primary"
+					>
 						{buttonLabel}
 					</button>
 				</div>
