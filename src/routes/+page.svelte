@@ -11,6 +11,7 @@
 	import Forest from '../components/forest.svelte';
 	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
+	import Toast from '../components/toast.svelte';
 
 	import '../app.css';
 
@@ -71,6 +72,8 @@
 		</button>
 	{/each}
 </div>
+
+<Toast />
 
 <style>
 	.content {
