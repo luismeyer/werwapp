@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import { startFirstNightPhase, startNextGamePhase } from '$lib/game';
 	import { gameStore } from '$lib/stores/game';
 	import { t } from '$lib/stores/i18n';
+	import { playerStore } from '$lib/stores/player';
+	import { showCurrentSongToast } from '$lib/stores/toast';
 
 	import SunAndMoon from './sunAndMoon.svelte';
-	import { playerStore } from '$lib/stores/player';
-	import { startFirstNightPhase, startNextGamePhase } from '$lib/game';
-	import { showCurrentSongToast } from '$lib/stores/toast';
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 

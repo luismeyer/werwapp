@@ -1,8 +1,8 @@
+import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 import { CrossFade, Player } from 'tone';
 
 import type { Song } from '$lib/song';
-import { browser } from '$app/environment';
 
 export type PlayerStore = {
 	fading: boolean;

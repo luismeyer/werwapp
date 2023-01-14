@@ -1,10 +1,10 @@
 import { get } from 'svelte/store';
+import { Buffer, type Player } from 'tone';
 
 import { gameStore } from '$lib/stores/game';
 import { playerStore } from '$lib/stores/player';
 
 import { createApiSongUrl, fadeSongs, getRandomSong, loadNextRandomSong } from './song';
-import { type Player, Buffer } from 'tone';
 import { showCurrentSongToast } from './stores/toast';
 
 /**

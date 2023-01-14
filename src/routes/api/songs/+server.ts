@@ -1,7 +1,6 @@
-import type { RequestEvent } from './$types';
+import type { RequestEvent } from '@sveltejs/kit';
 import fs from 'fs';
 
-/** @type {import('./$types').RequestHandler} */
 export async function GET({ url }: RequestEvent) {
 	const songUrl = url.searchParams.get('url') ?? '';
 	const internalSongName = Buffer.from(songUrl, 'ascii').toString('base64');
