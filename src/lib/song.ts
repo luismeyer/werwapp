@@ -63,12 +63,8 @@ export const createApiSongUrl = (song: Song) => 'api/songs?url=' + song.internal
 
 /**
  * Loads a new random song into the buffer that was not played in the last round.
- * @param songs	Songs to choose a random from.
- * @param excludedSong Song that gets excluded from the searchable songs.
- * @param player Player that will load the song.
- * @returns
  */
-export const loadNextRandomSong = async (target: 'day' | 'night', excludedSong?: Song) => {
+export const loadNextRandomSongForPhase = async (target: 'day' | 'night', excludedSong?: Song) => {
 	const { dayPlayer, nightPlayer } = get(playerStore);
 	const player = target === 'day' ? dayPlayer : nightPlayer;
 
@@ -76,5 +72,5 @@ export const loadNextRandomSong = async (target: 'day' | 'night', excludedSong?:
 
 	await player?.load(createApiSongUrl(song));
 
-	playerStore.update({ nextSong: song });
+	playerStore.update({ nextPhaseSong: song });
 };

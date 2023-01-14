@@ -7,23 +7,26 @@ export type Toast = {
 	text: string;
 };
 
-const { subscribe, update } = writable<Toast | undefined>();
+const { subscribe, update } = writable<Toast[]>([]);
 
 export const toastStore = {
 	subscribe,
-	setToast: (toast?: Toast) => {
-		update(() => toast);
+	addToast: (toast: Toast) => {
+		update((toasts) => [...toasts, toast]);
+	},
+	removeToast: (toast: Toast) => {
+		update((toasts) => toasts.filter((t) => t !== toast));
 	}
 };
 
 export const showToast = (toast: Toast) => {
-	toastStore.setToast(toast);
+	toastStore.addToast(toast);
 
-	setTimeout(() => toastStore.setToast(undefined), 2000);
+	setTimeout(() => toastStore.removeToast(toast), 2000);
 };
 
 export const showCurrentSongToast = (): Toast | undefined => {
-	const { currentSong } = get(playerStore);
+	const { currentPhaseSong: currentSong } = get(playerStore);
 
 	if (!currentSong) {
 		return;

@@ -1,17 +1,22 @@
-import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
-import { CrossFade, Player } from 'tone';
+import { CrossFade, Player, ToneAudioBuffer } from 'tone';
 
+import { browser } from '$app/environment';
 import type { Song } from '$lib/song';
 
 export type PlayerStore = {
 	fading: boolean;
-	currentSong?: Song;
-	nextSong?: Song;
+	paused: boolean;
+	currentPhaseSong?: Song;
+	nextPhaseSong?: Song;
 	crossFade?: CrossFade;
 	dayPlayer?: Player;
 	nightPlayer?: Player;
-	queueTimeout?: NodeJS.Timeout;
+	queue: {
+		timeout?: NodeJS.Timeout;
+		buffer?: ToneAudioBuffer;
+		song?: Song;
+	};
 };
 
 const createInit = (): PlayerStore => {
@@ -37,14 +42,18 @@ const createInit = (): PlayerStore => {
 
 	return {
 		fading: false,
+		paused: false,
 		crossFade,
 		dayPlayer,
-		nightPlayer
+		nightPlayer,
+		queue: {}
 	};
 };
 
 export function createPlayerStore() {
-	const init: PlayerStore | undefined = browser ? createInit() : { fading: false };
+	const init: PlayerStore | undefined = browser
+		? createInit()
+		: { fading: false, paused: false, queue: {} };
 
 	const { subscribe, update } = writable<PlayerStore>(init);
 

@@ -3,11 +3,12 @@
 
 	import { startFirstNightPhase, startNextGamePhase } from '$lib/game';
 	import { gameStore } from '$lib/stores/game';
-	import { t } from '$lib/stores/i18n';
 	import { playerStore } from '$lib/stores/player';
 	import { showCurrentSongToast } from '$lib/stores/toast';
 
 	import SunAndMoon from './sunAndMoon.svelte';
+	import Counter from './counter.svelte';
+	import Controls from './controls.svelte';
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 
@@ -33,17 +34,14 @@
 		showCurrentSongToast();
 	};
 
-	$: isDisabled = $playerStore.fading || !$playerStore.nextSong;
+	$: isDisabled = $playerStore.fading || !$playerStore.nextPhaseSong;
 </script>
 
 <div class="container">
-	<div
-		class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content w-fit justify-self-center"
-	>
-		<span class="countdown font-mono text-5xl">
-			<span style={`--value:${$gameStore.nightCount};`} />
-		</span>
-		{$t('counter')}
+	<div class="flex items-center justify-around">
+		<Counter />
+
+		<Controls />
 	</div>
 
 	<SunAndMoon disabled={isDisabled} handleStateChange={handleBtnClick} />
