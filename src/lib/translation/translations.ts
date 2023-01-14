@@ -11,6 +11,8 @@ export type Translations = {
 	'settings.theme.toggle': string;
 	'settings.qa': string;
 	'settings.support': string;
+	'settings.daytheme': string;
+	'settings.nighttheme': string;
 	night: string;
 	day: string;
 	game: string;
@@ -52,6 +54,8 @@ export const translations: I18n = {
 		'game.name': 'Werwapp',
 		'settings.discribtion': 'Here you can edit your game settings.',
 		'settings.theme.toggle': 'Automatic color scheme',
+		'settings.daytheme': 'Day Theme',
+		'settings.nighttheme': 'Night Theme',
 		'settings.qa': 'Any Questions?',
 		'settings.support': 'Support pls!',
 		counter: 'Nacht',
@@ -80,6 +84,8 @@ export const translations: I18n = {
 		settings: 'Einstellungen',
 		'settings.discribtion': 'Hier kannst du deine Spieleinstellungen bearbeiten.',
 		'settings.theme.toggle': 'Dynamischer Farbschemawechsel',
+		'settings.daytheme': 'Tag-Theme',
+		'settings.nighttheme': 'Nacht-Theme',
 		'settings.qa': 'Hast du Fragen?',
 		'settings.support': 'Hilfe bitte!',
 		en: 'Englisch',
