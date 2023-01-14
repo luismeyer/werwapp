@@ -3,10 +3,8 @@
 	import { start } from 'tone';
 
 	import { loadNextRandomSong } from '$lib/song';
-	import { songData } from '$lib/songdata';
-	import { playerStore } from '$lib/stores/player';
-
 	import { t } from '$lib/stores/i18n';
+	import { playerStore } from '$lib/stores/player';
 
 	import Forest from '../components/forest.svelte';
 	import Game from '../components/game.svelte';

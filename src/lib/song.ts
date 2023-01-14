@@ -1,5 +1,7 @@
-import { playerStore } from '$lib/stores/player';
 import { get } from 'svelte/store';
+
+import { playerStore } from '$lib/stores/player';
+
 import { songData } from './songdata';
 
 export type Song = {

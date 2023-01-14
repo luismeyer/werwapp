@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { t, i18nStore } from '../lib/stores/i18n';
-	import { themes, themeStore } from '../lib/stores/theme';
+	import { i18nStore, t } from '$lib/stores/i18n';
+	import { themes, themeStore } from '$lib/stores/theme';
 	import { locales } from '$lib/translations/translations';
+
 	import Support from './support.svelte';
 
 	const themeNameInUpper = (name: string) => name[0].toUpperCase() + name.slice(1);

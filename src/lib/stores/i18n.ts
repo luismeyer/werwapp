@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import { derived, writable } from 'svelte/store';
-import { translations, type Locale, type Translations } from '../translations/translations';
+
+import { type Locale, translations, type Translations } from '../translations/translations';
 
 const isLocale = (input?: string): input is Locale => input === 'de' || input === 'en';
 

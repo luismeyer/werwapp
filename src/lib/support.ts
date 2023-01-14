@@ -1,5 +1,6 @@
-import type { Locale, Translations } from './translations/translations';
 import { findBestMatch } from 'string-similarity';
+
+import type { Locale, Translations } from './translations/translations';
 
 type Question = {
 	[Property in Locale]: Array<string>;
