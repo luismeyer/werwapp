@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { FadeDuration } from '$lib/song';
-	import { gameStore } from '$lib/stores/gamestore';
+	import { gameStore } from '$lib/stores/game';
 
 	export let disabled: boolean;
 	export let handleStateChange: () => void;

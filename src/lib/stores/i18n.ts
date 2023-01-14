@@ -1,6 +1,6 @@
 import { browser } from '$app/environment';
 import { derived, writable } from 'svelte/store';
-import { translations, type Locale, type Translations } from './translations';
+import { translations, type Locale, type Translations } from '../translations/translations';
 
 const isLocale = (input?: string): input is Locale => input === 'de' || input === 'en';
 
@@ -12,12 +12,22 @@ const navigatorLocale = browser ? navigator.language.split('-')[0] : undefined;
 const defaultLocale = 'de';
 const storedLocale = customLocale ?? navigatorLocale;
 
-export const locale = writable<Locale>(isLocale(storedLocale) ? storedLocale : defaultLocale);
+const { subscribe, update } = writable<Locale>(
+	isLocale(storedLocale) ? storedLocale : defaultLocale
+);
 
-locale.subscribe((value) => {
-	if (browser) {
-		localStorage.setItem(LOCALE_STORAGE_KEY, value);
+const updateLocale = (input: Locale) => {
+	update(() => input);
+};
+
+export const i18nStore = { subscribe, updateLocale };
+
+subscribe((value) => {
+	if (!browser) {
+		return;
 	}
+
+	localStorage.setItem(LOCALE_STORAGE_KEY, value);
 });
 
 function translate(locale: Locale, key: keyof Translations, vars: Record<string, string>) {
@@ -41,7 +51,7 @@ function translate(locale: Locale, key: keyof Translations, vars: Record<string,
 }
 
 export const t = derived(
-	locale,
+	i18nStore,
 	($locale) =>
 		(key: keyof Translations, vars = {}) =>
 			translate($locale, key, vars)

@@ -1,4 +1,4 @@
-import type { Locale, Translations } from './translation/translations';
+import type { Locale, Translations } from './translations/translations';
 import { findBestMatch } from 'string-similarity';
 
 type Question = {

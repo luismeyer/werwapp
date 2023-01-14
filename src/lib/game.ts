@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 
-import { gameStore } from '$lib/stores/gamestore';
+import { gameStore } from '$lib/stores/game';
 import { playerStore } from '$lib/stores/player';
 
 import { fadeSongs, loadNextRandomSong } from './song';
