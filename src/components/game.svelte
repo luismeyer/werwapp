@@ -7,19 +7,29 @@
 	import SunAndMoon from './sunAndMoon.svelte';
 	import { playerStore } from '$lib/stores/player';
 	import { startFirstNightPhase, startNextGamePhase } from '$lib/game';
-
-	let toastVisible = false;
+	import { showToast, type Toast } from '$lib/stores/toast';
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 
 	$: ({ currentSong } = $playerStore);
+
+	const showCurrentSongToast = (): Toast | undefined => {
+		if (!currentSong) {
+			return;
+		}
+
+		showToast({
+			href: currentSong.songPage,
+			text: `${currentSong.title} von ${currentSong?.artist}`
+		});
+	};
 
 	onMount(async () => {
 		if ($gameStore.nightCount > 0) {
 			return;
 		}
 
-		showToast();
+		showCurrentSongToast();
 
 		startFirstNightPhase();
 	});
@@ -27,19 +37,13 @@
 	const startNight = async () => {
 		await startNextGamePhase('night');
 
-		showToast();
+		showCurrentSongToast();
 	};
 
 	const startDay = async () => {
 		await startNextGamePhase('day');
 
-		showToast();
-	};
-
-	const showToast = () => {
-		toastVisible = true;
-
-		setTimeout(() => (toastVisible = false), 2000);
+		showCurrentSongToast();
 	};
 
 	$: isDisabled = $playerStore.fading || !$playerStore.nextSong;
@@ -56,20 +60,6 @@
 	</div>
 
 	<SunAndMoon disabled={isDisabled} handleStateChange={handleBtnClick} />
-
-	<a
-		class="toast toast-top toast-center w-9/12"
-		class:hidden={!toastVisible}
-		target="_blank"
-		rel="noreferrer"
-		href={currentSong?.songPage}
-	>
-		<div class="alert">
-			<div>
-				<span>{currentSong?.title} von {currentSong?.artist}</span>
-			</div>
-		</div>
-	</a>
 </div>
 
 <style>
