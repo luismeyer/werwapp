@@ -4,6 +4,7 @@
 	import { locales } from '$lib/translations/translations';
 
 	import Support from './support.svelte';
+	import About from './about.svelte';
 
 	const themeNameInUpper = (name: string) => name[0].toUpperCase() + name.slice(1);
 </script>
@@ -52,6 +53,7 @@
 <label class="label grid grid-cols-3 gap-4">
 	<div class="flex flex-col gap-1">
 		<span class="label-text">{$t('settings.nighttheme')}</span>
+		<span class="label-text">{$t('settings.nighttheme')}</span>
 		<select
 			value={$themeStore.darkTheme}
 			class="tabs tabs-boxed items-center cursor-pointer"
@@ -59,6 +61,7 @@
 		>
 			{#each themes as theme}
 				<option value={theme}>
+					{themeNameInUpper(theme)}
 					{themeNameInUpper(theme)}
 				</option>
 			{/each}
@@ -68,6 +71,7 @@
 	{#if $themeStore.autoSwitching}
 		<div class="flex flex-col gap-1">
 			<span class="label-text">{$t('settings.daytheme')}</span>
+			<span class="label-text">{$t('settings.daytheme')}</span>
 			<select
 				value={$themeStore.lightTheme}
 				class="tabs tabs-boxed items-center cursor-pointer"
@@ -76,11 +80,25 @@
 				{#each themes as theme}
 					<option value={theme}>
 						{themeNameInUpper(theme)}
+						{themeNameInUpper(theme)}
 					</option>
 				{/each}
 			</select>
 		</div>
 	{/if}
+</label>
+
+<label for="about-modal" class="label cursor-pointer">
+	<span class="label-text">Über</span>
+	<label for="about-modal" class="btn btn-sm">Über Werwapp</label>
+</label>
+
+<input type="checkbox" id="about-modal" class="modal-toggle" />
+<label for="about-modal" class="modal cursor-pointer ">
+	<label class="modal-box relative" for="">
+		<label for="about-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+		<About />
+	</label>
 </label>
 
 <style>
