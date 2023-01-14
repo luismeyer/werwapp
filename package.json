@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"dev:gen": "license-report --output=json > ./static/licenses.json",
+		"build": "yarn dev:gen && vite build",
 		"preview": "vite preview",
 		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -24,6 +25,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte3": "^4.0.0",
+		"license-report": "^6.3.0",
 		"postcss": "^8.4.20",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
