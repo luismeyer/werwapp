@@ -20,10 +20,10 @@ export const songData: Songs = {
 		{
 			artist: 'John Bartmann',
 			title: 'Village Temple Romance',
-			internalUrl:
-				'https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/he08FRmiNf0LudbzORHJp9a9DZS4GvZ1FQhcoF3i.mp3?download=1&name=John%20Bartmann%20-%20Village%20Temple%20Romance.mp3',
 			songPage:
-				'https://freemusicarchive.org/music/John_Bartmann/chinese-valentine/village-temple-romance/'
+				'https://freemusicarchive.org/music/John_Bartmann/chinese-valentine/village-temple-romance/',
+			internalUrl:
+				'https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/he08FRmiNf0LudbzORHJp9a9DZS4GvZ1FQhcoF3i.mp3?download=1&name=John%20Bartmann%20-%20Village%20Temple%20Romance.mp3'
 		},
 		{
 			artist: 'Meydän',
@@ -69,9 +69,9 @@ export const songData: Songs = {
 		{
 			artist: ' malictumusic',
 			title: 'Forest Heartbeat',
+			songPage: 'https://freemusicarchive.org/music/malictusmusic/single/forest-heartbeat/',
 			internalUrl:
-				'https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/qgegVLAzvDSd3NAGQ7v9GkYDQUmj8E0sQuVZMysx.mp3?download=1&name=malictusmusic%20-%20Forest%20Heartbeat.mp3',
-			songPage: 'https://freemusicarchive.org/music/malictusmusic/single/forest-heartbeat/'
+				'https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/qgegVLAzvDSd3NAGQ7v9GkYDQUmj8E0sQuVZMysx.mp3?download=1&name=malictusmusic%20-%20Forest%20Heartbeat.mp3'
 		},
 		{
 			artist: 'Three Chain Links',
@@ -85,7 +85,8 @@ export const songData: Songs = {
 			artist: 'Meydän',
 			title: 'Away',
 			songPage: 'https://freemusicarchive.org/music/Meydan/Ambient_1860/Away_1569/',
-			internalUrl: 'https://freemusicarchive.org/music/Meydan/Ambient_1860/Away_1569/'
+			internalUrl:
+				'https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/Meydn/Ambient/Meydn_-_01_-_Away.mp3'
 		},
 		{
 			artist: 'Meydän',
