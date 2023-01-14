@@ -1,38 +1,55 @@
-# create-svelte
+# Werwapp
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+The unoffical App for the Game _Werwolf_. The app plays differnt songs for each day and night time.
 
-## Creating a project
+![](screenshots/night.png)
 
-If you're seeing this, you've probably already done this step. Congrats!
+Additional features:
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- User selectable themes for day and night
+- Counter of the current night
+- And more is currently under work
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## How can i use this great app?
 
-## Developing
+If you just want to play a round, head over to the [website](https://werwapp.onrender.com).
+For local hosting / usage see the development section.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## I need more functionalities
 
-```bash
-npm run dev
+Just create an issue and and describe the feature you wish. We will try our best to implement it.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## I found a bug!
 
-## Building
+Please create an issue and describe the error by providing reproduction steps and a scrrenshot.
 
-To create a production version of your app:
+## Develotment
 
-```bash
-npm run build
-```
+If you want to implement features, fix bugs or just host the website yourself follow theese instructions.
 
-You can preview the production build with `npm run preview`.
+### Setup and start the app
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+You need the following toolchain:
+
+- NodeJs (16.x)
+- Yarn
+
+With that provided, clone the repo and change directory:
+
+`git clone https://github.com/BjarneRentz/werwapp.git`
+
+`cd werwapp`
+
+Install the dependencies
+
+`yarn`
+
+and start the application
+
+`yarn dev`
+
+Thats it now you should see the app under [localhost](http://localhost:5173)
+
+## Contributing
+
+Just fork the repo and start hacking. Please name your commits aber the [convetional commits](https://www.conventionalcommits.org/en/v1.0.0/).
