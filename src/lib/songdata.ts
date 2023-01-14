@@ -11,7 +11,7 @@ export const songData: Songs = {
 		},
 		{
 			artist: 'Jason Shaw',
-			title: 'SOUTH OF THE ORDER',
+			title: 'SOUTH OF THE BORDER',
 			songPage:
 				'https://freemusicarchive.org/music/Jason_Shaw/Audionautix_Acoustic/SOUTH_OF_THE_BORDER___-60/',
 			internalUrl:

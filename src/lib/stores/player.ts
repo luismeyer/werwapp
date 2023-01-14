@@ -11,6 +11,7 @@ export type PlayerStore = {
 	crossFade?: CrossFade;
 	dayPlayer?: Player;
 	nightPlayer?: Player;
+	queueTimeout?: NodeJS.Timeout;
 };
 
 const createInit = (): PlayerStore => {
@@ -18,8 +19,15 @@ const createInit = (): PlayerStore => {
 
 	const crossFade = new CrossFade({ fade: 1 }).toDestination();
 
-	const dayPlayer = new Player({ loop: true, fadeIn: fadeTime, fadeOut: fadeTime });
-	const nightPlayer = new Player({ loop: true, fadeIn: fadeTime, fadeOut: fadeTime });
+	const dayPlayer = new Player({
+		fadeIn: fadeTime,
+		fadeOut: fadeTime
+	});
+
+	const nightPlayer = new Player({
+		fadeIn: fadeTime,
+		fadeOut: fadeTime
+	});
 
 	// bind day to 0
 	dayPlayer.connect(crossFade.a);

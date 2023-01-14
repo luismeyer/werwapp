@@ -7,22 +7,9 @@
 	import SunAndMoon from './sunAndMoon.svelte';
 	import { playerStore } from '$lib/stores/player';
 	import { startFirstNightPhase, startNextGamePhase } from '$lib/game';
-	import { showToast, type Toast } from '$lib/stores/toast';
+	import { showCurrentSongToast } from '$lib/stores/toast';
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
-
-	$: ({ currentSong } = $playerStore);
-
-	const showCurrentSongToast = (): Toast | undefined => {
-		if (!currentSong) {
-			return;
-		}
-
-		showToast({
-			href: currentSong.songPage,
-			text: `${currentSong.title} von ${currentSong?.artist}`
-		});
-	};
 
 	onMount(async () => {
 		if ($gameStore.nightCount > 0) {
