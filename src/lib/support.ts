@@ -60,8 +60,6 @@ export const findAnswer = (input: string, language: Locale): keyof Translations 
 
 	const { bestMatch } = findBestMatch(input.toLowerCase(), targetStrings);
 
-	console.log({ bestMatch });
-
 	const match = bestMatch.rating > 0.2 ? bestMatch.target : 'undefined';
 
 	const qa = QA.find(({ question }) => question[language].includes(match));

@@ -1,5 +1,6 @@
 import { playerStore } from '$lib/stores/player';
 import { get } from 'svelte/store';
+import { songData } from './songdata';
 
 export type Song = {
 	title: string;
@@ -13,7 +14,11 @@ export type Songs = {
 	nightSongs: Song[];
 };
 
-export const getRandomSong = (songs: Song[], excludedSong: Song | undefined): Song => {
+const getPhaseSongs = (phase: 'day' | 'night') =>
+	phase === 'day' ? songData.daySongs : songData.nightSongs;
+
+export const getRandomSong = (phase: 'day' | 'night', excludedSong: Song | undefined): Song => {
+	const songs = getPhaseSongs(phase);
 	const playableSongs = songs.length > 1 ? songs.filter((s) => s !== excludedSong) : songs;
 
 	const song = playableSongs[Math.floor(Math.random() * playableSongs.length)];
@@ -52,6 +57,8 @@ export const fadeSongs = (target: 'day' | 'night') => {
 	});
 };
 
+export const createApiSongUrl = (song: Song) => 'api/songs?url=' + song.internalUrl;
+
 /**
  * Loads a new random song into the buffer that was not played in the last round.
  * @param songs	Songs to choose a random from.
@@ -59,17 +66,13 @@ export const fadeSongs = (target: 'day' | 'night') => {
  * @param player Player that will load the song.
  * @returns
  */
-export const loadNextRandomSong = async (
-	songs: Song[],
-	target: 'day' | 'night',
-	excludedSong?: Song
-) => {
+export const loadNextRandomSong = async (target: 'day' | 'night', excludedSong?: Song) => {
 	const { dayPlayer, nightPlayer } = get(playerStore);
 	const player = target === 'day' ? dayPlayer : nightPlayer;
 
-	const song = getRandomSong(songs, excludedSong);
+	const song = getRandomSong(target, excludedSong);
 
-	await player?.load('api/songs?url=' + song.internalUrl);
+	await player?.load(createApiSongUrl(song));
 
 	playerStore.update({ nextSong: song });
 };

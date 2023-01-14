@@ -25,7 +25,7 @@
 	$: ({ nextSong, currentSong } = $playerStore);
 
 	onMount(async () => {
-		await loadNextRandomSong(songData.nightSongs, 'night');
+		await loadNextRandomSong('night');
 
 		playerStore.update({ currentSong: nextSong, nextSong: undefined });
 	});
