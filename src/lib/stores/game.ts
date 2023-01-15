@@ -13,15 +13,15 @@ export function createGameStateStore() {
 	const { subscribe, set, update } = writable<GameStore>({
 		state: 'setup',
 		gamestate: 'night',
-		nightCount: 0,
+		nightCount: 1,
 		roles: []
 	});
 
-	const setState = (gamestate: GameStore['gamestate']) => {
+	const setState = (gamestate: GameStore['gamestate'], increaseNightCount?: boolean) => {
 		update((currentState) => ({
 			...currentState,
 			gamestate,
-			nightCount: currentState.nightCount + 1
+			nightCount: increaseNightCount ? currentState.nightCount + 1 : currentState.nightCount
 		}));
 	};
 
