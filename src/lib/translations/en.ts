@@ -1,6 +1,12 @@
 import type { Translations } from './translations';
 
 export const en: Translations = {
+	'about.title': 'About Werwapp',
+	'about.github': 'Find us on Github!',
+	'about.licenses.title': 'Licenses',
+	'about.licenses.loading': 'Loading licenses',
+	'about.licenses.description': 'From {{author}} with a {{licenseType}} Lizenz',
+	'about.licenses.project': 'Project',
 	'role.hunter.name': 'hunter',
 	'role.villager.name': 'villager',
 	'role.armor.name': 'armor',
@@ -21,6 +27,8 @@ export const en: Translations = {
 	'settings.nighttheme': 'Night Theme',
 	'settings.qa': 'Any Questions?',
 	'settings.support': 'Support pls!',
+	'settings.about.label': 'Wanna know more?',
+	'settings.about.button': 'About Werwapp',
 	counter: 'Nacht',
 	state: 'state',
 	'support.headline': 'Welcome to the Support-Chat',
