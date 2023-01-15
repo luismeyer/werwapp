@@ -53,7 +53,6 @@
 <label class="label grid grid-cols-3 gap-4">
 	<div class="flex flex-col gap-1">
 		<span class="label-text">{$t('settings.nighttheme')}</span>
-		<span class="label-text">{$t('settings.nighttheme')}</span>
 		<select
 			value={$themeStore.darkTheme}
 			class="tabs tabs-boxed items-center cursor-pointer"
@@ -61,7 +60,6 @@
 		>
 			{#each themes as theme}
 				<option value={theme}>
-					{themeNameInUpper(theme)}
 					{themeNameInUpper(theme)}
 				</option>
 			{/each}
@@ -71,7 +69,6 @@
 	{#if $themeStore.autoSwitching}
 		<div class="flex flex-col gap-1">
 			<span class="label-text">{$t('settings.daytheme')}</span>
-			<span class="label-text">{$t('settings.daytheme')}</span>
 			<select
 				value={$themeStore.lightTheme}
 				class="tabs tabs-boxed items-center cursor-pointer"
@@ -79,7 +76,6 @@
 			>
 				{#each themes as theme}
 					<option value={theme}>
-						{themeNameInUpper(theme)}
 						{themeNameInUpper(theme)}
 					</option>
 				{/each}
@@ -89,8 +85,8 @@
 </label>
 
 <label for="about-modal" class="label cursor-pointer">
-	<span class="label-text">Über</span>
-	<label for="about-modal" class="btn btn-sm">Über Werwapp</label>
+	<span class="label-text">{$t('settings.about.label')}</span>
+	<label for="about-modal" class="btn btn-sm">{$t('settings.about.button')}</label>
 </label>
 
 <input type="checkbox" id="about-modal" class="modal-toggle" />
