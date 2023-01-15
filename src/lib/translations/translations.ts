@@ -2,6 +2,12 @@ import { de } from './de';
 import { en } from './en';
 
 export type Translations = {
+	'about.title': string;
+	'about.github': string;
+	'about.licenses.title': string;
+	'about.licenses.loading': string;
+	'about.licenses.description': string;
+	'about.licenses.project': string;
 	'role.hunter.name': string;
 	'role.villager.name': string;
 	'role.armor.name': string;
@@ -16,6 +22,8 @@ export type Translations = {
 	'settings.support': string;
 	'settings.daytheme': string;
 	'settings.nighttheme': string;
+	'settings.about.label': string;
+	'settings.about.button': string;
 	night: string;
 	day: string;
 	game: string;
