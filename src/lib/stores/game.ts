@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 export type GameStore = {
-	state: 'setup' | 'game' | 'finished';
+	state: 'setup' | 'running' | 'finished';
 	gamestate: 'day' | 'night';
 	nightCount: number;
 	roles: Role[];
@@ -10,12 +10,21 @@ export type GameStore = {
 type Role = 'villager' | 'armor' | 'visionary' | 'witch' | 'werwolf' | 'villagehoe' | 'hunter';
 
 export function createGameStateStore() {
-	const { subscribe, set, update } = writable<GameStore>({
+	const init: GameStore = {
 		state: 'setup',
 		gamestate: 'night',
 		nightCount: 1,
 		roles: []
-	});
+	};
+
+	const { subscribe, set, update } = writable<GameStore>(init);
+
+	const start = () => {
+		update((currentState) => ({
+			...currentState,
+			state: 'running'
+		}));
+	};
 
 	const setState = (gamestate: GameStore['gamestate'], increaseNightCount?: boolean) => {
 		update((currentState) => ({
@@ -26,12 +35,7 @@ export function createGameStateStore() {
 	};
 
 	const reset = () => {
-		set({
-			state: 'setup',
-			gamestate: 'night',
-			nightCount: 0,
-			roles: []
-		});
+		set(init);
 	};
 
 	const updateGame = (input: Partial<GameStore>) => {
@@ -41,6 +45,7 @@ export function createGameStateStore() {
 	return {
 		subscribe,
 		setState,
+		start,
 		updateGame,
 		reset
 	};

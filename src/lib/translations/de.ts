@@ -27,6 +27,7 @@ export const de: Translations = {
 	'settings.support': 'Hilfe bitte!',
 	'settings.about.label': 'Du willst mehr wissen?',
 	'settings.about.button': 'Über Werwapp',
+	'settings.reset': 'Spiel zurücksetzten',
 	en: 'Englisch',
 	de: 'Deutsch',
 	'game.name': 'Werwapp',
@@ -41,5 +42,10 @@ export const de: Translations = {
 	'support.no': 'Darauf habe ich keine antwort',
 	'game.load': 'Der erste song wird geladen...',
 	'game.start': 'Starte das spiel',
-	'song.title': '{{song}} von {{artist}}'
+	'song.title': '{{song}} von {{artist}}',
+	'reset.headline': 'Bist du dir sicher?',
+	'reset.body':
+		'Wenn du das Spiel zurücksetzt, dann geht der aktuelle Spielstand verloren. Du musst wieder in der ersten Nacht anfangen.',
+	'reset.yes': 'Trotzdem',
+	'reset.no': 'Lieber nicht'
 };

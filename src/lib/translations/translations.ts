@@ -24,6 +24,11 @@ export type Translations = {
 	'settings.nighttheme': string;
 	'settings.about.label': string;
 	'settings.about.button': string;
+	'settings.reset': string;
+	'reset.headline': string;
+	'reset.body': string;
+	'reset.yes': string;
+	'reset.no': string;
 	night: string;
 	day: string;
 	game: string;
