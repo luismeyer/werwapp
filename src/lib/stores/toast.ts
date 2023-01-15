@@ -1,4 +1,5 @@
 import { get, writable } from 'svelte/store';
+import { t } from './i18n';
 
 import { playerStore } from './player';
 
@@ -32,8 +33,10 @@ export const showCurrentSongToast = (): Toast | undefined => {
 		return;
 	}
 
+	const tFunc = get(t);
+
 	showToast({
 		href: currentSong.songPage,
-		text: `${currentSong.title} von ${currentSong?.artist}`
+		text: tFunc('song.title', { song: currentSong.title, artist: currentSong.artist })
 	});
 };

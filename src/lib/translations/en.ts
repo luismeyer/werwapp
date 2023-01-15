@@ -31,5 +31,6 @@ export const en: Translations = {
 		'To use this App you just have to click on either the moon or sun to change the current Phase. The music will change automatically',
 	'support.no': 'I have no answer to this',
 	'game.load': 'The first song is loading...',
-	'game.start': 'Start the game'
+	'game.start': 'Start the game',
+	'song.title': '{{song}} by {{artist}}'
 };
