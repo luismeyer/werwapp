@@ -1,15 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { start } from 'tone';
-
-	import { loadNextRandomSongForPhase } from '$lib/song';
 	import { t } from '$lib/stores/i18n';
-	import { playerStore } from '$lib/stores/player';
 
 	import Forest from '../components/forest.svelte';
-	import Game from '../components/game.svelte';
 	import Settings from '../components/settings.svelte';
 	import Toast from '../components/toast.svelte';
+	import Setup from '../components/setup.svelte';
 
 	import '../app.css';
 
@@ -17,24 +12,6 @@
 
 	let tabs: Tab[] = ['game', 'settings'];
 	let activeTab = 0;
-
-	let gameStarted = false;
-
-	$: ({ nextPhaseSong, currentPhaseSong } = $playerStore);
-
-	onMount(async () => {
-		await loadNextRandomSongForPhase('night');
-
-		playerStore.update({ currentPhaseSong: nextPhaseSong, nextPhaseSong: undefined });
-	});
-
-	const startGame = async () => {
-		await start();
-
-		gameStarted = true;
-	};
-
-	$: buttonLabel = currentPhaseSong ? $t('game.start') : $t('game.load');
 </script>
 
 <div class="content">
@@ -44,21 +21,9 @@
 		</div>
 	</header>
 
-	<main class="px-8 relative overflow-hidden">
+	<main>
 		{#if activeTab === 0}
-			{#if !gameStarted}
-				<div class="h-full flex justify-center items-center">
-					<button
-						disabled={!$playerStore.currentPhaseSong}
-						on:click={startGame}
-						class="btn btn-primary"
-					>
-						{buttonLabel}
-					</button>
-				</div>
-			{:else}
-				<Game />
-			{/if}
+			<Setup />
 		{:else if activeTab === 1}
 			<Settings />
 		{/if}
@@ -82,9 +47,10 @@
 		display: grid;
 		width: 100vw;
 		/* Substract height of bottom nav */
-		min-height: calc(100dvh - 5rem);
+		height: calc(100dvh - 5rem);
 		grid-template-rows: auto 1fr;
 		position: relative;
+		overflow: scroll;
 	}
 
 	.navigation {

@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import { CrossFade, Player, ToneAudioBuffer } from 'tone';
 
 import { browser } from '$app/environment';
@@ -55,15 +55,24 @@ export function createPlayerStore() {
 		? createInit()
 		: { fading: false, paused: false, queue: {} };
 
-	const { subscribe, update } = writable<PlayerStore>(init);
+	const { subscribe, update, set } = writable<PlayerStore>(init);
 
 	const updateAction = (newState: Partial<PlayerStore>) => {
 		update((currentState) => ({ ...currentState, ...newState }));
 	};
 
+	const reset = () => {
+		const { dayPlayer, nightPlayer } = get(playerStore);
+		dayPlayer?.stop();
+		nightPlayer?.stop();
+
+		set(createInit());
+	};
+
 	return {
 		subscribe,
-		update: updateAction
+		update: updateAction,
+		reset
 	};
 }
 

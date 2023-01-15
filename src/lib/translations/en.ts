@@ -29,6 +29,7 @@ export const en: Translations = {
 	'settings.support': 'Support pls!',
 	'settings.about.label': 'Wanna know more?',
 	'settings.about.button': 'About Werwapp',
+	'settings.reset': 'Reset Game',
 	counter: 'Nacht',
 	state: 'state',
 	'support.headline': 'Welcome to the Support-Chat',
@@ -40,5 +41,10 @@ export const en: Translations = {
 	'support.no': 'I have no answer to this',
 	'game.load': 'The first song is loading...',
 	'game.start': 'Start the game',
-	'song.title': '{{song}} by {{artist}}'
+	'song.title': '{{song}} by {{artist}}',
+	'reset.headline': 'Are you sure?',
+	'reset.body':
+		'When you reset the Game the current state will be lost and you have to start the game with the first night again.',
+	'reset.yes': 'Yes go ahead!',
+	'reset.no': 'NoNoNoNo'
 };
