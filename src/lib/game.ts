@@ -24,7 +24,7 @@ export const startNextGamePhase = async (nextPhase: 'night' | 'day') => {
 	clearTimeout(queue.timeout);
 
 	// start the ui transition
-	gameStore.setState(nextPhase);
+	gameStore.setState(nextPhase, nextPhase === 'night');
 
 	const currentPhase = nextPhase === 'night' ? 'day' : 'night';
 

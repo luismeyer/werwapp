@@ -13,7 +13,7 @@
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 
 	onMount(async () => {
-		if ($gameStore.nightCount > 0) {
+		if ($gameStore.nightCount > 1) {
 			return;
 		}
 
