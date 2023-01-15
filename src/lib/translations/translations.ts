@@ -31,6 +31,7 @@ export type Translations = {
 	'support.welcome': string;
 	'game.load': string;
 	'game.start': string;
+	'song.title': string;
 };
 
 export type Locale = 'en' | 'de';
