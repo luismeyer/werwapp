@@ -4,8 +4,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
-		"dev:gen": "license-report --output=json > ./static/licenses.json",
-		"build": "yarn dev:gen && vite build",
+		"gen:licenses": "license-report --output=json > ./static/licenses.json",
+		"build": "yarn gen:licenses && vite build",
 		"preview": "vite preview",
 		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

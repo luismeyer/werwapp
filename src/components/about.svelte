@@ -2,12 +2,17 @@
 	import type { License } from '$lib/license';
 	import { t } from '$lib/stores/i18n';
 
-	async function loadLicenses() {
-		const response = await fetch('/licenses.json');
-		return (await response.json()) as License[];
-	}
+	export let visible: boolean;
 
-	let loadLicensesPromise = loadLicenses();
+	let licenses: License[];
+
+	$: {
+		if (visible && !licenses) {
+			fetch('/licenses.json')
+				.then((res) => res.json())
+				.then((json) => (licenses = json));
+		}
+	}
 
 	const formatLink = (link: string): string => {
 		const columIndex = link.indexOf(':');
@@ -17,37 +22,47 @@
 	};
 </script>
 
-<h3>{$t('about.title')}</h3>
-<a target="_blank" rel="noreferrer" href="https://www.github.com/BjarneRentz/werwapp" class="link"
-	>{$t('about.github')}</a
+<h3 class="text-lg font-bold mb-5">{$t('about.title')}</h3>
+
+<a
+	target="_blank"
+	rel="noreferrer"
+	href="https://www.github.com/BjarneRentz/werwapp"
+	class="link mb-5"
 >
+	{$t('about.github')}
+</a>
 
-<h4>{$t('about.licenses.title')}</h4>
+<h4 class="mb-1">{$t('about.licenses.title')}</h4>
 
-{#await loadLicensesPromise}
+{#if !licenses}
 	<p>{$t('about.licenses.loading')}</p>
-{:then licenses}
+{:else}
 	<div class="overflow-y-scroll flex flex-col gap-8">
 		{#each licenses as license}
 			<div class="card bg-neutral shadow-xl">
 				<div class="card-body">
 					<h2 class="card-title">{license.name}</h2>
+
 					<p>
 						{$t('about.licenses.description', {
 							author: license.author,
 							licenseType: license.licenseType
 						})}
 					</p>
+
 					<div class="card-actions justify-end">
 						<a
 							target="_blank"
 							rel="noreferrer"
 							href={formatLink(license.link)}
-							class="btn btn-primary">{$t('about.licenses.project')}</a
+							class="btn btn-primary"
 						>
+							{$t('about.licenses.project')}
+						</a>
 					</div>
 				</div>
 			</div>
 		{/each}
 	</div>
-{/await}
+{/if}

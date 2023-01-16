@@ -3,7 +3,7 @@ import type { Translations } from './translations';
 export const en: Translations = {
 	'about.title': 'About Werwapp',
 	'about.github': 'Find us on Github!',
-	'about.licenses.title': 'Licenses',
+	'about.licenses.title': 'These are the Licenses of the libaries that we used to create Werwapp:',
 	'about.licenses.loading': 'Loading licenses',
 	'about.licenses.description': 'From {{author}} with a {{licenseType}} Lizenz',
 	'about.licenses.project': 'Project',
