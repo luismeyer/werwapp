@@ -7,6 +7,8 @@
 	import About from './about.svelte';
 
 	const themeNameInUpper = (name: string) => name[0].toUpperCase() + name.slice(1);
+
+	$: isAboutModalOpen = false;
 </script>
 
 <div class="text-xl font-extrabold">{$t('settings')}</div>
@@ -89,11 +91,12 @@
 	<label for="about-modal" class="btn btn-sm">{$t('settings.about.button')}</label>
 </label>
 
-<input type="checkbox" id="about-modal" class="modal-toggle" />
+<input bind:checked={isAboutModalOpen} type="checkbox" id="about-modal" class="modal-toggle" />
 <label for="about-modal" class="modal cursor-pointer ">
 	<label class="modal-box relative" for="">
 		<label for="about-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-		<About />
+
+		<About visible={isAboutModalOpen} />
 	</label>
 </label>
 
