@@ -50,7 +50,7 @@
 		height: calc(100dvh - 5rem);
 		grid-template-rows: auto 1fr;
 		position: relative;
-		overflow: scroll;
+		overflow-y: scroll;
 	}
 
 	.navigation {

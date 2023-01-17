@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { start, context } from 'tone';
+	import * as Tone from 'tone';
 
 	import { loadNextRandomSongForPhase } from '$lib/song';
 	import { t } from '$lib/stores/i18n';
@@ -18,7 +18,7 @@
 	});
 
 	const startGame = async () => {
-		await start();
+		await Tone.start();
 
 		gameStore.start();
 	};

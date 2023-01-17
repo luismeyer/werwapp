@@ -1,5 +1,5 @@
 import { get, writable } from 'svelte/store';
-import { CrossFade, Player, ToneAudioBuffer } from 'tone';
+import * as Tone from 'tone';
 
 import { browser } from '$app/environment';
 import type { Song } from '$lib/song';
@@ -9,12 +9,12 @@ export type PlayerStore = {
 	paused: boolean;
 	currentPhaseSong?: Song;
 	nextPhaseSong?: Song;
-	crossFade?: CrossFade;
-	dayPlayer?: Player;
-	nightPlayer?: Player;
+	crossFade?: Tone.CrossFade;
+	dayPlayer?: Tone.Player;
+	nightPlayer?: Tone.Player;
 	queue: {
 		timeout?: NodeJS.Timeout;
-		buffer?: ToneAudioBuffer;
+		buffer?: Tone.ToneAudioBuffer;
 		song?: Song;
 	};
 };
@@ -22,14 +22,14 @@ export type PlayerStore = {
 const createInit = (): PlayerStore => {
 	const fadeTime = 1;
 
-	const crossFade = new CrossFade({ fade: 1 }).toDestination();
+	const crossFade = new Tone.CrossFade({ fade: 1 }).toDestination();
 
-	const dayPlayer = new Player({
+	const dayPlayer = new Tone.Player({
 		fadeIn: fadeTime,
 		fadeOut: fadeTime
 	});
 
-	const nightPlayer = new Player({
+	const nightPlayer = new Tone.Player({
 		fadeIn: fadeTime,
 		fadeOut: fadeTime
 	});

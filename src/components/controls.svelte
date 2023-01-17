@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Transport } from 'tone';
+	import * as Tone from 'tone';
 
 	import { getCurrentPlayer, shiftQueueIntoPlayer } from '$lib/player';
 	import { playerStore } from '$lib/stores/player';
@@ -26,9 +26,9 @@
 		playerStore.update({ paused });
 
 		if (paused) {
-			Transport.pause();
+			Tone.Transport.pause();
 		} else {
-			Transport.start();
+			Tone.Transport.start();
 		}
 	};
 
