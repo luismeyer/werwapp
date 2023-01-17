@@ -2,8 +2,8 @@
 	import { gameStore } from '$lib/stores/game';
 	import { t } from '$lib/stores/i18n';
 	import { playerStore } from '$lib/stores/player';
-	import About from './about.svelte';
 
+	import About from './about.svelte';
 	import Support from './support.svelte';
 
 	const iconColor = 'hsl(var(--pc) / var(--tw-text-opacity))';
