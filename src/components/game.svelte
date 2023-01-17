@@ -37,7 +37,7 @@
 	$: isDisabled = $playerStore.fading || !$playerStore.nextPhaseSong;
 </script>
 
-<div class="container">
+<div class="game">
 	<div class="flex items-center justify-around">
 		<Counter />
 
@@ -48,7 +48,7 @@
 </div>
 
 <style>
-	.container {
+	.game {
 		display: grid;
 		grid-template-rows: auto 1fr;
 		height: 100%;
