@@ -12,16 +12,6 @@
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 
-	onMount(async () => {
-		if ($gameStore.nightCount > 1) {
-			return;
-		}
-
-		showCurrentSongToast();
-
-		startFirstNightPhase();
-	});
-
 	const startNight = async () => {
 		await startNextGamePhase('night');
 

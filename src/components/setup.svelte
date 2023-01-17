@@ -8,10 +8,15 @@
 	import { gameStore } from '$lib/stores/game';
 
 	import Game from '../components/game.svelte';
+	import { showCurrentSongToast } from '$lib/stores/toast';
+	import { startFirstNightPhase } from '$lib/game';
 
 	$: ({ nextPhaseSong, currentPhaseSong } = $playerStore);
 
 	onMount(async () => {
+		if ($gameStore.state == 'running') {
+			return;
+		}
 		await loadNextRandomSongForPhase('night');
 
 		playerStore.update({ currentPhaseSong: nextPhaseSong, nextPhaseSong: undefined });
@@ -21,6 +26,10 @@
 		await Tone.start();
 
 		gameStore.start();
+
+		showCurrentSongToast();
+
+		startFirstNightPhase();
 	};
 
 	$: buttonLabel = currentPhaseSong ? $t('game.start') : $t('game.load');

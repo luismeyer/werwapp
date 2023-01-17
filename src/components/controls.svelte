@@ -1,24 +1,10 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import * as Tone from 'tone';
 
-	import { getCurrentPlayer, shiftQueueIntoPlayer } from '$lib/player';
+	import { shiftQueueIntoPlayer } from '$lib/player';
 	import { playerStore } from '$lib/stores/player';
 
 	const fillColor = `hsl(var(--nc) / var(--tw-text-opacity))`;
-
-	let progress = 0;
-	let max = 0;
-
-	onMount(() => {
-		setInterval(() => {
-			if ($playerStore.paused) {
-				return;
-			}
-
-			progress = progress + 1;
-		}, 1000);
-	});
 
 	const togglePaused = () => {
 		const paused = !$playerStore.paused;
@@ -31,17 +17,6 @@
 			Tone.Transport.start();
 		}
 	};
-
-	playerStore.subscribe(() => {
-		const songDuration = getCurrentPlayer()?.buffer.duration;
-
-		if (!songDuration || max === songDuration) {
-			return;
-		}
-
-		progress = 0;
-		max = songDuration;
-	});
 </script>
 
 <div class="h-full flex flex-col gap-2">
@@ -88,6 +63,10 @@
 	</div>
 
 	<div class="flex gap-2 items-center">
-		<progress class="progress w-full" value={progress} {max} />
+		<progress
+			class="progress w-full"
+			value={$playerStore.progress}
+			max={$playerStore.currentSongDuration}
+		/>
 	</div>
 </div>

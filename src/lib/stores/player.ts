@@ -3,11 +3,14 @@ import * as Tone from 'tone';
 
 import { browser } from '$app/environment';
 import type { Song } from '$lib/song';
+import { getCurrentPlayer } from '$lib/player';
 
 export type PlayerStore = {
 	fading: boolean;
 	paused: boolean;
+	progress: number;
 	currentPhaseSong?: Song;
+	currentSongDuration: number;
 	nextPhaseSong?: Song;
 	crossFade?: Tone.CrossFade;
 	dayPlayer?: Tone.Player;
@@ -18,6 +21,8 @@ export type PlayerStore = {
 		song?: Song;
 	};
 };
+
+let progressTimer: NodeJS.Timer;
 
 const createInit = (): PlayerStore => {
 	const fadeTime = 1;
@@ -46,6 +51,8 @@ const createInit = (): PlayerStore => {
 		crossFade,
 		dayPlayer,
 		nightPlayer,
+		progress: 0,
+		currentSongDuration: 100,
 		queue: {}
 	};
 };
@@ -53,11 +60,21 @@ const createInit = (): PlayerStore => {
 export function createPlayerStore() {
 	const init: PlayerStore | undefined = browser
 		? createInit()
-		: { fading: false, paused: false, queue: {} };
+		: { currentSongDuration: 100, fading: false, paused: false, progress: 0, queue: {} };
 
 	const { subscribe, update, set } = writable<PlayerStore>(init);
 
 	const updateAction = (newState: Partial<PlayerStore>) => {
+		if (newState.paused != undefined) {
+			handlePaused(newState.paused);
+		}
+		if (newState.currentPhaseSong != undefined) {
+			clearInterval(progressTimer);
+			newState.progress = 0;
+			newState.currentSongDuration = getCurrentPlayer()?.buffer.duration;
+			progressTimer = createInterval();
+		}
+
 		update((currentState) => ({ ...currentState, ...newState }));
 	};
 
@@ -68,6 +85,21 @@ export function createPlayerStore() {
 
 		set(createInit());
 	};
+
+	const handlePaused = (paused: boolean) => {
+		if (paused) {
+			clearInterval(progressTimer);
+		} else {
+			progressTimer = createInterval();
+		}
+	};
+
+	const createInterval = (): NodeJS.Timer =>
+		setInterval(() => {
+			update((currentState) => ({ ...currentState, progress: currentState.progress + 1 }));
+		}, 1000);
+
+	progressTimer = createInterval();
 
 	return {
 		subscribe,
