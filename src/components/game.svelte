@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-
-	import { startFirstNightPhase, startNextGamePhase } from '$lib/game';
+	import { startNextGamePhase } from '$lib/game';
 	import { gameStore } from '$lib/stores/game';
 	import { playerStore } from '$lib/stores/player';
 	import { showCurrentSongToast } from '$lib/stores/toast';
