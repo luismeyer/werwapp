@@ -22,7 +22,7 @@ export type PlayerStore = {
 	};
 };
 
-let progressTimer: NodeJS.Timer;
+let progressClock: NodeJS.Timer;
 
 const createInit = (): PlayerStore => {
 	const fadeTime = 1;
@@ -65,14 +65,9 @@ export function createPlayerStore() {
 	const { subscribe, update, set } = writable<PlayerStore>(init);
 
 	const updateAction = (newState: Partial<PlayerStore>) => {
-		if (newState.paused != undefined) {
-			handlePaused(newState.paused);
-		}
-		if (newState.currentPhaseSong != undefined) {
-			clearInterval(progressTimer);
+		if (newState.currentPhaseSong !== undefined) {
 			newState.progress = 0;
 			newState.currentSongDuration = getCurrentPlayer()?.buffer.duration;
-			progressTimer = createInterval();
 		}
 
 		update((currentState) => ({ ...currentState, ...newState }));
@@ -86,20 +81,12 @@ export function createPlayerStore() {
 		set(createInit());
 	};
 
-	const handlePaused = (paused: boolean) => {
-		if (paused) {
-			clearInterval(progressTimer);
-		} else {
-			progressTimer = createInterval();
-		}
-	};
-
-	const createInterval = (): NodeJS.Timer =>
-		setInterval(() => {
-			update((currentState) => ({ ...currentState, progress: currentState.progress + 1 }));
-		}, 1000);
-
-	progressTimer = createInterval();
+	progressClock = setInterval(() => {
+		update((currentState) => ({
+			...currentState,
+			progress: currentState.progress + (currentState.paused ? 0 : 1)
+		}));
+	}, 1000);
 
 	return {
 		subscribe,

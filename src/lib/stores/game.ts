@@ -22,7 +22,8 @@ export function createGameStateStore() {
 	const start = () => {
 		update((currentState) => ({
 			...currentState,
-			state: 'running'
+			state: 'running',
+			gamestate: 'night'
 		}));
 	};
 

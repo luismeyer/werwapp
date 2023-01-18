@@ -6,10 +6,17 @@ import { playerStore } from '$lib/stores/player';
 import { fadeSongs, loadNextRandomSongForPhase } from './song';
 import { startPlayer } from './player';
 
-export const startFirstNightPhase = () => {
+import * as Tone from 'tone';
+import { showCurrentSongToast } from './stores/toast';
+
+export const startFirstNightPhase = async () => {
 	const { nightPlayer } = get(playerStore);
 
-	gameStore.setState('night');
+	await Tone.start();
+
+	gameStore.start();
+
+	showCurrentSongToast();
 
 	// load next day song
 	loadNextRandomSongForPhase('day');
