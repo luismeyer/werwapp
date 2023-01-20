@@ -31,7 +31,7 @@ export const en: Translations = {
 	'settings.about.button': 'About Werwapp',
 	'settings.reset': 'Reset Game',
 	'settings.wakelock': 'Disable automatic screenlock',
-	counter: 'Nacht',
+	counter: 'Night',
 	state: 'state',
 	'support.headline': 'Welcome to the Support-Chat',
 	'support.welcome': '👋 hey. You can ask me anything',
@@ -40,6 +40,8 @@ export const en: Translations = {
 	'support.play':
 		'To use this App you just have to click on either the moon or sun to change the current Phase. The music will change automatically',
 	'support.no': 'I have no answer to this',
+	'support.screenlock':
+		"You can deactivate the automatic screenlock inside the settings. If the option is disabled your Browser currently doesn't support this feature.",
 	'game.load': 'The first song is loading...',
 	'game.start': 'Start the game',
 	'song.title': '{{song}} by {{artist}}',

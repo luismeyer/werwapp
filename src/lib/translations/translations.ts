@@ -43,6 +43,7 @@ export type Translations = {
 	'support.play': string;
 	'support.no': string;
 	'support.welcome': string;
+	'support.screenlock': string;
 	'game.load': string;
 	'game.start': string;
 	'song.title': string;
