@@ -6,10 +6,11 @@
 
 	import Forest from '../components/forest.svelte';
 	import Settings from '../components/settings.svelte';
-	import Toast from '../components/toast.svelte';
 	import Setup from '../components/setup.svelte';
+	import Toast from '../components/toast.svelte';
 
 	import '../app.css';
+	import { mountWakeLock } from '$lib/stores/wakelock';
 
 	type Tab = 'game' | 'settings';
 
@@ -17,6 +18,8 @@
 	let activeTab = 0;
 
 	onMount(() => {
+		mountWakeLock();
+
 		registerSwipeGestures({
 			handleLeft: () => (activeTab = 0),
 			handleRight: () => (activeTab = 1)

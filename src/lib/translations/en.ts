@@ -30,6 +30,7 @@ export const en: Translations = {
 	'settings.about.label': 'Wanna know more?',
 	'settings.about.button': 'About Werwapp',
 	'settings.reset': 'Reset Game',
+	'settings.wakelock': 'Disable automatic screenlock',
 	counter: 'Nacht',
 	state: 'state',
 	'support.headline': 'Welcome to the Support-Chat',

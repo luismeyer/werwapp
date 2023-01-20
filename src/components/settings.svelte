@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { t } from '$lib/stores/i18n';
+	import { wakelockAvailable } from '$lib/wakelock';
 
 	import SettingsI18n from './settings-i18n.svelte';
 	import SettingsItems from './settings-items.svelte';
 	import SettingsTheme from './settings-theme.svelte';
+	import SettingsWakelock from './settings-wakelock.svelte';
 </script>
 
 <div class="px-5 pb-20">
@@ -22,6 +24,10 @@
 	<SettingsItems />
 
 	<div class="divider" />
+
+	{#if wakelockAvailable()}
+		<SettingsWakelock />
+	{/if}
 
 	<SettingsTheme />
 </div>

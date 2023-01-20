@@ -15,7 +15,7 @@
 	/>
 </label>
 
-<label class="grid grid-cols-3 gap-4">
+<label class="grid grid-cols-3 gap-4 mb-2">
 	<div class="flex flex-col gap-1">
 		<span class="label-text">{$t('settings.nighttheme')}</span>
 		<select
