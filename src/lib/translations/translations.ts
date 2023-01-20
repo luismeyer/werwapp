@@ -25,6 +25,7 @@ export type Translations = {
 	'settings.about.label': string;
 	'settings.about.button': string;
 	'settings.reset': string;
+	'settings.wakelock': string;
 	'reset.headline': string;
 	'reset.body': string;
 	'reset.yes': string;

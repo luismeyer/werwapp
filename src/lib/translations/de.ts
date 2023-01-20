@@ -28,6 +28,7 @@ export const de: Translations = {
 	'settings.about.label': 'Du willst mehr wissen?',
 	'settings.about.button': 'Über Werwapp',
 	'settings.reset': 'Spiel zurücksetzten',
+	'settings.wakelock': 'Deaktiviere die automatische Bildschirmsperre',
 	en: 'Englisch',
 	de: 'Deutsch',
 	'game.name': 'Werwapp',
