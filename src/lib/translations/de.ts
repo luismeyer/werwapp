@@ -41,6 +41,8 @@ export const de: Translations = {
 	'support.play':
 		'Um zu spielen muss du nur entweder auf den Mond oder die Sonne klicken um die aktuelle Phase zu ändern. Dann wechselt die Musik automatisch',
 	'support.no': 'Darauf habe ich keine antwort',
+	'support.screenlock':
+		'Du kannst die automatische Bildschirmsperre in den Einstellungen deaktivieren. Wenn die Option deaktiviert ist, dann unterstützt dein Browser diese Funktion leider nicht.',
 	'game.load': 'Der erste song wird geladen...',
 	'game.start': 'Starte das spiel',
 	'song.title': '{{song}} von {{artist}}',

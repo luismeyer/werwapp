@@ -50,6 +50,22 @@ const QA: QA = [
 				'how do i change to day'
 			]
 		}
+	},
+	{
+		answer: 'support.screenlock',
+		question: {
+			de: [
+				'warum kann ich die automatische bildschirm sperre nicht deaktivieren',
+				'wieso geht die bildschirmsperre nicht',
+				'ich kann den screenlock nicht ausschalten',
+				'wieso sperrt sich während dem spiel mein handy'
+			],
+			en: [
+				'how can i disable automatic screenlock',
+				'i can not disable automatic screenlock',
+				'deactivate screenlock'
+			]
+		}
 	}
 ];
 
