@@ -3,7 +3,7 @@ import fs from 'fs';
 
 export async function GET({ url }: RequestEvent) {
 	const songUrl = url.searchParams.get('url') ?? '';
-	const internalSongName = Buffer.from(songUrl, 'ascii').toString('base64');
+	const internalSongName = Buffer.from(songUrl, 'ascii').toString('base64url');
 	const songPath = './tmp/' + internalSongName + '.mp3';
 
 	if (fs.existsSync(songPath)) {
