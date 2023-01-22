@@ -1,5 +1,8 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import { t } from '$lib/stores/i18n';
+	import { registerSwipeGestures } from '$lib/swipe';
 
 	import Forest from '../components/forest.svelte';
 	import Settings from '../components/settings.svelte';
@@ -12,6 +15,13 @@
 
 	let tabs: Tab[] = ['game', 'settings'];
 	let activeTab = 0;
+
+	onMount(() => {
+		registerSwipeGestures({
+			handleLeft: () => (activeTab = 0),
+			handleRight: () => (activeTab = 1)
+		});
+	});
 </script>
 
 <div class="content">
