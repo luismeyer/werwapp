@@ -1,40 +1,37 @@
 <script lang="ts">
-	import { FadeDuration } from '$lib/song';
 	import { gameStore } from '$lib/stores/game';
+	import { playerStore } from '$lib/stores/player';
 
 	export let disabled: boolean;
-	export let handleStateChange: () => void;
-
-	let running: boolean;
-
-	let current: 'sun' | 'moon' = $gameStore.gamestate === 'day' ? 'sun' : 'moon';
-
-	$: animationStateClass = running ? 'running' : 'paused';
-
-	$: moonAnimationClass = current === 'moon' ? 'out-animation' : 'in-animation';
-	$: sunAnimationClass = current === 'sun' ? 'out-animation' : 'in-animation';
 
 	$: disabledClass = disabled ? 'disabled' : '';
 
-	const handleClick = () => {
-		handleStateChange();
+	let moonClass = 'out-top';
+	let sunClass = 'in-bottom';
 
-		running = true;
+	let transitionClass = '';
 
-		setTimeout(() => {
-			running = false;
+	$: {
+		// disable the transition after animation so the
+		// in- and out- class switch will not get animated
+		transitionClass = $playerStore.fading ? 'transition' : '';
 
-			current = current === 'moon' ? 'sun' : 'moon';
-			// substract 100 so the switch happens before the animation would reset.
-			// otherwise there is a flicker on IOS
-		}, FadeDuration - 100);
-	};
+		// the class if running is always the target position of
+		// the animation. the class if not running is the starting
+		// position of the next animation
+
+		const enterScreenClass = $playerStore.fading ? 'in-top' : 'out-top';
+		const leaveScreenClass = $playerStore.fading ? 'out-bottom' : 'in-bottom';
+
+		sunClass = $gameStore.gamestate === 'day' ? enterScreenClass : leaveScreenClass;
+		moonClass = $gameStore.gamestate === 'night' ? enterScreenClass : leaveScreenClass;
+	}
 </script>
 
 <div class="w-full h-full relative">
-	<button class="button" on:click={handleClick} {disabled}>
+	<button on:click {disabled}>
 		<svg
-			class={`${moonAnimationClass} ${animationStateClass} icon ${disabledClass}`}
+			class={`icon ${disabledClass} ${moonClass} ${transitionClass}`}
 			xmlns="http://www.w3.org/2000/svg"
 			width="192"
 			height="192"
@@ -47,9 +44,9 @@
 		</svg>
 	</button>
 
-	<button on:click={handleClick} {disabled}>
+	<button on:click {disabled}>
 		<svg
-			class={`${sunAnimationClass} ${animationStateClass} icon ${disabledClass}`}
+			class={`icon ${disabledClass} ${sunClass} ${transitionClass}`}
 			xmlns="http://www.w3.org/2000/svg"
 			width="192"
 			height="192"
@@ -71,30 +68,35 @@
 		left: 0;
 		right: 0;
 		fill: hsl(var(--p));
-		/* time = FadeDuration */
-		transition: opacity 1s ease, fill 6s ease;
+	}
+
+	.transition {
+		/* trasnform time = FadeDuration */
+		transition: opacity 1s ease, fill 6s ease, transform 6s ease;
+	}
+
+	/* start position on the top before the icon leaves the screen */
+	.out-top {
+		transform: rotate(0deg) translate(0px, calc(-100dvh / 2)) rotate(0deg);
+	}
+
+	/* end position on the bottom after the icon left the screen */
+	.out-bottom {
+		transform: rotate(180deg) translate(0px, calc(-100dvh / 2)) rotate(-180deg);
+	}
+
+	/* end position on the top after the icon entered the screen */
+	.in-top {
+		transform: rotate(180deg) translate(0px, calc(100dvh / 2)) rotate(-180deg);
+	}
+
+	/* start position on the bottom before the icon enters the screen */
+	.in-bottom {
+		transform: rotate(0deg) translate(0px, calc(100dvh / 2)) rotate(0deg);
 	}
 
 	.disabled {
 		opacity: 0.5;
-	}
-
-	.in-animation {
-		/* time = FadeDuration */
-		animation: cirlceIn 6s ease infinite;
-	}
-
-	.out-animation {
-		/* time = FadeDuration */
-		animation: circleOut 6s ease infinite;
-	}
-
-	.running {
-		animation-play-state: running;
-	}
-
-	.paused {
-		animation-play-state: paused;
 	}
 
 	@keyframes cirlceIn {

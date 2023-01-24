@@ -27,11 +27,16 @@ export const startFirstNightPhase = async () => {
 
 export const startNextGamePhase = async (nextPhase: 'night' | 'day') => {
 	const { dayPlayer, nightPlayer, currentPhaseSong, nextPhaseSong, queue } = get(playerStore);
+	const { nightCount } = get(gameStore);
 
 	clearTimeout(queue.timeout);
 
 	// start the ui transition
-	gameStore.setState(nextPhase, nextPhase === 'night');
+
+	gameStore.updateStore({
+		gamestate: nextPhase,
+		nightCount: nextPhase === 'night' ? nightCount + 1 : nightCount
+	});
 
 	const currentPhase = nextPhase === 'night' ? 'day' : 'night';
 
@@ -56,4 +61,6 @@ export const startNextGamePhase = async (nextPhase: 'night' | 'day') => {
 	currentPlayer?.stop();
 
 	playerStore.update({ fading: false });
+
+	showCurrentSongToast();
 };

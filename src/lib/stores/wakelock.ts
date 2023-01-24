@@ -17,8 +17,6 @@ const WAKELOCK_STORAGE_KEY = 'wakelock';
 const getStorageWakeLock = (): WakeLockStore['state'] => {
 	const storeageItem = localStorage.getItem(WAKELOCK_STORAGE_KEY) ?? '';
 
-	console.log({ storeageItem });
-
 	return storeageItem === 'enabled' ? 'enabled' : 'disabled';
 };
 
