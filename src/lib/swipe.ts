@@ -1,6 +1,8 @@
 type SwipeOptions = {
-	handleLeft: () => void;
-	handleRight: () => void;
+	handleLeft?: () => void;
+	handleRight?: () => void;
+	handleUp?: () => void;
+	handleDown?: () => void;
 };
 
 let xDown: number | null = null;
@@ -23,12 +25,21 @@ const handleTouchMove = (options: SwipeOptions) => (evt: TouchEvent) => {
 	const xDiff = xDown - xUp;
 	const yDiff = yDown - yUp;
 
-	if (Math.abs(xDiff) > Math.abs(yDiff)) {
-		/*most significant*/
+	const threshhold = 5;
+
+	if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > threshhold) {
 		if (xDiff > 0) {
-			options.handleRight();
+			options.handleLeft?.();
 		} else {
-			options.handleLeft();
+			options.handleRight?.();
+		}
+	}
+
+	if (Math.abs(yDiff) > Math.abs(xDiff) && Math.abs(yDiff) > threshhold) {
+		if (yDiff > 0) {
+			options.handleDown?.();
+		} else {
+			options.handleUp?.();
 		}
 	}
 

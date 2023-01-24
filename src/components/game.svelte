@@ -2,7 +2,7 @@
 	import { startNextGamePhase } from '$lib/game';
 	import { gameStore } from '$lib/stores/game';
 	import { playerStore } from '$lib/stores/player';
-	import { showCurrentSongToast } from '$lib/stores/toast';
+	import { getUtilityRole, showRole } from '$lib/roles';
 
 	import SunAndMoon from './sunAndMoon.svelte';
 	import Counter from './counter.svelte';
@@ -11,15 +11,13 @@
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 
 	const startNight = async () => {
+		showRole(getUtilityRole('night'));
 		await startNextGamePhase('night');
-
-		showCurrentSongToast();
 	};
 
 	const startDay = async () => {
+		showRole(getUtilityRole('day'));
 		await startNextGamePhase('day');
-
-		showCurrentSongToast();
 	};
 
 	$: isDisabled = $playerStore.fading || !$playerStore.nextPhaseSong;
@@ -32,7 +30,7 @@
 		<Controls />
 	</div>
 
-	<SunAndMoon disabled={isDisabled} handleStateChange={handleBtnClick} />
+	<SunAndMoon disabled={isDisabled} on:click={handleBtnClick} />
 </div>
 
 <style>

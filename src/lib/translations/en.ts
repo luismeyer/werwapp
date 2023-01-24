@@ -7,17 +7,11 @@ export const en: Translations = {
 	'about.licenses.loading': 'Loading licenses',
 	'about.licenses.description': 'From {{author}} with a {{licenseType}} Lizenz',
 	'about.licenses.project': 'Project',
-	'role.hunter.name': 'hunter',
-	'role.villager.name': 'villager',
-	'role.armor.name': 'armor',
-	'role.visionary.name': 'visionary',
-	'role.werwolf.name': 'werwolf',
-	'role.vilagehoe.name': 'vilagehoe',
-	'role.witch.name': 'witch',
-	night: 'night',
-	day: 'day',
+	night: 'Night',
+	day: 'Day',
 	game: 'Game',
 	settings: 'Settings',
+	rules: 'Rules',
 	en: 'English',
 	de: 'German',
 	'game.name': 'Werwapp',
@@ -45,9 +39,48 @@ export const en: Translations = {
 	'game.load': 'The first song is loading...',
 	'game.start': 'Start the game',
 	'song.title': '{{song}} by {{artist}}',
+
 	'reset.headline': 'Are you sure?',
 	'reset.body':
 		'When you reset the Game the current state will be lost and you have to start the game with the first night again.',
 	'reset.yes': 'Yes go ahead!',
-	'reset.no': 'NoNoNoNo'
+	'reset.no': 'NoNoNoNo',
+	'narrator.selected': 'Selected Roles:',
+	'narrator.next': 'next',
+	'narrator.prev': 'back',
+	'narrator.close': 'close',
+	'narrator.music.button': 'switch music',
+	'narrator.headline.day': 'The Village awakens!',
+	'narrator.headline.night': 'The Village goes to sleep!',
+	'narrator.headline.plural': 'The {{role}} awaken!',
+	'narrator.headline.singular.female': 'The {{role}} awakens!',
+	'narrator.headline.singular.male': 'The {{role}} awakens!',
+	'narrator.amor.name': 'Amor',
+	'narrator.amor.name.plural': 'Amors',
+	'narrator.amor.description':
+		'The amor shoots arrows of love at two people. They open their eyes and fall in love. The new goal if this couple is to be the last two alive.',
+	'narrator.hunter.name': 'Hunter',
+	'narrator.hunter.name.plural': 'Hunters',
+	'narrator.hunter.description':
+		'If the hunter died last night he will now revenge himself by killing one other player!',
+	'narrator.villager.name': 'Villager',
+	'narrator.villager.name.plural': 'Villagers',
+	'narrator.villager.description':
+		'The whole village decides now who will be killed and made responsible for the crimes that happened.',
+	'narrator.seer.name': 'Seer',
+	'narrator.seer.name.plural': 'Seers',
+	'narrator.seer.description':
+		'The Seer can use her magic spells to see the role of one other player. She can use these spells once per night.',
+	'narrator.werewolf.name': 'Werwolf',
+	'narrator.werewolf.name.plural': 'Werwolfs',
+	'narrator.werewolf.description':
+		'The Werwolf pack kills one other player per night. The have to vote without making any sounds and by pointing their fingers at the target.',
+	'narrator.witch.name': 'Witch',
+	'narrator.witch.name.plural': 'Witches',
+	'narrator.witch.description':
+		'The Witch owns two potions. One to heal and one to kill another person or herself. She can use each potion only once by eather showing a thumbs up or down. Before she makes her choice the narrator reveals the person that will be killed by the werewolfs',
+	'narrator.girl.name': 'Girl',
+	'narrator.girl.name.plural': 'Girls',
+	'narrator.girl.description':
+		'The Girl can open her eyes secretly while the werewolfs choose a target and therefor spy on them.'
 };

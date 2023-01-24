@@ -10,5 +10,5 @@
 		<span style={`--value:${$gameStore.nightCount};`} />
 	</span>
 
-	{$t('counter')}
+	{$t('night')}
 </div>

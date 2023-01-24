@@ -8,14 +8,9 @@ export type Translations = {
 	'about.licenses.loading': string;
 	'about.licenses.description': string;
 	'about.licenses.project': string;
-	'role.hunter.name': string;
-	'role.villager.name': string;
-	'role.armor.name': string;
-	'role.visionary.name': string;
-	'role.werwolf.name': string;
-	'role.vilagehoe.name': string;
-	'role.witch.name': string;
+
 	'game.name': string;
+
 	'settings.discribtion': string;
 	'settings.theme.toggle': string;
 	'settings.qa': string;
@@ -26,6 +21,7 @@ export type Translations = {
 	'settings.about.button': string;
 	'settings.reset': string;
 	'settings.wakelock': string;
+
 	'reset.headline': string;
 	'reset.body': string;
 	'reset.yes': string;
@@ -34,19 +30,54 @@ export type Translations = {
 	day: string;
 	game: string;
 	settings: string;
+	rules: string;
 	en: string;
 	de: string;
 	counter: string;
 	state: string;
+
 	'support.headline': string;
 	'support.sound': string;
 	'support.play': string;
 	'support.no': string;
 	'support.welcome': string;
 	'support.screenlock': string;
+
 	'game.load': string;
 	'game.start': string;
 	'song.title': string;
+
+	'narrator.selected': string;
+	'narrator.next': string;
+	'narrator.prev': string;
+	'narrator.close': string;
+	'narrator.music.button': string;
+	'narrator.headline.day': string;
+	'narrator.headline.night': string;
+	'narrator.headline.plural': string;
+	'narrator.headline.singular.female': string;
+	'narrator.headline.singular.male': string;
+	'narrator.amor.name': string;
+	'narrator.amor.name.plural': string;
+	'narrator.amor.description': string;
+	'narrator.hunter.name': string;
+	'narrator.hunter.name.plural': string;
+	'narrator.hunter.description': string;
+	'narrator.villager.name': string;
+	'narrator.villager.name.plural': string;
+	'narrator.villager.description': string;
+	'narrator.seer.name': string;
+	'narrator.seer.name.plural': string;
+	'narrator.seer.description': string;
+	'narrator.werewolf.name': string;
+	'narrator.werewolf.name.plural': string;
+	'narrator.werewolf.description': string;
+	'narrator.witch.name': string;
+	'narrator.witch.name.plural': string;
+	'narrator.witch.description': string;
+	'narrator.girl.name': string;
+	'narrator.girl.name.plural': string;
+	'narrator.girl.description': string;
 };
 
 export type Locale = 'en' | 'de';

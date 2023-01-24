@@ -2,14 +2,13 @@
 	import { onMount } from 'svelte';
 
 	import { loadNextRandomSongForPhase } from '$lib/song';
-	import { t } from '$lib/stores/i18n';
 	import { playerStore } from '$lib/stores/player';
 	import { gameStore } from '$lib/stores/game';
 
-	import Game from '../components/game.svelte';
-	import { startFirstNightPhase } from '$lib/game';
+	import Game from './game.svelte';
+	import RolesSetup from './roles-setup.svelte';
 
-	$: ({ nextPhaseSong, currentPhaseSong } = $playerStore);
+	$: ({ nextPhaseSong } = $playerStore);
 
 	onMount(async () => {
 		if ($gameStore.state == 'running') {
@@ -19,20 +18,14 @@
 
 		playerStore.update({ currentPhaseSong: nextPhaseSong, nextPhaseSong: undefined });
 	});
-
-	$: buttonLabel = currentPhaseSong ? $t('game.start') : $t('game.load');
 </script>
 
+<!-- This is needed because daisy ui requires the tabindex -->
+<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+
 {#if $gameStore.state !== 'running'}
-	<div class="h-full flex justify-center items-center">
-		<button
-			disabled={!$playerStore.currentPhaseSong}
-			on:click={startFirstNightPhase}
-			class="btn btn-primary"
-		>
-			{buttonLabel}
-		</button>
-	</div>
+	<RolesSetup />
 {:else}
 	<Game />
 {/if}
