@@ -30,14 +30,14 @@ export const de: Translations = {
 	'support.headline': 'Willkommen im Support-Chat',
 	'support.welcome': '👋 hey. Frag mich egal was',
 	'support.sound':
-		'Wenn du ein Iphone hast musst du den Stummmodus deaktivieren. An sonsten hast du versucht dein Gerät neu zu start?',
+		'Wenn du ein Iphone hast, musst du den Stummmodus deaktivieren. Ansonsten: hast du versucht, dein Gerät neu zu start?',
 	'support.play':
-		'Um zu spielen muss du nur entweder auf den Mond oder die Sonne klicken um die aktuelle Phase zu ändern. Dann wechselt die Musik automatisch',
-	'support.no': 'Darauf habe ich keine antwort',
+		'Um zu spielen musst du nur entweder auf den Mond oder die Sonne klicken, um die aktuelle Phase zu ändern. Dann wechselt die Musik automatisch',
+	'support.no': 'Darauf habe ich keine Antwort',
 	'support.screenlock':
 		'Du kannst die automatische Bildschirmsperre in den Einstellungen deaktivieren. Wenn die Option deaktiviert ist, dann unterstützt dein Browser diese Funktion leider nicht.',
-	'game.load': 'Der erste song wird geladen...',
-	'game.start': 'Starte das spiel',
+	'game.load': 'Der erste Song wird geladen...',
+	'game.start': 'Starte das Spiel',
 	'song.title': '{{song}} von {{artist}}',
 	'reset.headline': 'Bist du dir sicher?',
 	'reset.body':
@@ -57,20 +57,20 @@ export const de: Translations = {
 	'narrator.amor.name': 'Amor',
 	'narrator.amor.name.plural': 'Amore',
 	'narrator.amor.description':
-		'Amor schießt zwei Liebes Pfeile ab und verliebt die beiden Ziele. Die beiden Verliebten erwachen und schauen sich tief in die Augen. Das neue Ziel des Paares ist es als letztes zu Überleben.',
+		'Amor schießt zwei Liebes-Pfeile ab und verliebt die beiden Ziele. Die beiden Verliebten erwachen und schauen sich tief in die Augen. Das neue Ziel des Paares ist es, bis zum Ende zu überleben.',
 	'narrator.hunter.name': 'Jäger',
 	'narrator.hunter.name.plural': 'Jäger',
 	'narrator.hunter.description':
-		'Wenn der Jäger während der letzten Nacht getötet wurde kann er sich nun rächen. Dafür wählt er einen weiteren Spieler und reißt diesen mit in den Tod.',
-	'narrator.villager.name': 'Dorfbewohner',
-	'narrator.villager.name.plural': 'Dorfbewohner',
+		'Wenn der Jäger während der letzten Nacht getötet wurde, kann er sich nun rächen. Dafür wählt er eine*n weitere*n Spieler*in und reißt diese*n mit in den Tod.',
+	'narrator.villager.name': 'Dorfbewohner*in',
+	'narrator.villager.name.plural': 'Dorfbewohner*innen',
 	'narrator.villager.description':
-		'Das ganze Dorf muss sich nun für einen Sündenbock entscheiden der an diesem Tag gehängt wird.',
+		'Das ganze Dorf muss sich nun für einen Sündenbock entscheiden, der an diesem Tag gehängt wird.',
 	'narrator.seer.name': 'Seherin',
 	'narrator.seer.name.plural': 'Seherinnen',
 	'narrator.seer.description':
-		'Die Seherin kann jede Nacht die Identität eines anderen Mitspielers herausfinden. Dafür zeigt sie auf die Person und der Erzähler zeigt die Karte dieses Spielers.',
-	'narrator.werewolf.name': 'Werworf',
+		'Die Seherin kann jede Nacht die Identität eines/einer anderen Mitspielers/Mitspielerin herausfinden. Dafür zeigt sie auf die Person und der/die Erzähler*in zeigt die Karte des Spielenden.',
+	'narrator.werewolf.name': 'Werwolf',
 	'narrator.werewolf.name.plural': 'Werwölfe',
 	'narrator.werewolf.description':
 		'Das Werwolfrudel sucht sich jede Nacht ein Opfer aus. Dafür müssen alle Wölfe gemeinsam abstimmen.',

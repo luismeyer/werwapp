@@ -33,7 +33,6 @@ export type Translations = {
 	rules: string;
 	en: string;
 	de: string;
-	counter: string;
 	state: string;
 
 	'support.headline': string;
