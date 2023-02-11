@@ -59,7 +59,12 @@ export const fadeSongs = (target: 'day' | 'night') => {
 	});
 };
 
-export const createApiSongUrl = (song: Song) => 'api/songs?url=' + song.internalUrl;
+export const createApiSongUrl = (song: Song) => {
+	const searchParams = new URLSearchParams(location.search);
+	searchParams.set('url', song.internalUrl);
+
+	return `api/songs?${searchParams.toString()}`;
+};
 
 /**
  * Loads a new random song into the buffer that was not played in the last round.
