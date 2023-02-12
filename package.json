@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
-		"@sveltejs/adapter-node": "^1.0.0",
+		"@sveltejs/adapter-cloudflare": "^2.0.1",
 		"@sveltejs/kit": "^1.0.0",
 		"@types/dom-screen-wake-lock": "^1.0.0",
 		"@types/string-similarity": "^4.0.0",
