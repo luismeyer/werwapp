@@ -4,14 +4,12 @@ import { gameStore } from '$lib/stores/game';
 import { playerStore } from '$lib/stores/player';
 
 import { fadeSongs, loadNextRandomSongForPhase } from './song';
-import { startPlayer } from './player';
+import { startCurrentPlayer } from './player';
 
 import * as Tone from 'tone';
 import { showCurrentSongToast } from './stores/toast';
 
 export const startFirstNightPhase = async () => {
-	const { nightPlayer } = get(playerStore);
-
 	await Tone.start();
 
 	gameStore.start();
@@ -22,7 +20,7 @@ export const startFirstNightPhase = async () => {
 	loadNextRandomSongForPhase('day');
 
 	// start the music
-	startPlayer(nightPlayer);
+	startCurrentPlayer();
 };
 
 export const startNextGamePhase = async (nextPhase: 'night' | 'day') => {
@@ -41,7 +39,6 @@ export const startNextGamePhase = async (nextPhase: 'night' | 'day') => {
 	const currentPhase = nextPhase === 'night' ? 'day' : 'night';
 
 	const currentPlayer = currentPhase === 'day' ? dayPlayer : nightPlayer;
-	const nextPlayer = nextPhase === 'day' ? dayPlayer : nightPlayer;
 
 	playerStore.update({
 		fading: true,
@@ -54,7 +51,7 @@ export const startNextGamePhase = async (nextPhase: 'night' | 'day') => {
 	loadNextRandomSongForPhase(currentPhase, currentPhaseSong);
 
 	// start the second player so both players make music
-	startPlayer(nextPlayer);
+	startCurrentPlayer();
 
 	await fadeSongs(nextPhase);
 

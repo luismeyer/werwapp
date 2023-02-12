@@ -3,11 +3,10 @@ import * as Tone from 'tone';
 
 import { browser } from '$app/environment';
 import type { Song } from '$lib/song';
-import { getCurrentPlayer } from '$lib/player';
 
 export type PlayerStore = {
 	fading: boolean;
-	paused: boolean;
+	playing: boolean;
 	progress: number;
 	currentPhaseSong?: Song;
 	currentSongDuration: number;
@@ -21,8 +20,6 @@ export type PlayerStore = {
 		song?: Song;
 	};
 };
-
-let progressClock: NodeJS.Timer;
 
 const createInit = (): PlayerStore => {
 	const fadeTime = 1;
@@ -47,7 +44,7 @@ const createInit = (): PlayerStore => {
 
 	return {
 		fading: false,
-		paused: false,
+		playing: false,
 		crossFade,
 		dayPlayer,
 		nightPlayer,
@@ -60,16 +57,11 @@ const createInit = (): PlayerStore => {
 export function createPlayerStore() {
 	const init: PlayerStore | undefined = browser
 		? createInit()
-		: { currentSongDuration: 100, fading: false, paused: false, progress: 0, queue: {} };
+		: { currentSongDuration: 100, fading: false, playing: false, progress: 0, queue: {} };
 
 	const { subscribe, update, set } = writable<PlayerStore>(init);
 
 	const updateAction = (newState: Partial<PlayerStore>) => {
-		if (newState.currentPhaseSong !== undefined) {
-			newState.progress = 0;
-			newState.currentSongDuration = getCurrentPlayer()?.buffer.duration;
-		}
-
 		update((currentState) => ({ ...currentState, ...newState }));
 	};
 
@@ -81,11 +73,12 @@ export function createPlayerStore() {
 		set(createInit());
 	};
 
-	progressClock = setInterval(() => {
-		update((currentState) => ({
-			...currentState,
-			progress: currentState.progress + (currentState.paused ? 0 : 1)
-		}));
+	setInterval(() => {
+		update((currentState) => {
+			const progress = currentState.progress + (currentState.playing ? 1 : 0);
+
+			return { ...currentState, progress };
+		});
 	}, 1000);
 
 	return {

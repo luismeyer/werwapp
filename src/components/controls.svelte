@@ -1,21 +1,15 @@
 <script lang="ts">
-	import * as Tone from 'tone';
-
-	import { shiftQueueIntoPlayer } from '$lib/player';
+	import { pauseCurrentPlayer, resumeCurrentPlayer, shiftQueueIntoPlayer } from '$lib/player';
 	import { playerStore } from '$lib/stores/player';
 	import { gameStore } from '$lib/stores/game';
 
 	const fillColor = `hsl(var(--nc) / var(--tw-text-opacity))`;
 
-	const togglePaused = () => {
-		const paused = !$playerStore.paused;
-
-		playerStore.update({ paused });
-
-		if (paused) {
-			Tone.Transport.pause();
+	const togglePlayer = () => {
+		if ($playerStore.playing) {
+			pauseCurrentPlayer();
 		} else {
-			Tone.Transport.start();
+			resumeCurrentPlayer();
 		}
 	};
 
@@ -27,8 +21,8 @@
 <div class="h-full flex flex-col gap-2">
 	<div class="h-full flex gap-2">
 		<div class="btn-group h-full w-full">
-			<button class="btn h-full" on:click={togglePaused}>
-				{#if $playerStore.paused}
+			<button class="btn h-full" on:click={togglePlayer}>
+				{#if $playerStore.playing}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="48"
@@ -36,7 +30,7 @@
 						viewBox="0 0 24 24"
 						fill={fillColor}
 					>
-						<path d="M7 6v12l10-6z" />
+						<path d="M8 7h3v10H8zm5 0h3v10h-3z" />
 					</svg>
 				{:else}
 					<svg
@@ -46,7 +40,7 @@
 						viewBox="0 0 24 24"
 						fill={fillColor}
 					>
-						<path d="M8 7h3v10H8zm5 0h3v10h-3z" />
+						<path d="M7 6v12l10-6z" />
 					</svg>
 				{/if}
 			</button>
