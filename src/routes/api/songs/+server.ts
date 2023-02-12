@@ -31,5 +31,6 @@ export async function GET({ url }: RequestEvent) {
 
 	const response = new Response(blob);
 	response.headers.append('cache-control', 'public, max-age=31536000');
+
 	return response;
 }
