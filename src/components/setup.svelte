@@ -14,6 +14,7 @@
 		if ($gameStore.state == 'running') {
 			return;
 		}
+
 		await loadNextRandomSongForPhase('night');
 
 		playerStore.update({ currentPhaseSong: nextPhaseSong, nextPhaseSong: undefined });

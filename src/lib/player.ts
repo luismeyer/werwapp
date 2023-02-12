@@ -7,7 +7,11 @@ import { playerStore } from '$lib/stores/player';
 import { createApiSongUrl, getRandomSong } from './song';
 import { showCurrentSongToast } from './stores/toast';
 
-export const shiftQueueIntoPlayer = () => {
+/**
+ * Function will shift a new song into the current player.
+ * Afterwards another song is put into the queue.
+ */
+export const shiftQueueIntoPlayer = async () => {
 	const {
 		queue: { buffer, song, timeout }
 	} = get(playerStore);
@@ -31,29 +35,38 @@ export const shiftQueueIntoPlayer = () => {
 	player.buffer = buffer;
 
 	playerStore.update({ currentPhaseSong: song, queue: {} });
+
 	showCurrentSongToast();
 
-	startPlayer(player);
+	await startCurrentPlayer();
 };
 
 /**
- *	Function will start the tone player and fetch one next song. A timeout
- *  will be started that ends at the same time the song ends. After the timeout
- *  the new fetched song will be played and the function is called recursivly
+ * Function will start the tone player and fetch one next song. A timeout
+ * will be started that ends at the same time the song ends. After the timeout
+ * the new fetched song will be played and the function is called recursivly
  */
-export const startPlayer = async (player?: Tone.Player) => {
+export const startCurrentPlayer = async () => {
+	const player = getCurrentPlayer();
+
 	if (!player) {
-		return;
+		throw new Error('Trying to start undefined player');
 	}
 
-	// start music
-	Tone.Transport.start();
+	// start the tone transport and the queue timeout
+	resumeCurrentPlayer();
+
+	// sync player to tone transport
 	player.sync().start();
 
-	const timeout = setTimeout(shiftQueueIntoPlayer, player.buffer.duration * 1000 - 500);
+	playerStore.update({
+		playing: true,
+		progress: 0,
+		currentSongDuration: player.buffer.duration
+	});
 
-	const { currentPhaseSong } = get(playerStore);
 	const { gamestate } = get(gameStore);
+	const { currentPhaseSong, queue } = get(playerStore);
 
 	// find random song exluding the current one
 	const songInQueue = getRandomSong(gamestate, currentPhaseSong);
@@ -62,7 +75,7 @@ export const startPlayer = async (player?: Tone.Player) => {
 	const queueBuffer = new Tone.ToneAudioBuffer();
 	await queueBuffer.load(createApiSongUrl(songInQueue));
 
-	playerStore.update({ paused: false, queue: { timeout, buffer: queueBuffer, song: songInQueue } });
+	playerStore.update({ queue: { ...queue, buffer: queueBuffer, song: songInQueue } });
 };
 
 export const getCurrentPlayer = () => {
@@ -70,4 +83,53 @@ export const getCurrentPlayer = () => {
 	const { dayPlayer, nightPlayer } = get(playerStore);
 
 	return gamestate === 'day' ? dayPlayer : nightPlayer;
+};
+
+/**
+ * Function pauses the transport and clears the timeout of the queue
+ */
+export const pauseCurrentPlayer = () => {
+	const {
+		playing,
+		queue: { timeout }
+	} = get(playerStore);
+
+	if (!playing) {
+		throw new Error('Trying to pause already paused player');
+	}
+
+	if (!timeout) {
+		throw new Error('Trying to pause without timeout');
+	}
+
+	Tone.Transport.pause();
+
+	// clearing queue
+	clearTimeout(timeout);
+
+	playerStore.update({ playing: false });
+};
+
+/**
+ * Function will resume the transport and create a new queue timeout that
+ * will shift the next song into the player at the correct time
+ */
+export const resumeCurrentPlayer = () => {
+	const player = getCurrentPlayer();
+
+	if (!player) {
+		throw new Error('Trying to resume undefined player');
+	}
+
+	// start music
+	Tone.Transport.start();
+
+	const { progress, queue } = get(playerStore);
+
+	// calculate end of current song
+	const remainingSongDuration = (player.buffer.duration - progress) * 1000;
+
+	const timeout = setTimeout(shiftQueueIntoPlayer, remainingSongDuration - 500);
+
+	playerStore.update({ playing: true, queue: { ...queue, timeout } });
 };
