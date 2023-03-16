@@ -6,7 +6,6 @@ import { songData } from './songdata';
 
 export type Song = {
 	title: string;
-	internalUrl: string;
 	songPage: string;
 	artist: string;
 };
@@ -59,7 +58,8 @@ export const fadeSongs = (target: 'day' | 'night') => {
 	});
 };
 
-export const createApiSongUrl = (song: Song) => 'api/songs?url=' + song.internalUrl;
+export const createApiSongUrl = (song: Song, state: 'day' | 'night') =>
+	`api/songs?state=${state}&title=${song.title}&artist=${song.artist}`;
 
 /**
  * Loads a new random song into the buffer that was not played in the last round.
@@ -70,7 +70,7 @@ export const loadNextRandomSongForPhase = async (target: 'day' | 'night', exclud
 
 	const song = getRandomSong(target, excludedSong);
 
-	await player?.load(createApiSongUrl(song));
+	await player?.load(createApiSongUrl(song, target));
 
 	playerStore.update({ nextPhaseSong: song });
 };
