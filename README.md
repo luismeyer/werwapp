@@ -23,7 +23,7 @@ Just create an issue and and describe the feature you wish. We will try our best
 
 Please create an issue and describe the error by providing reproduction steps and a scrrenshot.
 
-## Develotment
+## Development
 
 If you want to implement features, fix bugs or just host the website yourself follow theese instructions.
 
@@ -49,6 +49,11 @@ and start the application
 `yarn dev`
 
 Thats it now you should see the app under [localhost](http://localhost:5173)
+
+## Hosting the songs
+
+You need to prived the env variable `SECRET_SONG_BASE_PATH`. You can utilize the parametes `{STATE}`, `{ARTIST}` and `{TITLE}` in the url.
+Theese are getting substitutet with the attributes of the song in upper case during the server side request.
 
 ## Contributing
 

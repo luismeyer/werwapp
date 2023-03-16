@@ -73,7 +73,7 @@ export const startCurrentPlayer = async () => {
 
 	// create buffer and load next song
 	const queueBuffer = new Tone.ToneAudioBuffer();
-	await queueBuffer.load(createApiSongUrl(songInQueue));
+	await queueBuffer.load(createApiSongUrl(songInQueue, gamestate));
 
 	playerStore.update({ queue: { ...queue, buffer: queueBuffer, song: songInQueue } });
 };

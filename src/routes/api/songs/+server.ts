@@ -1,41 +1,35 @@
-import type { RequestEvent } from '@sveltejs/kit';
-import fs from 'fs';
+import { error, type RequestEvent } from '@sveltejs/kit';
+import { env } from '$env/dynamic/private';
 
 export async function GET({ url }: RequestEvent) {
-	const songUrl = url.searchParams.get('url') ?? '';
-	const internalSongName = Buffer.from(songUrl, 'ascii').toString('base64url');
-	const songPath = './tmp/' + internalSongName + '.mp3';
+	const replaceMap = {
+		artist: url.searchParams.get('artist')?.replaceAll(' ', '').toUpperCase() ?? '',
+		title: url.searchParams.get('title')?.replaceAll(' ', '').toUpperCase() ?? '',
+		state: url.searchParams.get('state')?.replaceAll(' ', '').toUpperCase() ?? ''
+	};
 
-	if (fs.existsSync(songPath)) {
-		// Serve song from internal cache
-		const blob = fs.readFileSync(songPath);
-
-		console.log('Serving mp3 from cache');
-
-		const response = new Response(blob);
-		response.headers.append('cache-control', 'public, max-age=31536000');
-		return response;
-	} else {
-		// Request song and save it.
-
-		const songData = await fetch(songUrl);
-		const blob = await songData.blob();
-		const buffer = Buffer.from(await blob.arrayBuffer());
-
-		if (!fs.existsSync('./tmp')) {
-			fs.mkdirSync('./tmp');
-		}
-
-		console.log('Saving mp3 into cache', songPath);
-
-		fs.writeFile(songPath, buffer, (err) => {
-			if (err) {
-				console.log('Could not save mp3', err);
-			}
-		});
-
-		const response = new Response(blob);
-		response.headers.append('cache-control', 'public, max-age=31536000');
-		return response;
+	if (!(replaceMap.artist && replaceMap.title && replaceMap.state)) {
+		throw error(404, 'artist, title and state have to be provided by serach params');
 	}
+
+	const songUrl = env.SECRET_SONG_BASE_PATH?.replaceAll(/{STATE}|{ARTIST}|{TITLE}/g, (matched) => {
+		const key = matched.replaceAll(/{|}/g, '').toLocaleLowerCase() as keyof typeof replaceMap;
+		return replaceMap[key];
+	});
+
+	if (!songUrl) {
+		throw error(500, 'Secret_Song_Base_Path is not set!');
+	}
+
+	const songResponse = await fetch(songUrl);
+
+	if (songResponse.status !== 200) {
+		throw error(500, 'Song could not be fetched using URL: ' + songUrl);
+	}
+
+	const blob = await songResponse.blob();
+
+	const response = new Response(blob);
+	response.headers.append('cache-control', 'public, max-age=31536000');
+	return response;
 }
