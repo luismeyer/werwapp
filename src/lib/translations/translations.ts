@@ -43,6 +43,7 @@ export type Translations = {
 	'support.screenlock': string;
 
 	'game.load': string;
+	'game.loadError': string;
 	'game.start': string;
 	'song.title': string;
 
