@@ -5,7 +5,7 @@ import { gameStore } from '$lib/stores/game';
 import { playerStore } from '$lib/stores/player';
 
 import { createApiSongUrl, getRandomSong } from './song';
-import { showCurrentSongToast } from './stores/toast';
+import { showCurrentSongToast, showErrorToast, showToast } from './stores/toast';
 
 /**
  * Function will shift a new song into the current player.
@@ -73,8 +73,8 @@ export const startCurrentPlayer = async () => {
 
 	// create buffer and load next song
 	const queueBuffer = new Tone.ToneAudioBuffer();
-	await queueBuffer.load(createApiSongUrl(songInQueue, gamestate));
 
+	await queueBuffer.load(createApiSongUrl(songInQueue, gamestate)).catch(showErrorToast);
 	playerStore.update({ queue: { ...queue, buffer: queueBuffer, song: songInQueue } });
 };
 

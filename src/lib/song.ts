@@ -3,6 +3,7 @@ import { get } from 'svelte/store';
 import { playerStore } from '$lib/stores/player';
 
 import { songData } from './songdata';
+import { showErrorToast, showToast } from './stores/toast';
 
 export type Song = {
 	title: string;
@@ -70,7 +71,6 @@ export const loadNextRandomSongForPhase = async (target: 'day' | 'night', exclud
 
 	const song = getRandomSong(target, excludedSong);
 
-	await player?.load(createApiSongUrl(song, target));
-
+	await player?.load(createApiSongUrl(song, target)).catch(showErrorToast);
 	playerStore.update({ nextPhaseSong: song });
 };
