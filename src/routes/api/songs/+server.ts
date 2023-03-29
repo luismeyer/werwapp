@@ -24,7 +24,8 @@ export async function GET({ url }: RequestEvent) {
 	const songResponse = await fetch(songUrl);
 
 	if (songResponse.status !== 200) {
-		throw error(500, 'Song could not be fetched using URL: ' + songUrl);
+		console.error(`Song could not be fetched using URL: ${songUrl}`, songResponse);
+		throw error(500, 'Song could not be fetched!');
 	}
 
 	const blob = await songResponse.blob();
