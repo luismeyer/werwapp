@@ -12,29 +12,29 @@ Additional features:
 
 ## How can i use this great app?
 
-If you just want to play a round, head over to the [website](https://werwapp.onrender.com).
+If you just want to play a round, head over to the [website](https://werwapp.pages.dev/).
 For local hosting / usage see the development section.
 
-## I need more functionalities
+## I need more functionality
 
-Just create an issue and and describe the feature you wish. We will try our best to implement it.
+Just create a new issue and and describe the feature you wish. We will try our best to implement it.
 
 ## I found a bug!
 
-Please create an issue and describe the error by providing reproduction steps and a scrrenshot.
+Please create an issue and describe the bug with reproduction steps and a screenshot.
 
 ## Development
 
-If you want to implement features, fix bugs or just host the website yourself follow theese instructions.
+If you want to implement features, fix bugs or just host the site yourself, follow these instructions.
 
-### Setup and start the app
+### Setup and launching the app
 
-You need the following toolchain:
+You will need the following toolchain:
 
 - NodeJs (16.x)
 - Yarn
 
-With that provided, clone the repo and change directory:
+With that provided, clone the repo and change the directory:
 
 `git clone https://github.com/BjarneRentz/werwapp.git`
 
@@ -48,13 +48,13 @@ and start the application
 
 `yarn dev`
 
-Thats it now you should see the app under [localhost](http://localhost:5173)
+Thats it, now you should see the app on [localhost](http://localhost:5173)
 
 ## Hosting the songs
 
 You need to prived the env variable `SECRET_SONG_BASE_PATH`. You can utilize the parametes `{STATE}`, `{ARTIST}` and `{TITLE}` in the url.
 Theese are getting substitutet with the attributes of the song in upper case during the server side request.
 
-## Contributing
+## Contribute
 
-Just fork the repo and start hacking. Please name your commits aber the [convetional commits](https://www.conventionalcommits.org/en/v1.0.0/).
+Just fork the repo and start hacking. Please name your commits using [convetional commits](https://www.conventionalcommits.org/en/v1.0.0/).
