@@ -54,8 +54,9 @@ export type Translations = {
 	'narrator.headline.day': string;
 	'narrator.headline.night': string;
 	'narrator.headline.plural': string;
-	'narrator.headline.singular.female': string;
-	'narrator.headline.singular.male': string;
+	'narrator.headline.singular.feminimum': string;
+	'narrator.headline.singular.masculinum': string;
+	'narrator.headline.singular.neutrum': string;
 	'narrator.amor.name': string;
 	'narrator.amor.name.plural': string;
 	'narrator.amor.description': string;

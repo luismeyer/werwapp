@@ -1,5 +1,7 @@
 import { writable } from 'svelte/store';
 
+import { RoleDefinitions } from './roles';
+
 export type GameStore = {
 	state: 'setup' | 'running' | 'finished';
 	gamestate: 'day' | 'night';
@@ -17,7 +19,7 @@ export type GameRole = {
 	name: GameRoleName;
 	amount: number;
 	combinedWith?: RoleName;
-	male?: boolean;
+	prefix: 'feminimum' | 'masculinum' | 'neutrum';
 };
 
 export type UtilityRole = {
@@ -27,19 +29,6 @@ export type UtilityRole = {
 export type Role = GameRole | UtilityRole;
 
 export type RoleName = Role['name'];
-
-// This also defined the order of the Roles
-const RoleDefinitions: Role[] = [
-	{ name: 'night' },
-	{ name: 'amor', amount: 1, male: true },
-	{ name: 'werewolf', amount: 1, male: true },
-	{ name: 'girl', amount: 1, combinedWith: 'werewolf' },
-	{ name: 'witch', amount: 1 },
-	{ name: 'seer', amount: 1 },
-	{ name: 'day' },
-	{ name: 'hunter', amount: 1, male: true },
-	{ name: 'villager', amount: 1, male: true }
-];
 
 export function createGameStateStore() {
 	const init: GameStore = {

@@ -52,8 +52,9 @@ export const en: Translations = {
 	'narrator.headline.day': 'The Village awakens!',
 	'narrator.headline.night': 'The Village goes to sleep!',
 	'narrator.headline.plural': 'The {{role}} awaken!',
-	'narrator.headline.singular.female': 'The {{role}} awakens!',
-	'narrator.headline.singular.male': 'The {{role}} awakens!',
+	'narrator.headline.singular.masculinum': 'The {{role}} awakens!',
+	'narrator.headline.singular.feminimum': 'The {{role}} awakens!',
+	'narrator.headline.singular.neutrum': 'The {{role}} awakens!',
 	'narrator.amor.name': 'Amor',
 	'narrator.amor.name.plural': 'Amors',
 	'narrator.amor.description':

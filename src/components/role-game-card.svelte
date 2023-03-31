@@ -17,9 +17,11 @@
 
 	$: title = $t(
 		role.amount === 1
-			? role.male
-				? 'narrator.headline.singular.male'
-				: 'narrator.headline.singular.female'
+			? role.prefix === 'masculinum'
+				? 'narrator.headline.singular.masculinum'
+				: role.prefix === 'feminimum'
+				? 'narrator.headline.singular.feminimum'
+				: 'narrator.headline.singular.neutrum'
 			: 'narrator.headline.plural',
 		{ role: name }
 	);
