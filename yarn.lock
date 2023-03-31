@@ -353,16 +353,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-cloudflare@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@sveltejs/adapter-cloudflare@npm:2.0.1"
+"@sveltejs/adapter-cloudflare@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@sveltejs/adapter-cloudflare@npm:2.2.0"
   dependencies:
     "@cloudflare/workers-types": ^4.20221111.1
     esbuild: ^0.16.3
     worktop: 0.8.0-next.14
   peerDependencies:
     "@sveltejs/kit": ^1.0.0
-  checksum: 8f6111ccc1a10d9f3d25e8525e35e8308bebfd218055d9bb6cfd5e9aa1016d61bd5b6349afa5bdf9b3265799e34561dff7342921195779a2a53a4c1a7759fefc
+  checksum: da452b7694b12a1aaeec77d8b51b7e2a0c9d48e29e9c9a3e8c91072c3b5a6e20c197fdd0deecb0f641b1cf545835af54a10a6b6b317961d353d066d9475e3b40
   languageName: node
   linkType: hard
 
@@ -4167,7 +4167,7 @@ __metadata:
   resolution: "werwapp@workspace:."
   dependencies:
     "@playwright/test": ^1.28.1
-    "@sveltejs/adapter-cloudflare": ^2.0.1
+    "@sveltejs/adapter-cloudflare": ^2.2.0
     "@sveltejs/kit": ^1.14.0
     "@types/dom-screen-wake-lock": ^1.0.1
     "@types/string-similarity": ^4.0.0
