@@ -2,17 +2,23 @@
 	"name": "werwapp",
 	"version": "0.0.1",
 	"private": true,
+	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
-		"gen:licenses": "license-report --output=json > ./static/licenses.json",
 		"build": "yarn gen:licenses && vite build",
-		"preview": "vite preview",
-		"test": "playwright test",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test:unit": "vitest",
+		"dev": "vite dev",
+		"format": "prettier --plugin-search-dir . --write .",
+		"gen:licenses": "license-report --output=json > ./static/licenses.json",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"preview": "vite preview",
+		"test": "playwright test",
+		"test:unit": "vitest"
+	},
+	"dependencies": {
+		"daisyui": "^2.46.1",
+		"string-similarity": "^4.0.4",
+		"tone": "^14.7.77"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
@@ -37,11 +43,5 @@
 		"typescript": "^5.0.3",
 		"vite": "^4.2.1",
 		"vitest": "^0.29.8"
-	},
-	"type": "module",
-	"dependencies": {
-		"daisyui": "^2.46.1",
-		"string-similarity": "^4.0.4",
-		"tone": "^14.7.77"
 	}
 }
