@@ -52,8 +52,9 @@ export const de: Translations = {
 	'narrator.headline.day': 'Das Dorf erwacht!',
 	'narrator.headline.night': 'Das Dorf schläft ein!',
 	'narrator.headline.plural': 'Die {{role}} erwachen!',
-	'narrator.headline.singular.female': 'Die {{role}} erwacht!',
-	'narrator.headline.singular.male': 'Der {{role}} erwacht!',
+	'narrator.headline.singular.feminimum': 'Die {{role}} erwacht!',
+	'narrator.headline.singular.masculinum': 'Der {{role}} erwacht!',
+	'narrator.headline.singular.neutrum': 'Das {{role}} erwacht!',
 	'narrator.amor.name': 'Amor',
 	'narrator.amor.name.plural': 'Amore',
 	'narrator.amor.description':
@@ -81,5 +82,5 @@ export const de: Translations = {
 	'narrator.girl.name': 'Mädchen',
 	'narrator.girl.name.plural': 'Mädchen',
 	'narrator.girl.description':
-		'Das Mädchen wacht zusammen mit den Werwölfen auf. Dabei versucht sie unbemerckt die Augen zu öffnen und die Wölfe auszuspionieren.'
+		'Das Mädchen wacht zusammen mit den Werwölfen auf. Dabei versucht sie unbemerkt die Augen zu öffnen und die Wölfe auszuspionieren.'
 };
