@@ -1372,9 +1372,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^2.46.1":
-  version: 2.46.1
-  resolution: "daisyui@npm:2.46.1"
+"daisyui@npm:^2.51.5":
+  version: 2.51.5
+  resolution: "daisyui@npm:2.51.5"
   dependencies:
     color: ^4.2
     css-selector-tokenizer: ^0.8.0
@@ -1383,7 +1383,7 @@ __metadata:
   peerDependencies:
     autoprefixer: ^10.0.2
     postcss: ^8.1.6
-  checksum: 6385e1d322e893568739c29908e592d9a95deee3599aac6fac2ebdc84c871d97d0c97d24e779587f86fb4c66e83213b721b72de9df5b76bbf206757318a2e382
+  checksum: cdc49c2378b1cae907eb3b1167266930c07a3e8e3da06339ddf200f93fbbef0d9b1fa6b3b2ba6ebfae5a4bcbb40eeb4bc8ff3256d9f30b04f5baaf26698d9eaf
   languageName: node
   linkType: hard
 
@@ -4457,7 +4457,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.45.0
     "@typescript-eslint/parser": ^5.45.0
     autoprefixer: ^10.4.13
-    daisyui: ^2.46.1
+    daisyui: ^2.51.5
     eslint: ^8.37.0
     eslint-config-prettier: ^8.8.0
     eslint-plugin-svelte3: ^4.0.0
