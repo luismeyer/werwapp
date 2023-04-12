@@ -36,6 +36,7 @@ export const en: Translations = {
 	'support.screenlock':
 		"You can deactivate the automatic screenlock inside the settings. If the option is disabled your Browser currently doesn't support this feature.",
 	'game.load': 'The first song is loading...',
+	'game.loadError': 'Song could not be loaded. Please try again later',
 	'game.start': 'Start the game',
 	'song.title': '{{song}} by {{artist}}',
 

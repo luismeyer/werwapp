@@ -37,6 +37,7 @@ export const de: Translations = {
 	'support.screenlock':
 		'Du kannst die automatische Bildschirmsperre in den Einstellungen deaktivieren. Wenn die Option deaktiviert ist, dann unterstützt dein Browser diese Funktion leider nicht.',
 	'game.load': 'Der erste Song wird geladen...',
+	'game.loadError': 'Song konnte nicht geladen werden. Bitte versuche es später erneut',
 	'game.start': 'Starte das Spiel',
 	'song.title': '{{song}} von {{artist}}',
 	'reset.headline': 'Bist du dir sicher?',
