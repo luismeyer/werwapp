@@ -24,5 +24,10 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Install Commitlint Config
+        run: yarn add @vidavidorra/commitlint-config
+
       - name: Validate commits
         uses: wagoid/commitlint-github-action@v5
+        with:
+          configFile: .github/workflows/commitlint.config.js
