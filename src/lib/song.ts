@@ -3,7 +3,7 @@ import { get } from 'svelte/store';
 import { playerStore } from '$lib/stores/player';
 
 import { songData } from './songdata';
-import { showErrorToast, showToast } from './stores/toast';
+import { showErrorToast } from './stores/toast';
 
 export type Song = {
 	title: string;

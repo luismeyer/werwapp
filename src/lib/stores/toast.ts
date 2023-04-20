@@ -26,7 +26,7 @@ export const toastStore = {
 	}
 };
 
-export const showToast = (toast: Toast, delay?: number) => {
+const showToast = (toast: Toast, delay?: number) => {
 	toastStore.addToast(toast);
 
 	if (delay) {

@@ -5,7 +5,7 @@ import { gameStore } from '$lib/stores/game';
 import { playerStore } from '$lib/stores/player';
 
 import { createApiSongUrl, getRandomSong } from './song';
-import { showCurrentSongToast, showErrorToast, showToast } from './stores/toast';
+import { showCurrentSongToast, showErrorToast } from './stores/toast';
 
 /**
  * Function will shift a new song into the current player.
