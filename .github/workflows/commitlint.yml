@@ -31,3 +31,5 @@ jobs:
         uses: wagoid/commitlint-github-action@v5
         with:
           configFile: .github/workflows/commitlint.config.js
+        env:
+          NODE_PATH: ${{ github.workspace }}/node_modules
