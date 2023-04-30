@@ -1,63 +1,36 @@
 import { get } from 'svelte/store';
 
 import { gameStore } from '$lib/stores/game';
-import { playerStore } from '$lib/stores/player';
+import { nightPlayer, isFading, dayPlayer, nextPlayer } from '$lib/stores/player';
 
-import { fadeSongs, loadNextRandomSongForPhase } from './song';
-import { startCurrentPlayer } from './player';
-
-import * as Tone from 'tone';
-import { showCurrentSongToast } from './stores/toast';
+import { fadeSongs } from './song';
 
 export const startFirstNightPhase = async () => {
-	await Tone.start();
-
 	gameStore.start();
 
-	showCurrentSongToast();
-
-	// load next day song
-	loadNextRandomSongForPhase('day');
-
 	// start the music
-	startCurrentPlayer();
+	nightPlayer.play();
+
+	// prepare the day
+	dayPlayer.loadSong();
 };
 
-export const startNextGamePhase = async (nextPhase: 'night' | 'day') => {
-	const { dayPlayer, nightPlayer, currentPhaseSong, nextPhaseSong, queue } = get(playerStore);
-	const { nightCount } = get(gameStore);
+export const startNextGamePhase = async () => {
+	const { nightCount, gamestate } = get(gameStore);
 
-	clearTimeout(queue.timeout);
-
-	// start the ui transition
+	const nextPhase = gamestate === 'day' ? 'night' : 'day';
 
 	gameStore.updateStore({
 		gamestate: nextPhase,
 		nightCount: nextPhase === 'night' ? nightCount + 1 : nightCount
 	});
 
-	const currentPhase = nextPhase === 'night' ? 'day' : 'night';
-
-	const currentPlayer = currentPhase === 'day' ? dayPlayer : nightPlayer;
-
-	playerStore.update({
-		fading: true,
-		currentPhaseSong: nextPhaseSong,
-		nextPhaseSong: undefined,
-		queue: {}
-	});
-
-	// load next song for the phase after the next phase
-	loadNextRandomSongForPhase(currentPhase, currentPhaseSong);
-
-	// start the second player so both players make music
-	startCurrentPlayer();
+	isFading.set(true);
 
 	await fadeSongs(nextPhase);
 
-	currentPlayer?.stop();
+	isFading.set(false);
 
-	playerStore.update({ fading: false });
-
-	showCurrentSongToast();
+	const player = get(nextPlayer);
+	player.loadSong();
 };

@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { toastStore } from '$lib/stores/toast';
+
+	$: toasts = Object.values($toastStore);
 </script>
 
 <div class="toast toast-top toast-center w-9/12 text-center">
-	{#each $toastStore as toast}
+	{#each toasts as toast}
 		{#if 'href' in toast}
 			<a target="_blank" rel="noreferrer" href={toast.href}>
 				<div class="alert alert-info">

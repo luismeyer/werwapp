@@ -1,16 +1,21 @@
 <script lang="ts">
-	import { pauseCurrentPlayer, resumeCurrentPlayer, shiftQueueIntoPlayer } from '$lib/player';
-	import { playerStore } from '$lib/stores/player';
 	import { gameStore } from '$lib/stores/game';
+	import { currentPlayer } from '$lib/stores/player';
 
 	const fillColor = `hsl(var(--nc) / var(--tw-text-opacity))`;
 
+	$: ({ playing, progress, duration, nextReady } = $currentPlayer);
+
 	const togglePlayer = () => {
-		if ($playerStore.playing) {
-			pauseCurrentPlayer();
+		if ($playing) {
+			$currentPlayer.pause();
 		} else {
-			resumeCurrentPlayer();
+			$currentPlayer.resume();
 		}
+	};
+
+	const nextSong = () => {
+		$currentPlayer.next();
 	};
 
 	const toggleNarrator = () => {
@@ -22,7 +27,7 @@
 	<div class="h-full flex gap-2">
 		<div class="btn-group h-full w-full">
 			<button class="btn h-full" on:click={togglePlayer}>
-				{#if $playerStore.playing}
+				{#if $playing}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="48"
@@ -45,11 +50,7 @@
 				{/if}
 			</button>
 
-			<button
-				disabled={!$playerStore.queue.buffer}
-				class="btn h-full"
-				on:click={shiftQueueIntoPlayer}
-			>
+			<button class="btn h-full" disabled={!$nextReady} on:click={nextSong}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="48"
@@ -77,9 +78,5 @@
 		</button>
 	</div>
 
-	<progress
-		class="progress w-full"
-		value={$playerStore.progress}
-		max={$playerStore.currentSongDuration}
-	/>
+	<progress class="progress w-full" value={$progress} max={$duration} />
 </div>

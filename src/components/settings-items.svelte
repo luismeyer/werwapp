@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { gameStore } from '$lib/stores/game';
 	import { t } from '$lib/stores/i18n';
-	import { playerStore } from '$lib/stores/player';
+	import { dayPlayer, nightPlayer } from '$lib/stores/player';
 
 	import About from './about.svelte';
 	import Support from './support.svelte';
@@ -12,7 +12,8 @@
 
 	const reset = () => {
 		gameStore.reset();
-		playerStore.reset();
+		dayPlayer.stop();
+		nightPlayer.stop();
 	};
 </script>
 
