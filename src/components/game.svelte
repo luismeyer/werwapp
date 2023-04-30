@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { startNextGamePhase } from '$lib/game';
 	import { gameStore } from '$lib/stores/game';
-	import { playerStore } from '$lib/stores/player';
 	import { getUtilityRole, showRole } from '$lib/roles';
 
 	import SunAndMoon from './sunAndMoon.svelte';
@@ -12,15 +11,13 @@
 
 	const startNight = async () => {
 		showRole(getUtilityRole('night'));
-		await startNextGamePhase('night');
+		await startNextGamePhase();
 	};
 
 	const startDay = async () => {
 		showRole(getUtilityRole('day'));
-		await startNextGamePhase('day');
+		await startNextGamePhase();
 	};
-
-	$: isDisabled = $playerStore.fading || !$playerStore.nextPhaseSong;
 </script>
 
 <div class="game">
@@ -30,7 +27,7 @@
 		<Controls />
 	</div>
 
-	<SunAndMoon disabled={isDisabled} on:click={handleBtnClick} />
+	<SunAndMoon on:click={handleBtnClick} />
 </div>
 
 <style>

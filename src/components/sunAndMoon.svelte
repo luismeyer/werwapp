@@ -1,31 +1,30 @@
 <script lang="ts">
 	import { gameStore } from '$lib/stores/game';
-	import { playerStore } from '$lib/stores/player';
+	import { isFading, nextPlayer } from '$lib/stores/player';
 
-	export let disabled: boolean;
+	$: ({ ready } = $nextPlayer);
+
+	$: disabled = !$ready || $isFading;
+
+	console.log($ready, $isFading);
 
 	$: disabledClass = disabled ? 'disabled' : '';
 
 	let moonClass = 'out-top';
 	let sunClass = 'in-bottom';
 
-	let transitionClass = '';
+	// disable the transition after animation so the
+	// in- and out- class switch will not get animated
+	$: transitionClass = $isFading ? 'transition' : '';
 
-	$: {
-		// disable the transition after animation so the
-		// in- and out- class switch will not get animated
-		transitionClass = $playerStore.fading ? 'transition' : '';
+	// the class if running is always the target position of
+	// the animation. the class if not running is the starting
+	// position of the next animation
+	$: enterScreenClass = $isFading ? 'in-top' : 'out-top';
+	$: leaveScreenClass = $isFading ? 'out-bottom' : 'in-bottom';
 
-		// the class if running is always the target position of
-		// the animation. the class if not running is the starting
-		// position of the next animation
-
-		const enterScreenClass = $playerStore.fading ? 'in-top' : 'out-top';
-		const leaveScreenClass = $playerStore.fading ? 'out-bottom' : 'in-bottom';
-
-		sunClass = $gameStore.gamestate === 'day' ? enterScreenClass : leaveScreenClass;
-		moonClass = $gameStore.gamestate === 'night' ? enterScreenClass : leaveScreenClass;
-	}
+	$: sunClass = $gameStore.gamestate === 'day' ? enterScreenClass : leaveScreenClass;
+	$: moonClass = $gameStore.gamestate === 'night' ? enterScreenClass : leaveScreenClass;
 </script>
 
 <div class="w-full h-full relative">
@@ -71,7 +70,7 @@
 	}
 
 	.transition {
-		/* trasnform time = FadeDuration */
+		/* transform time = FadeDuration */
 		transition: opacity 1s ease, fill 6s ease, transform 6s ease;
 	}
 

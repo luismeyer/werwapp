@@ -13,7 +13,7 @@
 	const changeMusic = () => {
 		gameStore.updateStore({ isNarratorVisible: false });
 
-		startNextGamePhase(role.name);
+		startNextGamePhase();
 	};
 </script>
 

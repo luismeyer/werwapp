@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { t } from '$lib/stores/i18n';
-	import { playerStore } from '$lib/stores/player';
-	import { gameStore, type GameRole } from '$lib/stores/game';
+	import { onMount } from 'svelte';
+
 	import { startFirstNightPhase } from '$lib/game';
 	import { isUtility, roleAddable, roleRemovable, rolesValid } from '$lib/roles';
+	import { gameStore, type GameRole } from '$lib/stores/game';
+	import { t } from '$lib/stores/i18n';
+	import { nightPlayer } from '$lib/stores/player';
 
-	import RoleListItem from './role-list-item.svelte';
 	import RoleImage from './role-image.svelte';
-
-	$: ({ currentPhaseSong } = $playerStore);
-
-	$: buttonLabel = currentPhaseSong ? $t('game.start') : $t('game.load');
+	import RoleListItem from './role-list-item.svelte';
 
 	const removeRole = (role: GameRole) => () => {
 		if (!role.amount || role.amount === 0) {
@@ -34,6 +32,12 @@
 
 	$: addableRoles = rolesArray.filter(({ name }) => roleAddable(rolesArray, name));
 	$: usedRoles = rolesArray.filter(({ amount }) => amount > 0);
+
+	$: ({ ready } = nightPlayer);
+
+	onMount(async () => {
+		nightPlayer.loadSong();
+	});
 </script>
 
 <!-- This is needed because daisy ui requires the tabindex -->
@@ -56,10 +60,10 @@
 	<div class="flex gap-5">
 		<button
 			class="btn btn-primary"
-			disabled={!$playerStore.currentPhaseSong || !rolesValid(rolesArray)}
+			disabled={!rolesValid(rolesArray) || !$ready}
 			on:click={startFirstNightPhase}
 		>
-			{buttonLabel}
+			{$t('game.start')}
 		</button>
 
 		<div class="dropdown dropdown-top dropdown-end">

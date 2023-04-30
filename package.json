@@ -17,8 +17,7 @@
 	},
 	"dependencies": {
 		"daisyui": "^2.51.5",
-		"string-similarity": "^4.0.4",
-		"tone": "^14.7.77"
+		"string-similarity": "^4.0.4"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
