@@ -8,13 +8,12 @@ export class AudioPlayer {
 	private song?: Song;
 	public readonly ready = writable(false);
 
-	private nextAudio: HTMLAudioElement;
+	private nextAudio?: string;
 	private nextSong?: Song;
 	public readonly nextReady = writable(false);
 
 	constructor(private songRepository: SongRepository) {
 		this.audio = new Audio();
-		this.nextAudio = new Audio();
 
 		this.audio.autoplay = false;
 
@@ -31,18 +30,24 @@ export class AudioPlayer {
 		});
 	}
 
+	private async loadAudio(url: string) {
+		return fetch(url)
+			.then((res) => res.blob())
+			.then((blob) => window.URL.createObjectURL(blob));
+	}
+
 	private async loadNextSong() {
 		const song = this.songRepository.getSong(this.song);
 
 		this.nextReady.set(false);
 
-		this.nextAudio.src = createApiSongUrl(song);
-		this.nextAudio.load();
+		const url = createApiSongUrl(song);
 
-		this.nextAudio.addEventListener('canplay', () => {
-			this.nextSong = song;
-			this.nextReady.set(true);
-		});
+		const src = await this.loadAudio(url);
+
+		this.nextAudio = src;
+		this.nextSong = song;
+		this.nextReady.set(true);
 	}
 
 	public async loadSong() {
@@ -50,7 +55,10 @@ export class AudioPlayer {
 
 		this.ready.set(false);
 
-		this.audio.src = createApiSongUrl(song);
+		const url = createApiSongUrl(song);
+		const src = this.nextAudio ?? (await this.loadAudio(url));
+
+		this.audio.src = src;
 		this.audio.load();
 
 		return new Promise((resolve, reject) => {
