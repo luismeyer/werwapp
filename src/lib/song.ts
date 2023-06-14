@@ -2,13 +2,6 @@ import { dayPlayer, nightPlayer } from '$lib/stores/player';
 
 import { Crossfade } from './abstractions/Crossfade';
 
-export type Song = {
-	type: 'day' | 'night';
-	title: string;
-	songPage: string;
-	artist: string;
-};
-
 export type Songs = {
 	daySongs: Song[];
 	nightSongs: Song[];
@@ -23,5 +16,11 @@ export const fadeSongs = (nextPhase: 'day' | 'night') => {
 	return crossfade.run();
 };
 
-export const createApiSongUrl = (song: Song) =>
-	`api/songs?state=${song.type}&title=${song.title}&artist=${song.artist}`;
+export type Song = {
+	type: 'day' | 'night';
+	id: number;
+	title: string;
+	songPage: string;
+	songUrl: string;
+	artist: string;
+};

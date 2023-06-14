@@ -1,14 +1,20 @@
 import type { Song } from '../song';
-import { songData } from '../songdata';
 
 export interface SongRepository {
-	getSong(excludeSong?: Song): Song;
+	getSong(excludeSong?: Song): Promise<Song>;
 }
 
-const getRandomSong = (songs: Song[], excludedSong: Song | undefined): Song => {
-	const playableSongs = songs.filter((s) => s !== excludedSong);
+const getRandomSong = async (type: 'day' | 'night', excludedSong?: Song) => {
+	const params = new URLSearchParams();
+	params.set('type', type);
 
-	const song = playableSongs[Math.floor(Math.random() * playableSongs.length)];
+	if (excludedSong) {
+		params.set('exclude', String(excludedSong.id));
+	}
+
+	const song: Song | undefined = await fetch(`/api/song?${params.toString()}`)
+		.then((res) => res.json())
+		.catch(() => undefined);
 
 	if (!song) {
 		throw new Error('No new song');
@@ -19,12 +25,12 @@ const getRandomSong = (songs: Song[], excludedSong: Song | undefined): Song => {
 
 export class DaySongs implements SongRepository {
 	public getSong(excludeSong?: Song) {
-		return getRandomSong(songData.daySongs, excludeSong);
+		return getRandomSong('day', excludeSong);
 	}
 }
 
 export class NightSongs implements SongRepository {
 	public getSong(excludeSong?: Song) {
-		return getRandomSong(songData.nightSongs, excludeSong);
+		return getRandomSong('night', excludeSong);
 	}
 }
