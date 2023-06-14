@@ -1,7 +1,8 @@
 import { readable, writable, type Readable } from 'svelte/store';
-import { createApiSongUrl, type Song } from '../song';
-import type { SongRepository } from './SongRepository';
+
 import { showSongToast } from '../stores/toast';
+import type { SongRepository } from './SongRepository';
+import type { Song } from '../song';
 
 export class AudioPlayer {
 	private audio: HTMLAudioElement;
@@ -37,13 +38,11 @@ export class AudioPlayer {
 	}
 
 	private async loadNextSong() {
-		const song = this.songRepository.getSong(this.song);
+		const song = await this.songRepository.getSong(this.song);
 
 		this.nextReady.set(false);
 
-		const url = createApiSongUrl(song);
-
-		const src = await this.loadAudio(url);
+		const src = await this.loadAudio(song.songUrl);
 
 		this.nextAudio = src;
 		this.nextSong = song;
@@ -51,12 +50,11 @@ export class AudioPlayer {
 	}
 
 	public async loadSong() {
-		const song = this.nextSong ?? this.songRepository.getSong(this.song);
+		const song = this.nextSong ?? (await this.songRepository.getSong(this.song));
 
 		this.ready.set(false);
 
-		const url = createApiSongUrl(song);
-		const src = this.nextAudio ?? (await this.loadAudio(url));
+		const src = this.nextAudio ?? (await this.loadAudio(song.songUrl));
 
 		this.audio.src = src;
 		this.audio.load();

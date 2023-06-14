@@ -15,3 +15,4 @@ yarn.lock
 
 # Ignore generated licenses.json
 /static/licenses.json
+.cloudflare

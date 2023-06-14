@@ -24,3 +24,4 @@ build
 /tmp
 yarn-error.log
 /static/licenses.json
+songs.json

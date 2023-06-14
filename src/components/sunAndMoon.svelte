@@ -6,8 +6,6 @@
 
 	$: disabled = !$ready || $isFading;
 
-	console.log($ready, $isFading);
-
 	$: disabledClass = disabled ? 'disabled' : '';
 
 	let moonClass = 'out-top';
