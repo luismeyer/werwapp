@@ -80,7 +80,7 @@
 
 <!-- Support Modal -->
 <input type="checkbox" id="qa-modal" class="modal-toggle" />
-<label for="qa-modal" class="modal cursor-pointer ">
+<label for="qa-modal" class="modal cursor-pointer">
 	<label class="modal-box support-modal relative" for="">
 		<label for="qa-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 
@@ -112,7 +112,7 @@
 
 <!-- About Modal -->
 <input bind:checked={isAboutModalOpen} type="checkbox" id="about-modal" class="modal-toggle" />
-<label for="about-modal" class="modal cursor-pointer ">
+<label for="about-modal" class="modal cursor-pointer">
 	<label class="modal-box relative" for="">
 		<label for="about-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 

@@ -31,7 +31,7 @@
 </script>
 
 <div class="flex flex-col justify-between h-screen pb-4">
-	<div class="overflow-hidden	">
+	<div class="overflow-hidden">
 		{#each roles as role}
 			<div bind:this={cardElements[role.name]} class="flex items-center justify-center h-full p-4">
 				{#if isUtility(role)}
