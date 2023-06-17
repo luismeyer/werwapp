@@ -8,9 +8,11 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"dev": "vite dev",
-		"format": "prettier --plugin-search-dir . --write .",
 		"gen:licenses": "license-report --output=json > ./static/licenses.json",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"lint": "eslint . --fix",
+		"lint:check": "eslint .",
+		"prettier": "prettier --plugin-search-dir . --write .",
+		"prettier:check": "prettier --plugin-search-dir . --check .",
 		"preview": "vite preview",
 		"test": "playwright test",
 		"test:unit": "vitest"

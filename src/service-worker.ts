@@ -8,6 +8,7 @@ const ASSETS = [
 	...files // everything in `static`
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 self.addEventListener('install', (event: any) => {
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {
@@ -18,6 +19,7 @@ self.addEventListener('install', (event: any) => {
 	event.waitUntil(addFilesToCache());
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 self.addEventListener('activate', (event: any) => {
 	// Remove previous cached data from disk
 	async function deleteOldCaches() {
@@ -29,6 +31,7 @@ self.addEventListener('activate', (event: any) => {
 	event.waitUntil(deleteOldCaches());
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 self.addEventListener('fetch', (event: any) => {
 	// ignore POST requests etc
 	if (event.request.method !== 'GET') return;
