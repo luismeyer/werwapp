@@ -646,9 +646,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/kit@npm:^1.14.0":
-  version: 1.20.4
-  resolution: "@sveltejs/kit@npm:1.20.4"
+"@sveltejs/kit@npm:^1.21.0":
+  version: 1.21.0
+  resolution: "@sveltejs/kit@npm:1.21.0"
   dependencies:
     "@sveltejs/vite-plugin-svelte": ^2.4.1
     "@types/cookie": ^0.5.1
@@ -667,7 +667,7 @@ __metadata:
     vite: ^4.0.0
   bin:
     svelte-kit: svelte-kit.js
-  checksum: 957e19c4afa9c7c9d09dedf7cc1f596fdac06a84db9f406bab618f8b7dabbc906938f63b86a57560ee9cafee63f117d96235ad67e2431fc36e307c60f378fc3d
+  checksum: c0810e3a843f8d4c9969cf8da15640a5a43f9be25556da84c99c8702e859a624a2a41767ee077646145e97e0057c2f017201ed3cb8e53376a7cd25d6a71ca89b
   languageName: node
   linkType: hard
 
@@ -5446,7 +5446,7 @@ __metadata:
     "@commitlint/config-conventional": ^17.6.5
     "@playwright/test": ^1.28.1
     "@sveltejs/adapter-cloudflare": ^2.2.0
-    "@sveltejs/kit": ^1.14.0
+    "@sveltejs/kit": ^1.21.0
     "@types/dom-screen-wake-lock": ^1.0.1
     "@types/string-similarity": ^4.0.0
     "@typescript-eslint/eslint-plugin": ^5.60.1
