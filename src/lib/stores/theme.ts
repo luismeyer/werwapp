@@ -6,7 +6,7 @@ import { gameStore } from './game';
 const THEME_STORAGE_KEY = 'theme';
 
 const updateThemeOnBody = (theme: string) => {
-	document.body.setAttribute('data-theme', theme);
+	document.documentElement.setAttribute('data-theme', theme);
 };
 
 const updateThemeInGame = (newState?: ThemeData) => {
