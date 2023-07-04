@@ -60,20 +60,20 @@ export class AudioPlayer {
 		this.audio.load();
 
 		return new Promise((resolve, reject) => {
-			this.audio.addEventListener('canplay', () => {
+			this.audio.oncanplay = () => {
 				this.song = song;
 				this.ready.set(true);
 
 				this.loadNextSong();
 
 				resolve(true);
-			});
+			};
 
-			this.audio.addEventListener('error', (error) => {
+			this.audio.onerror = (error) => {
 				this.ready.set(false);
 
 				reject(error);
-			});
+			};
 		});
 	}
 
