@@ -18,7 +18,7 @@
 		"test:unit": "vitest"
 	},
 	"dependencies": {
-		"daisyui": "^2.51.5",
+		"daisyui": "^3.1.7",
 		"string-similarity": "^4.0.4"
 	},
 	"devDependencies": {
