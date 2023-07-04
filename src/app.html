@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme">
 	<head>
 		<meta charset="utf-8" />
 
@@ -54,11 +54,6 @@
 				transition: background-color 3s ease, fill 3s ease;
 			}
 
-			.content {
-				margin: auto;
-				display: contents;
-			}
-
 			body {
 				height: 100dvh;
 			}
@@ -67,7 +62,7 @@
 		%sveltekit.head%
 	</head>
 
-	<body data-sveltekit-preload-data="hover" class="theme">
+	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
