@@ -64,6 +64,7 @@ gameStore.subscribe(() => {
 	updateThemeInGame();
 });
 
+// this needs to be in sync with the tailwind.config.js file
 export const themes = [
 	'light',
 	'dark',
