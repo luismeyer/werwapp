@@ -1866,17 +1866,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^3.1.10":
-  version: 3.1.10
-  resolution: "daisyui@npm:3.1.10"
+"daisyui@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "daisyui@npm:3.2.1"
   dependencies:
     colord: ^2.9
     css-selector-tokenizer: ^0.8
+    postcss: ^8
     postcss-js: ^4
     tailwindcss: ^3
-  peerDependencies:
-    postcss: ^8
-  checksum: c042de460e4e54a80ee6e2bd62e7218a819317910c192510abfe026a72f0848e4d2d3efb678b55250b52a9517e88b505ec6e88d1efd4b85717a4cfeb7d8ce164
+  checksum: 916d80b46b8576f41008f05aa9c0dd80bfdd4b95b2ac864386ed218ff91fabaaf5469b183a5bcd087a8666e55a84f9f1f7ca835d0f15b39623fb77c3b974f7fa
   languageName: node
   linkType: hard
 
@@ -4240,6 +4239,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8, postcss@npm:^8.4.24, postcss@npm:^8.4.25":
+  version: 8.4.25
+  resolution: "postcss@npm:8.4.25"
+  dependencies:
+    nanoid: ^3.3.6
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: 9ed3ab8af43ad5210c28f56f916fd9b8c9f94fbeaebbf645dcf579bc28bdd8056c2a7ecc934668d399b81fedb6128f0c4b299f931e50454964bc911c25a3a0a2
+  languageName: node
+  linkType: hard
+
 "postcss@npm:^8.4.23":
   version: 8.4.24
   resolution: "postcss@npm:8.4.24"
@@ -4248,17 +4258,6 @@ __metadata:
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
   checksum: 814e2126dacfea313588eda09cc99a9b4c26ec55c059188aa7a916d20d26d483483106dc5ff9e560731b59f45c5bb91b945dfadc670aed875cc90ddbbf4e787d
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.24, postcss@npm:^8.4.25":
-  version: 8.4.25
-  resolution: "postcss@npm:8.4.25"
-  dependencies:
-    nanoid: ^3.3.6
-    picocolors: ^1.0.0
-    source-map-js: ^1.0.2
-  checksum: 9ed3ab8af43ad5210c28f56f916fd9b8c9f94fbeaebbf645dcf579bc28bdd8056c2a7ecc934668d399b81fedb6128f0c4b299f931e50454964bc911c25a3a0a2
   languageName: node
   linkType: hard
 
@@ -5654,7 +5653,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.61.0
     "@typescript-eslint/parser": ^5.60.1
     autoprefixer: ^10.4.14
-    daisyui: ^3.1.10
+    daisyui: ^3.2.1
     eslint: ^8.44.0
     eslint-config-prettier: ^8.8.0
     eslint-plugin-svelte3: ^4.0.0
