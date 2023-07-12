@@ -817,16 +817,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sveltejs/adapter-cloudflare@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@sveltejs/adapter-cloudflare@npm:2.3.0"
+"@sveltejs/adapter-cloudflare@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@sveltejs/adapter-cloudflare@npm:2.3.1"
   dependencies:
     "@cloudflare/workers-types": ^4.20230404.0
-    esbuild: ^0.17.18
+    esbuild: ^0.18.11
     worktop: 0.8.0-next.15
   peerDependencies:
     "@sveltejs/kit": ^1.0.0
-  checksum: 0dddf016b622cbc99535f6ac021ec765008d85803ac85f7fcbc577ef2e3e985d64603f0b2ca67e3301a5a088c7542510a611ddc2fbd523abfb4754d4b60f445d
+  checksum: e94af7dd0648702ed59a5a8731d00b0bb7ca834d3d096b6671028cbe8d977e4c710b9db9307b057f5fd23799cea98fdb3e448ce118a22074cc0b70ed59042d08
   languageName: node
   linkType: hard
 
@@ -2119,7 +2119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.17.18, esbuild@npm:^0.17.5":
+"esbuild@npm:^0.17.5":
   version: 0.17.19
   resolution: "esbuild@npm:0.17.19"
   dependencies:
@@ -2196,7 +2196,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.18.10":
+"esbuild@npm:^0.18.10, esbuild@npm:^0.18.11":
   version: 0.18.11
   resolution: "esbuild@npm:0.18.11"
   dependencies:
@@ -5647,7 +5647,7 @@ __metadata:
     "@commitlint/config-conventional": ^17.6.6
     "@planetscale/database": ^1.7.0
     "@playwright/test": ^1.28.1
-    "@sveltejs/adapter-cloudflare": ^2.3.0
+    "@sveltejs/adapter-cloudflare": ^2.3.1
     "@sveltejs/kit": ^1.22.1
     "@types/dom-screen-wake-lock": ^1.0.1
     "@types/string-similarity": ^4.0.0
