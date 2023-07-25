@@ -1866,17 +1866,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^3.1.10":
-  version: 3.1.10
-  resolution: "daisyui@npm:3.1.10"
+"daisyui@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "daisyui@npm:3.4.0"
   dependencies:
     colord: ^2.9
     css-selector-tokenizer: ^0.8
+    postcss: ^8
     postcss-js: ^4
     tailwindcss: ^3
-  peerDependencies:
-    postcss: ^8
-  checksum: c042de460e4e54a80ee6e2bd62e7218a819317910c192510abfe026a72f0848e4d2d3efb678b55250b52a9517e88b505ec6e88d1efd4b85717a4cfeb7d8ce164
+  checksum: aadc9af2ef7ec750ee57ff2f01ffc72776e2525a73048a28026cb4218858dd1d174d9d539ced7706e2291d181278cd00ce359a2045d80c5280de64f5d058be87
   languageName: node
   linkType: hard
 
@@ -4240,6 +4239,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8":
+  version: 8.4.27
+  resolution: "postcss@npm:8.4.27"
+  dependencies:
+    nanoid: ^3.3.6
+    picocolors: ^1.0.0
+    source-map-js: ^1.0.2
+  checksum: 1cdd0c298849df6cd65f7e646a3ba36870a37b65f55fd59d1a165539c263e9b4872a402bf4ed1ca1bc31f58b68b2835545e33ea1a23b161a1f8aa6d5ded81e78
+  languageName: node
+  linkType: hard
+
 "postcss@npm:^8.4.23":
   version: 8.4.24
   resolution: "postcss@npm:8.4.24"
@@ -5654,7 +5664,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.61.0
     "@typescript-eslint/parser": ^5.60.1
     autoprefixer: ^10.4.14
-    daisyui: ^3.1.10
+    daisyui: ^3.4.0
     eslint: ^8.44.0
     eslint-config-prettier: ^8.8.0
     eslint-plugin-svelte3: ^4.0.0
