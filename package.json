@@ -23,7 +23,7 @@
 		"string-similarity": "^4.0.4"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.6.6",
+		"@commitlint/cli": "^17.7.1",
 		"@commitlint/config-conventional": "^17.6.6",
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-cloudflare": "^2.3.1",
