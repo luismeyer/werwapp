@@ -27,7 +27,7 @@
 		"@commitlint/config-conventional": "^17.6.6",
 		"@playwright/test": "^1.38.0",
 		"@sveltejs/adapter-cloudflare": "^2.3.1",
-		"@sveltejs/kit": "^1.22.1",
+		"@sveltejs/kit": "^1.25.0",
 		"@types/dom-screen-wake-lock": "^1.0.1",
 		"@types/string-similarity": "^4.0.0",
 		"@typescript-eslint/eslint-plugin": "^5.61.0",
