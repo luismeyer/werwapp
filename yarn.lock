@@ -1861,16 +1861,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "daisyui@npm:3.4.0"
+"daisyui@npm:^3.7.4":
+  version: 3.7.4
+  resolution: "daisyui@npm:3.7.4"
   dependencies:
     colord: ^2.9
     css-selector-tokenizer: ^0.8
     postcss: ^8
     postcss-js: ^4
     tailwindcss: ^3
-  checksum: aadc9af2ef7ec750ee57ff2f01ffc72776e2525a73048a28026cb4218858dd1d174d9d539ced7706e2291d181278cd00ce359a2045d80c5280de64f5d058be87
+  checksum: 94ace10f70db46403368ee3da83117f3a6e84c7df35d1f9ad7ea502fc1cb406293cd95baa4dc0f28a45c60d04b1e5b4131df64348d7a3ddcd8ee6f6cd77aad5d
   languageName: node
   linkType: hard
 
@@ -5748,7 +5748,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.61.0
     "@typescript-eslint/parser": ^5.60.1
     autoprefixer: ^10.4.14
-    daisyui: ^3.4.0
+    daisyui: ^3.7.4
     eslint: ^8.44.0
     eslint-config-prettier: ^8.8.0
     eslint-plugin-svelte3: ^4.0.0
