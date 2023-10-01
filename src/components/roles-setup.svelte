@@ -6,6 +6,7 @@
 	import { gameStore, type GameRole } from '$lib/stores/game';
 	import { t } from '$lib/stores/i18n';
 	import { nightPlayer } from '$lib/stores/player';
+	import { transition } from '$lib/view-transitions';
 
 	import RoleImage from './role-image.svelte';
 	import RoleListItem from './role-list-item.svelte';
@@ -61,7 +62,7 @@
 		<button
 			class="btn btn-primary"
 			disabled={!rolesValid(rolesArray) || !$ready}
-			on:click={startFirstNightPhase}
+			on:click={transition(startFirstNightPhase)}
 		>
 			{$t('game.start')}
 		</button>
