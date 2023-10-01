@@ -32,7 +32,7 @@ If you want to implement features, fix bugs or just host the site yourself, foll
 You will need the following toolchain:
 
 - NodeJs (16.x)
-- Yarn
+- Bun
 
 With that provided, clone the repo and change the directory:
 
@@ -42,11 +42,11 @@ With that provided, clone the repo and change the directory:
 
 Install the dependencies
 
-`yarn`
+`bun install`
 
 and start the application
 
-`yarn dev`
+`bun run dev`
 
 Thats it, now you should see the app on [localhost](http://localhost:5173)
 

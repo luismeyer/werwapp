@@ -16,12 +16,8 @@ vite.config.js.timestamp-*
 .vercel
 .test-tmp
 symlink-from
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
 .pnp.*
 build
 /tmp
-yarn-error.log
 /static/licenses.json
 songs.json

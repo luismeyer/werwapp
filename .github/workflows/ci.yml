@@ -12,19 +12,20 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'yarn'
+
+      - uses: oven-sh/setup-bun@v1
 
       - name: Install
-        run: yarn
+        run: bun install
 
       - name: Build
-        run: yarn build
+        run: bun run build
 
       - name: Check
-        run: yarn check
+        run: bun run check
 
       - name: Lint check
-        run: yarn lint:check
+        run: bun lint:check
 
       - name: Prettier check
-        run: yarn prettier:check
+        run: bun prettier:check
