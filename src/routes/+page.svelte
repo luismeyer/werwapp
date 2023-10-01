@@ -5,6 +5,7 @@
 	import { registerSwipeGestures } from '$lib/swipe';
 	import { gameStore } from '$lib/stores/game';
 	import { mountWakeLock } from '$lib/stores/wakelock';
+	import { slideTransition } from '$lib/view-transitions';
 
 	import Forest from '../components/forest.svelte';
 	import Settings from '../components/settings.svelte';
@@ -19,6 +20,15 @@
 	let tabs: Tab[] = ['game', 'settings'];
 	let activeTab = 0;
 
+	const changeTab = (index: number) => {
+		const animate = slideTransition(
+			() => (activeTab = index),
+			activeTab < index ? 'left' : 'right'
+		);
+
+		animate();
+	};
+
 	onMount(() => {
 		mountWakeLock();
 
@@ -30,18 +40,18 @@
 				}
 
 				if (activeTab === 0) {
-					activeTab = 1;
+					changeTab(activeTab + 1);
 					return;
 				}
 			},
 			handleRight: () => {
-				if (activeTab === 0 && !$gameStore.isNarratorVisible) {
+				if (activeTab === 0 && !$gameStore.isNarratorVisible && $gameStore.state === 'running') {
 					gameStore.updateStore({ isNarratorVisible: true });
 					return;
 				}
 
 				if (activeTab === 1) {
-					activeTab = 0;
+					changeTab(activeTab - 1);
 				}
 			}
 		});
@@ -55,15 +65,16 @@
 		class="drawer-toggle"
 		bind:checked={$gameStore.isNarratorVisible}
 	/>
+
 	<div class="drawer-content">
-		<div class="content gap-5">
+		<div id="main" class="content gap-5">
 			<header>
 				<div class="flex justify-around py-5">
 					<h1 class="text-5xl font-bold">{$t('game.name')}</h1>
 				</div>
 			</header>
 
-			<main>
+			<main class="slide-transition">
 				{#if activeTab === 0}
 					<Setup />
 				{:else if activeTab === 1}
@@ -72,18 +83,21 @@
 			</main>
 
 			<Forest />
+		</div>
 
-			<div class="btm-nav navigation theme">
-				{#each tabs as tab, index}
-					<button
-						class="theme"
-						on:click={() => (activeTab = index)}
-						class:active={index === activeTab}
-					>
-						{$t(tab)}
-					</button>
-				{/each}
-			</div>
+		<div class="btm-nav navigation theme">
+			{#each tabs as tab, index}
+				<button
+					class="theme"
+					on:click={slideTransition(
+						() => (activeTab = index),
+						activeTab < index ? 'left' : 'right'
+					)}
+					class:active={index === activeTab}
+				>
+					{$t(tab)}
+				</button>
+			{/each}
 		</div>
 	</div>
 
@@ -113,5 +127,10 @@
 		margin: auto;
 		/* Safe space for mobile devices with home bar */
 		bottom: 1rem;
+	}
+
+	.slide-transition {
+		view-transition-name: slide;
+		transform: translate3D(0, 0, 0);
 	}
 </style>
