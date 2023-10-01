@@ -8,7 +8,7 @@
 	import SettingsWakelock from './settings-wakelock.svelte';
 </script>
 
-<div class="px-5 pb-20">
+<div class="px-5 pb-20 h-full flex flex-col">
 	<div class="text-xl font-extrabold">{$t('settings')}</div>
 
 	<div class="text-base-content/70 my-4 text-xs">
