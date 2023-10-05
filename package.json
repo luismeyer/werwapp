@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@planetscale/database": "^1.7.0",
-		"daisyui": "^3.4.0",
+		"daisyui": "^3.9.1",
 		"string-similarity": "^4.0.4"
 	},
 	"devDependencies": {
