@@ -1861,16 +1861,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "daisyui@npm:3.4.0"
+"daisyui@npm:^3.9.2":
+  version: 3.9.2
+  resolution: "daisyui@npm:3.9.2"
   dependencies:
     colord: ^2.9
     css-selector-tokenizer: ^0.8
     postcss: ^8
     postcss-js: ^4
-    tailwindcss: ^3
-  checksum: aadc9af2ef7ec750ee57ff2f01ffc72776e2525a73048a28026cb4218858dd1d174d9d539ced7706e2291d181278cd00ce359a2045d80c5280de64f5d058be87
+    tailwindcss: ^3.1
+  checksum: b30644baf29d2e608209ad8e3e9c1e3fbfe03f92a69baabe943255ab5d95096bc8f7471f83415651d04da83b70a9240cbb9705c1031f33a6cfaa6b9708cd1bcb
   languageName: node
   linkType: hard
 
@@ -5150,7 +5150,40 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3, tailwindcss@npm:^3.2.4":
+"tailwindcss@npm:^3.1":
+  version: 3.3.3
+  resolution: "tailwindcss@npm:3.3.3"
+  dependencies:
+    "@alloc/quick-lru": ^5.2.0
+    arg: ^5.0.2
+    chokidar: ^3.5.3
+    didyoumean: ^1.2.2
+    dlv: ^1.1.3
+    fast-glob: ^3.2.12
+    glob-parent: ^6.0.2
+    is-glob: ^4.0.3
+    jiti: ^1.18.2
+    lilconfig: ^2.1.0
+    micromatch: ^4.0.5
+    normalize-path: ^3.0.0
+    object-hash: ^3.0.0
+    picocolors: ^1.0.0
+    postcss: ^8.4.23
+    postcss-import: ^15.1.0
+    postcss-js: ^4.0.1
+    postcss-load-config: ^4.0.1
+    postcss-nested: ^6.0.1
+    postcss-selector-parser: ^6.0.11
+    resolve: ^1.22.2
+    sucrase: ^3.32.0
+  bin:
+    tailwind: lib/cli.js
+    tailwindcss: lib/cli.js
+  checksum: 0195c7a3ebb0de5e391d2a883d777c78a4749f0c532d204ee8aea9129f2ed8e701d8c0c276aa5f7338d07176a3c2a7682c1d0ab9c8a6c2abe6d9325c2954eb50
+  languageName: node
+  linkType: hard
+
+"tailwindcss@npm:^3.2.4":
   version: 3.3.2
   resolution: "tailwindcss@npm:3.3.2"
   dependencies:
@@ -5748,7 +5781,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.61.0
     "@typescript-eslint/parser": ^5.60.1
     autoprefixer: ^10.4.14
-    daisyui: ^3.4.0
+    daisyui: ^3.9.2
     eslint: ^8.44.0
     eslint-config-prettier: ^8.8.0
     eslint-plugin-svelte3: ^4.0.0
