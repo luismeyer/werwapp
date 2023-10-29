@@ -46,7 +46,7 @@ self.addEventListener('fetch', (event: any) => {
 		}
 
 		// Server cached songs
-		if (url.pathname.startsWith('api')) {
+		if (url.pathname.startsWith('storage-freemusicarchive-org')) {
 			const cachedSong = await cache.match(event.request);
 			if (cachedSong) {
 				return cachedSong;
