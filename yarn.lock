@@ -972,10 +972,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/string-similarity@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@types/string-similarity@npm:4.0.0"
-  checksum: e530b8c1254ae3318662baaa71e5d42938c900dd6d3486a358f188dfe0d6f14c2342ad48f363db9851230ab51e17460de7a6569038c022815ade6d4bbe78f46f
+"@types/string-similarity@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@types/string-similarity@npm:4.0.1"
+  checksum: b7e99f2fc191fe79e60fbafc8caf9648b60f3efcebc694ec1e88b690e9fa9faef2b691cf915dc182dc9de17d5f9ba0daa73139889a0ea568ceb5a30f9932ddcc
   languageName: node
   linkType: hard
 
@@ -5667,7 +5667,7 @@ __metadata:
     "@sveltejs/adapter-cloudflare": ^2.3.1
     "@sveltejs/kit": ^1.27.1
     "@types/dom-screen-wake-lock": ^1.0.1
-    "@types/string-similarity": ^4.0.0
+    "@types/string-similarity": ^4.0.1
     "@typescript-eslint/eslint-plugin": ^6.9.0
     "@typescript-eslint/parser": ^6.9.0
     autoprefixer: ^10.4.14
