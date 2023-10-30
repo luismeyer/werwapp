@@ -25,7 +25,7 @@
 	"devDependencies": {
 		"@commitlint/cli": "^18.2.0",
 		"@commitlint/config-conventional": "^17.6.6",
-		"@playwright/test": "^1.38.0",
+		"@playwright/test": "^1.39.0",
 		"@sveltejs/adapter-cloudflare": "^2.3.1",
 		"@sveltejs/kit": "^1.27.1",
 		"@types/dom-screen-wake-lock": "^1.0.1",
