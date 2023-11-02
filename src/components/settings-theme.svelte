@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 	import { themes, themeStore } from '$lib/stores/theme';
 
 	const themeNameInUpper = (name: string) => name[0].toUpperCase() + name.slice(1);

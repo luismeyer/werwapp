@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 	import { wakelockAvailable } from '$lib/wakelock';
 
 	import SettingsI18n from './settings-i18n.svelte';

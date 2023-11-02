@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { startNextGamePhase } from '$lib/game';
 	import { gameStore, type UtilityRole } from '$lib/stores/game';
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 	import { getNextRole, showRole } from '$lib/roles';
 
 	export let role: UtilityRole;
