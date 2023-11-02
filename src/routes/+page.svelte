@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 	import { registerSwipeGestures } from '$lib/swipe';
 	import { gameStore } from '$lib/stores/game';
 	import { mountWakeLock } from '$lib/stores/wakelock';

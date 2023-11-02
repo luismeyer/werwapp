@@ -4,7 +4,7 @@
 	import { startFirstNightPhase } from '$lib/game';
 	import { isUtility, roleAddable, roleRemovable, rolesValid } from '$lib/roles';
 	import { gameStore, type GameRole } from '$lib/stores/game';
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 	import { nightPlayer } from '$lib/stores/player';
 
 	import RoleImage from './role-image.svelte';

@@ -1,13 +1,12 @@
 import { findBestMatch } from 'string-similarity';
-
-import type { Locale, Translations } from './translations/translations';
+import type { Locale } from './stores/i18n';
 
 type Question = {
 	[Property in Locale]: Array<string>;
 };
 
 type QA = Array<{
-	answer: keyof Translations;
+	answer: string;
 	question: Question;
 }>;
 
@@ -69,7 +68,7 @@ const QA: QA = [
 	}
 ];
 
-export const findAnswer = (input: string, language: Locale): keyof Translations => {
+export const findAnswer = (input: string, language: Locale): string => {
 	const targetStrings = QA.reduce<string[]>(
 		(acc, curr) => [...acc, ...curr.question[language]],
 		[]

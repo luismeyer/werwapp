@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { gameStore } from '$lib/stores/game';
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 </script>
 
 <div

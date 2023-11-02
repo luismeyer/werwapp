@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { License } from '$lib/license';
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 
 	export let visible: boolean;
 
