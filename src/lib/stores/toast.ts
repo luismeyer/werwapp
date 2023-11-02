@@ -1,7 +1,7 @@
 import { get, writable } from 'svelte/store';
 
-import { t } from './i18n';
 import type { Song } from '../song';
+import { t } from './translations';
 
 export type Toast = SongToast | ErrorToast;
 

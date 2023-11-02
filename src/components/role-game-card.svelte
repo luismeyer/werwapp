@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { GameRole } from '$lib/stores/game';
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 	import { getNextRole, getPrevRole, isUtility, showRole } from '$lib/roles';
 
 	import RoleImage from './role-image.svelte';
@@ -16,13 +16,7 @@
 	$: description = $t(`narrator.${role.name}.description`);
 
 	$: title = $t(
-		role.amount === 1
-			? role.prefix === 'masculinum'
-				? 'narrator.headline.singular.masculinum'
-				: role.prefix === 'feminimum'
-				? 'narrator.headline.singular.feminimum'
-				: 'narrator.headline.singular.neutrum'
-			: 'narrator.headline.plural',
+		role.amount === 1 ? `narrator.headline.singular.${role.prefix}` : 'narrator.headline.plural',
 		{ role: name }
 	);
 </script>

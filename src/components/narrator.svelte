@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { activeRoles, getUtilityRole, isUtility, roleState } from '$lib/roles';
 	import { gameStore, type RoleName } from '$lib/stores/game';
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 
 	import RoleUtilCard from './role-util-card.svelte';
 	import RoleGameCard from './role-game-card.svelte';

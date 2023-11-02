@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { t } from '$lib/stores/i18n';
+	import { t } from '$lib/stores/translations';
 	import { wakeLockStore } from '$lib/stores/wakelock';
 	import { releaseWakeLock, requestWakeLock, wakelockAvailable } from '$lib/wakelock';
 
