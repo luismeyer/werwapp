@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { GameRole } from '$lib/stores/game';
+	import type { PlayerRole } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
 
-	export let role: GameRole;
+	export let role: PlayerRole;
 
 	$: name = $t(`narrator.${role.name}.name`);
 </script>

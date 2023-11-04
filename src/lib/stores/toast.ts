@@ -19,8 +19,6 @@ const { subscribe, update } = writable<Record<number, Toast>>({});
 export const toastStore = {
 	subscribe,
 	addToast: (id: number, toast: Toast) => {
-		console.info('added toast ', toast);
-
 		update((toasts) => ({ ...toasts, [id]: toast }));
 	},
 	removeToast: (id: number) => {

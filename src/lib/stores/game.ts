@@ -11,26 +11,31 @@ export type GameStore = {
 	currentRole: Role;
 };
 
-export type UtilityRoleName = 'night' | 'day';
-
-export type GameRoleName = 'amor' | 'girl' | 'hunter' | 'seer' | 'werewolf' | 'witch' | 'villager';
-
-export type GameRole = {
-	name: GameRoleName;
+export type PlayerRole = {
+	type: 'player';
+	state: 'day' | 'night';
+	name: string;
 	amount: number;
-	combinedWith?: RoleName;
+	addable: boolean;
+	combinedWith?: string;
 	prefix: 'feminimum' | 'masculinum' | 'neutrum';
+	isEvil: boolean;
+	activeNights?: number[];
 };
 
 export type UtilityRole = {
-	name: UtilityRoleName;
+	type: 'util';
+	state: 'day' | 'night';
+	name: string;
 };
 
-export type Role = GameRole | UtilityRole;
-
-export type RoleName = Role['name'];
+export type Role = PlayerRole | UtilityRole;
 
 export function createGameStateStore() {
+	if (!RoleDefinitions[0]) {
+		throw new Error('RoleDefinitions must not be empty');
+	}
+
 	const init: GameStore = {
 		state: 'setup',
 		gamestate: 'night',

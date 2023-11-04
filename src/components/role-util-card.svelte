@@ -10,10 +10,12 @@
 
 	const title = role.name === 'day' ? $t('narrator.headline.day') : $t('narrator.headline.night');
 
-	const changeMusic = () => {
+	const changeMusic = async () => {
 		gameStore.updateStore({ isNarratorVisible: false });
 
-		startNextGamePhase();
+		await startNextGamePhase();
+
+		gameStore.updateStore({ isNarratorVisible: true, currentRole: nextRole });
 	};
 </script>
 

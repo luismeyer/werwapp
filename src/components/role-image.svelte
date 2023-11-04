@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { GameRole } from '$lib/stores/game';
+	import type { PlayerRole } from '$lib/stores/game';
 
-	export let role: GameRole;
+	export let role: PlayerRole;
 </script>
 
 <div class="avatar indicator">
