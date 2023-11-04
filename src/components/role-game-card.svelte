@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { GameRole } from '$lib/stores/game';
+	import type { PlayerRole } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
-	import { getNextRole, getPrevRole, isUtility, showRole } from '$lib/roles';
+	import { getNextRole, getPrevRole, isPlayerRole, showRole } from '$lib/roles';
 
 	import RoleImage from './role-image.svelte';
 
-	export let role: GameRole;
+	export let role: PlayerRole;
 
 	$: nextRole = getNextRole(role);
 	$: prevRole = getPrevRole(role);
@@ -37,7 +37,7 @@
 			{/if}
 
 			<div class="indicator w-full">
-				{#if !isUtility(nextRole) && nextRole.combinedWith === role.name}
+				{#if isPlayerRole(nextRole) && nextRole.combinedWith === role.name}
 					<span class="indicator-item badge badge-accent bounce">1</span>
 				{/if}
 				<button on:click={() => showRole(nextRole)} class="btn btn-secondary w-full">

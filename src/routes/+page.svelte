@@ -34,7 +34,7 @@
 
 		registerSwipeGestures({
 			handleLeft: () => {
-				if ($gameStore.isNarratorVisible) {
+				if ($gameStore.isNarratorVisible && $gameStore.state === 'running') {
 					gameStore.updateStore({ isNarratorVisible: false });
 					return;
 				}

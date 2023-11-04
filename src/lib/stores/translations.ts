@@ -64,14 +64,15 @@ export const t = derived(
 			// Grab the translation from the translations object.
 			let text = $translations[key];
 
-			if (!text) {
+			if (!text || window.location.search.includes('debug')) {
 				return key;
 			}
 
 			// Replace any passed in variables in the translation string.
-			Object.keys(vars).map((k) => {
-				const regex = new RegExp(`{{${k}}}`, 'g');
-				text = text.replace(regex, vars[k]);
+			Object.entries(vars).map(([key, value]) => {
+				const regex = new RegExp(`{{${key}}}`, 'g');
+
+				text = text?.replace(regex, value);
 			});
 
 			return text;

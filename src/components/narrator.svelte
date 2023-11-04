@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { activeRoles, getUtilityRole, isUtility, roleState } from '$lib/roles';
-	import { gameStore, type RoleName } from '$lib/stores/game';
+	import { activeRoles, getUtilityRole, isUtilityRole, roleState } from '$lib/roles';
+	import { gameStore } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
 
 	import RoleUtilCard from './role-util-card.svelte';
 	import RoleGameCard from './role-game-card.svelte';
 
-	let cardElements: Partial<Record<RoleName, HTMLDivElement>> = {};
+	let cardElements: Record<string, HTMLDivElement> = {};
 
 	const closeLayer = () => {
 		gameStore.updateStore({ isNarratorVisible: false });
@@ -27,14 +27,14 @@
 		}
 	}
 
-	$: roles = activeRoles([...$gameStore.roles]);
+	$: roles = activeRoles([...$gameStore.roles], $gameStore.nightCount);
 </script>
 
 <div class="flex flex-col justify-between h-screen pb-4">
 	<div class="overflow-hidden">
 		{#each roles as role}
 			<div bind:this={cardElements[role.name]} class="flex items-center justify-center h-full p-4">
-				{#if isUtility(role)}
+				{#if isUtilityRole(role)}
 					<RoleUtilCard {role} />
 				{:else}
 					<RoleGameCard {role} />

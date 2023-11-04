@@ -10,8 +10,8 @@ let yDown: number | null = null;
 
 const handleTouchStart = (evt: TouchEvent) => {
 	const [firstTouch] = evt.touches;
-	xDown = firstTouch.clientX;
-	yDown = firstTouch.clientY;
+	xDown = firstTouch?.clientX ?? 0;
+	yDown = firstTouch?.clientY ?? 0;
 };
 
 const handleTouchMove = (options: SwipeOptions) => (evt: TouchEvent) => {
@@ -19,8 +19,8 @@ const handleTouchMove = (options: SwipeOptions) => (evt: TouchEvent) => {
 		return;
 	}
 
-	const xUp = evt.touches[0].clientX;
-	const yUp = evt.touches[0].clientY;
+	const xUp = evt.touches[0]?.clientX ?? 0;
+	const yUp = evt.touches[0]?.clientY ?? 0;
 
 	const xDiff = xDown - xUp;
 	const yDiff = yDown - yUp;

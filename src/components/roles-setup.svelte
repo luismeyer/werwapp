@@ -2,8 +2,8 @@
 	import { onMount } from 'svelte';
 
 	import { startFirstNightPhase } from '$lib/game';
-	import { isUtility, roleAddable, roleRemovable, rolesValid } from '$lib/roles';
-	import { gameStore, type GameRole } from '$lib/stores/game';
+	import { isPlayerRole, roleAddable, roleRemovable, rolesValid } from '$lib/roles';
+	import { gameStore, type PlayerRole } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
 	import { nightPlayer } from '$lib/stores/player';
 	import { transition } from '$lib/view-transitions';
@@ -11,7 +11,7 @@
 	import RoleImage from './role-image.svelte';
 	import RoleListItem from './role-list-item.svelte';
 
-	const removeRole = (role: GameRole) => () => {
+	const removeRole = (role: PlayerRole) => () => {
 		if (!role.amount || role.amount === 0) {
 			return;
 		}
@@ -22,16 +22,18 @@
 		gameStore.updateStore({ roles: $gameStore.roles });
 	};
 
-	const addRole = (role: GameRole) => () => {
+	const addRole = (role: PlayerRole) => () => {
 		role.amount = (role.amount ?? 0) + 1;
 		$gameStore.roles.add(role);
 
 		gameStore.updateStore({ roles: $gameStore.roles });
 	};
 
-	$: rolesArray = [...$gameStore.roles].filter((role): role is GameRole => !isUtility(role));
+	$: rolesArray = [...$gameStore.roles].filter((role): role is PlayerRole => isPlayerRole(role));
 
-	$: addableRoles = rolesArray.filter(({ name }) => roleAddable(rolesArray, name));
+	$: roleAmount = rolesArray.reduce((acc, role) => acc + role.amount, 0);
+
+	$: addableRoles = rolesArray.filter((role) => roleAddable(rolesArray, role));
 	$: usedRoles = rolesArray.filter(({ amount }) => amount > 0);
 
 	$: ({ ready } = nightPlayer);
@@ -47,11 +49,11 @@
 
 <div class="h-full flex flex-col items-center justify-between">
 	<div>
-		<h2 class="mb-3">{$t('narrator.selected')}</h2>
+		<h2 class="mb-3">{roleAmount} {$t('narrator.selected')}</h2>
 
 		<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 			{#each usedRoles as role}
-				<button disabled={!roleRemovable(rolesArray, role.name)} on:click={removeRole(role)}>
+				<button disabled={!roleRemovable(rolesArray, role)} on:click={removeRole(role)}>
 					<RoleImage {role} />
 				</button>
 			{/each}
