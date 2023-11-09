@@ -1,65 +1,77 @@
-import { get } from 'svelte/store';
+import { derived, get } from 'svelte/store';
 import { gameStore, type PlayerRole, type Role, type UtilityRole } from './stores/game';
+
+export const rolesArray = derived(gameStore, ({ roles }) => [...roles]);
+export const playerRolesArray = derived(rolesArray, (roles) =>
+	roles.filter((role): role is PlayerRole => role.type === 'player')
+);
 
 const evilRolesCount = (roles: Role[]) =>
 	roles
-		.filter((role): role is PlayerRole => isPlayerRole(role) && role.isEvil)
+		.filter((role): role is PlayerRole => role.type === 'player' && role.isEvil)
 		.reduce((acc, { amount = 0 }) => acc + amount, 0);
 
 const innocentRolesCount = (roles: Role[]) =>
 	roles
-		.filter((role): role is PlayerRole => isPlayerRole(role) && !role.isEvil)
+		.filter((role): role is PlayerRole => role.type === 'player' && !role.isEvil)
 		.reduce((acc, { amount = 0 }) => acc + amount, 0);
 
-export const activeRoles = (roles: Role[], nightCount: number) =>
-	roles.filter(
+export const activeGameRoles = derived(gameStore, ({ roles, nightCount }) =>
+	[...roles].filter(
 		(role) =>
-			isUtilityRole(role) ||
+			role.type === 'util' ||
 			// player
-			(isPlayerRole(role) &&
+			(role.type === 'player' &&
 				// user selected the role in setup
 				role.amount > 0 &&
 				// role is active in current night
 				(!role.activeNights || role.activeNights?.includes(nightCount)))
-	);
+	)
+);
 
-export const roleRemovable = (roles: Role[], role: PlayerRole): boolean => {
-	const evils = evilRolesCount(roles);
-	const innocents = innocentRolesCount(roles);
+export const playerRoleRemovable = derived(
+	playerRolesArray,
+	(roles) =>
+		(role: PlayerRole): boolean => {
+			const evils = evilRolesCount(roles);
+			const innocents = innocentRolesCount(roles);
 
-	if (role.isEvil) {
-		// there has to be always 1 werewolf
-		return evils > 1;
-	}
+			if (role.isEvil) {
+				// there has to be always 1 werewolf
+				return evils > 1;
+			}
 
-	// there is always one more normal role than werewolfs
-	return evils < innocents - 1;
-};
+			// there is always one more normal role than werewolfs
+			return evils < innocents - 1;
+		}
+);
 
-export const roleAddable = (roles: Role[], role: PlayerRole): boolean => {
-	const evils = evilRolesCount(roles);
-	const innocents = innocentRolesCount(roles);
+export const addablePlayerRoles = derived(playerRolesArray, (roles) =>
+	roles.filter((role: PlayerRole): boolean => {
+		const evils = evilRolesCount(roles);
+		const innocents = innocentRolesCount(roles);
 
-	if (role.isEvil) {
-		// there is alway one more werewolf than other roles
-		return innocents > evils + 1;
-	}
+		if (role.isEvil) {
+			// there is alway one more werewolf than other roles
+			return innocents > evils + 1;
+		}
 
-	if (role.addable) {
-		// role can be added infitely
-		return true;
-	}
+		if (role.addable) {
+			// role can be added infitely
+			return true;
+		}
 
-	// the other roles can only be added once
-	return role.amount === 0;
-};
+		// the other roles can only be added once
+		return role.amount === 0;
+	})
+);
 
-export const rolesValid = (roles: Role[]): boolean => {
+export const playerRolesValid = derived(playerRolesArray, (roles): boolean => {
 	const evils = evilRolesCount(roles);
 	const innocents = innocentRolesCount(roles);
 
 	return evils > 0 && innocents > 0 && innocents > evils;
-};
+});
 
 const firstRole = (activeGameRoles: Role[]) => {
 	if (!activeGameRoles[0]) {
@@ -69,19 +81,13 @@ const firstRole = (activeGameRoles: Role[]) => {
 	return activeGameRoles[0];
 };
 
-export const getNextRole = (currentRole?: Role): Role => {
-	const { roles: rolesSet, nightCount } = get(gameStore);
-
-	const roles = [...rolesSet];
-
-	const activeGameRoles = activeRoles(roles, nightCount);
-
+export const getNextGameRole = derived(activeGameRoles, (activeGameRoles) => (role: Role): Role => {
 	// start with first role
-	if (!currentRole) {
+	if (!role) {
 		return firstRole(activeGameRoles);
 	}
 
-	const currentIndex = activeGameRoles.indexOf(currentRole);
+	const currentIndex = activeGameRoles.indexOf(role);
 
 	// startover again
 	if (currentIndex === activeGameRoles.length - 1) {
@@ -94,51 +100,29 @@ export const getNextRole = (currentRole?: Role): Role => {
 	}
 
 	return nextRole;
-};
+});
 
-export const getPrevRole = (currentRole: Role): Role | undefined => {
-	const { roles: rolesSet, nightCount } = get(gameStore);
+export const getPrevGameRole = derived(
+	activeGameRoles,
+	(activeGameRoles) =>
+		(role: Role): Role | undefined => {
+			const currentIndex = activeGameRoles.indexOf(role);
 
-	const roles = [...rolesSet];
+			// can't go back to last
+			if (currentIndex === 0) {
+				return;
+			}
 
-	const activeGameRoles = activeRoles(roles, nightCount);
+			const previousRole = activeGameRoles[currentIndex - 1];
 
-	const currentIndex = activeGameRoles.indexOf(currentRole);
+			// can't go back to util
+			if (!previousRole || previousRole.type === 'util') {
+				return;
+			}
 
-	// can't go back to last
-	if (currentIndex === 0) {
-		return;
-	}
-
-	const previousRole = activeGameRoles[currentIndex - 1];
-
-	// can't go back to util
-	if (!previousRole || isUtilityRole(previousRole)) {
-		return;
-	}
-
-	return previousRole;
-};
-
-export const isUtilityRole = (role: Role): role is UtilityRole => role.type === 'util';
-
-export const isPlayerRole = (role: Role): role is PlayerRole => role.type === 'player';
-
-export const isDayRole = ({ state }: Role) => state === 'day';
-
-export const isNightRole = ({ state }: Role) => state === 'night';
-
-export const roleState = (role: Role) => {
-	if (isDayRole(role)) {
-		return 'day';
-	}
-
-	if (isNightRole(role)) {
-		return 'night';
-	}
-
-	throw new Error(`Missing role state for ${role.name}`);
-};
+			return previousRole;
+		}
+);
 
 export const showRole = (role?: Role) => {
 	gameStore.updateStore({ currentRole: role });
@@ -159,18 +143,8 @@ export const getRole = (name: string): Role => {
 export const getUtilityRole = (name: string): UtilityRole => {
 	const role = getRole(name);
 
-	if (isPlayerRole(role)) {
+	if (role.type === 'player') {
 		throw new Error('Missing util role ' + name);
-	}
-
-	return role;
-};
-
-export const getPlayerRole = (name: string): PlayerRole => {
-	const role = getRole(name);
-
-	if (isUtilityRole(role)) {
-		throw new Error('Missing game role ' + name);
 	}
 
 	return role;

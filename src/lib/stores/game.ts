@@ -1,6 +1,13 @@
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
+import { roleDefinitionsStore, type PlayerRoleDef, type UtilityRoleDef } from './roles';
 
-import { RoleDefinitions } from './roles';
+export type PlayerRole = PlayerRoleDef & {
+	amount: number;
+};
+
+export type UtilityRole = UtilityRoleDef;
+
+export type Role = PlayerRole | UtilityRoleDef;
 
 export type GameStore = {
 	state: 'setup' | 'running' | 'finished';
@@ -8,41 +15,17 @@ export type GameStore = {
 	nightCount: number;
 	isNarratorVisible: boolean;
 	roles: Set<Role>;
-	currentRole: Role;
+	currentRole?: Role;
 };
-
-export type PlayerRole = {
-	type: 'player';
-	state: 'day' | 'night';
-	name: string;
-	amount: number;
-	addable: boolean;
-	combinedWith?: string;
-	prefix: 'feminimum' | 'masculinum' | 'neutrum';
-	isEvil: boolean;
-	activeNights?: number[];
-};
-
-export type UtilityRole = {
-	type: 'util';
-	state: 'day' | 'night';
-	name: string;
-};
-
-export type Role = PlayerRole | UtilityRole;
 
 export function createGameStateStore() {
-	if (!RoleDefinitions[0]) {
-		throw new Error('RoleDefinitions must not be empty');
-	}
-
 	const init: GameStore = {
 		state: 'setup',
 		gamestate: 'night',
 		nightCount: 1,
-		roles: new Set(RoleDefinitions),
+		roles: new Set(),
 		isNarratorVisible: false,
-		currentRole: RoleDefinitions[0]
+		currentRole: undefined
 	};
 
 	const { subscribe, set, update } = writable<GameStore>(init);
@@ -72,3 +55,19 @@ export function createGameStateStore() {
 }
 
 export const gameStore = createGameStateStore();
+
+roleDefinitionsStore.store.subscribe((roleDefinitions) => {
+	const { state } = get(gameStore);
+
+	if (state !== 'setup' || !roleDefinitions?.roles) {
+		return;
+	}
+
+	const init = roleDefinitions.roles.map((role) =>
+		role.type === 'player' ? { ...role, amount: 1 } : role
+	);
+
+	gameStore.updateStore({ roles: new Set(init) });
+});
+
+void roleDefinitionsStore.revalidate();

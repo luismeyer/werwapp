@@ -21,7 +21,8 @@
 	"dependencies": {
 		"@planetscale/database": "^1.7.0",
 		"daisyui": "^4.4.6",
-		"string-similarity": "^4.0.4"
+		"string-similarity": "^4.0.4",
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^18.2.0",

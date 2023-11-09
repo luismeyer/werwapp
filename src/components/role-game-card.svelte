@@ -1,14 +1,14 @@
 <script lang="ts">
 	import type { PlayerRole } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
-	import { getNextRole, getPrevRole, isPlayerRole, showRole } from '$lib/roles';
+	import { getNextGameRole, getPrevGameRole, showRole } from '$lib/roles';
 
 	import RoleImage from './role-image.svelte';
 
 	export let role: PlayerRole;
 
-	$: nextRole = getNextRole(role);
-	$: prevRole = getPrevRole(role);
+	$: nextRole = $getNextGameRole(role);
+	$: prevRole = $getPrevGameRole(role);
 
 	$: name =
 		role.amount === 1 ? $t(`narrator.${role.name}.name`) : $t(`narrator.${role.name}.name.plural`);
@@ -37,7 +37,7 @@
 			{/if}
 
 			<div class="indicator w-full">
-				{#if isPlayerRole(nextRole) && nextRole.combinedWith === role.name}
+				{#if nextRole.type === 'player' && nextRole.combinedWith === role.name}
 					<span class="indicator-item badge badge-accent bounce">1</span>
 				{/if}
 				<button on:click={() => showRole(nextRole)} class="btn btn-secondary w-full">
