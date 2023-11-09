@@ -2,7 +2,12 @@
 	import { onMount } from 'svelte';
 
 	import { startFirstNightPhase } from '$lib/game';
-	import { isPlayerRole, roleAddable, roleRemovable, rolesValid } from '$lib/roles';
+	import {
+		playerRoleRemovable,
+		playerRolesArray,
+		playerRolesValid,
+		addablePlayerRoles
+	} from '$lib/roles';
 	import { gameStore, type PlayerRole } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
 	import { nightPlayer } from '$lib/stores/player';
@@ -29,12 +34,8 @@
 		gameStore.updateStore({ roles: $gameStore.roles });
 	};
 
-	$: rolesArray = [...$gameStore.roles].filter((role): role is PlayerRole => isPlayerRole(role));
-
-	$: roleAmount = rolesArray.reduce((acc, role) => acc + role.amount, 0);
-
-	$: addableRoles = rolesArray.filter((role) => roleAddable(rolesArray, role));
-	$: usedRoles = rolesArray.filter(({ amount }) => amount > 0);
+	$: roleAmount = $playerRolesArray.reduce((acc, role) => acc + role.amount, 0);
+	$: usedRoles = $playerRolesArray.filter(({ amount }) => amount > 0);
 
 	$: ({ ready } = nightPlayer);
 
@@ -53,7 +54,7 @@
 
 		<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 			{#each usedRoles as role}
-				<button disabled={!roleRemovable(rolesArray, role)} on:click={removeRole(role)}>
+				<button disabled={!$playerRoleRemovable(role)} on:click={removeRole(role)}>
 					<RoleImage {role} />
 				</button>
 			{/each}
@@ -63,7 +64,7 @@
 	<div class="flex gap-5">
 		<button
 			class="btn btn-primary"
-			disabled={!rolesValid(rolesArray) || !$ready}
+			disabled={!$playerRolesValid || !$ready}
 			on:click={transition(startFirstNightPhase)}
 		>
 			{$t('game.start')}
@@ -85,7 +86,7 @@
 			</label>
 
 			<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box mb-1">
-				{#each addableRoles as role}
+				{#each $addablePlayerRoles as role}
 					<li class="mb-1">
 						<RoleListItem on:click={addRole(role)} {role} />
 					</li>

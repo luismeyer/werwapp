@@ -1,80 +1,43 @@
-import type { Role } from './game';
+import { z } from 'zod';
+import RolesDefinitions from './roles.json';
+import { createAsyncStore } from './async-store';
 
-// This also defined the order of the Roles
-export const RoleDefinitions: Role[] = [
-	{
-		name: 'night',
-		state: 'night',
-		type: 'util'
-	},
-	{
-		name: 'amor',
-		type: 'player',
-		state: 'night',
-		amount: 1,
-		prefix: 'masculinum',
-		isEvil: false,
-		addable: false,
-		activeNights: [1]
-	},
-	{
-		name: 'werewolf',
-		type: 'player',
-		state: 'night',
-		amount: 1,
-		prefix: 'masculinum',
-		isEvil: true,
-		addable: true
-	},
-	{
-		name: 'girl',
-		type: 'player',
-		state: 'night',
-		amount: 1,
-		combinedWith: 'werewolf',
-		prefix: 'neutrum',
-		isEvil: false,
-		addable: false
-	},
-	{
-		name: 'witch',
-		type: 'player',
-		state: 'night',
-		amount: 1,
-		prefix: 'feminimum',
-		isEvil: false,
-		addable: false
-	},
-	{
-		name: 'seer',
-		type: 'player',
-		state: 'night',
-		amount: 1,
-		prefix: 'feminimum',
-		isEvil: false,
-		addable: false
-	},
-	{
-		name: 'day',
-		state: 'day',
-		type: 'util'
-	},
-	{
-		name: 'hunter',
-		type: 'player',
-		state: 'day',
-		amount: 1,
-		prefix: 'masculinum',
-		isEvil: false,
-		addable: false
-	},
-	{
-		name: 'villager',
-		type: 'player',
-		state: 'day',
-		amount: 1,
-		prefix: 'feminimum',
-		isEvil: false,
-		addable: true
+const PlayerRoleDefSchema = z.object({
+	type: z.literal('player'),
+	state: z.enum(['day', 'night']),
+	name: z.string(),
+	addable: z.boolean(),
+	combinedWith: z.string().optional(),
+	prefix: z.enum(['feminimum', 'masculinum', 'neutrum']),
+	isEvil: z.boolean(),
+	activeNights: z.array(z.number()).optional()
+});
+
+export type PlayerRoleDef = z.infer<typeof PlayerRoleDefSchema>;
+
+export const UtilityRoleDefSchema = z.object({
+	type: z.literal('util'),
+	state: z.enum(['day', 'night']),
+	name: z.string()
+});
+
+export type UtilityRoleDef = z.infer<typeof UtilityRoleDefSchema>;
+
+export const RoleDefSchema = z.union([PlayerRoleDefSchema, UtilityRoleDefSchema]);
+
+const RoleDefResponseSchema = z.object({
+	roles: z.array(RoleDefSchema)
+});
+
+export type RoleDefResponse = z.infer<typeof RoleDefResponseSchema>;
+
+export const roleDefinitionsStore = createAsyncStore<RoleDefResponse>({
+	createStorageKey: () => 'werwapp-roles',
+	fetchValue: async () => {
+		const roleDefinitions = RoleDefResponseSchema.parse(RolesDefinitions);
+
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+
+		return roleDefinitions;
 	}
-];
+});

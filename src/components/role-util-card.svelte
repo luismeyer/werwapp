@@ -2,11 +2,11 @@
 	import { startNextGamePhase } from '$lib/game';
 	import { gameStore, type UtilityRole } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
-	import { getNextRole, showRole } from '$lib/roles';
+	import { getNextGameRole, showRole } from '$lib/roles';
 
 	export let role: UtilityRole;
 
-	$: nextRole = getNextRole(role);
+	$: nextRole = $getNextGameRole(role);
 
 	const title = role.name === 'day' ? $t('narrator.headline.day') : $t('narrator.headline.night');
 

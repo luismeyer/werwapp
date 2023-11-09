@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { activeRoles, getUtilityRole, isUtilityRole, roleState } from '$lib/roles';
+	import { activeGameRoles, getUtilityRole } from '$lib/roles';
 	import { gameStore } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
 
@@ -13,28 +13,26 @@
 	};
 
 	$: {
-		cardElements[$gameStore.currentRole.name]?.scrollIntoView({ behavior: 'smooth' });
+		$gameStore.currentRole &&
+			cardElements[$gameStore.currentRole.name]?.scrollIntoView({ behavior: 'smooth' });
 	}
 
 	$: {
-		const notPhaseRole =
-			$gameStore.currentRole.name !== 'day' && $gameStore.currentRole.name !== 'night';
+		const notUtilRole = $gameStore.currentRole?.type !== 'util';
 
 		// update the current role if user clicked sun or moon
-		if (notPhaseRole && $gameStore.gamestate !== roleState($gameStore.currentRole)) {
+		if (notUtilRole && $gameStore.gamestate !== $gameStore.currentRole?.state) {
 			const currentRole = getUtilityRole($gameStore.gamestate);
 			gameStore.updateStore({ currentRole });
 		}
 	}
-
-	$: roles = activeRoles([...$gameStore.roles], $gameStore.nightCount);
 </script>
 
 <div class="flex flex-col justify-between h-screen pb-4">
 	<div class="overflow-hidden">
-		{#each roles as role}
+		{#each $activeGameRoles as role}
 			<div bind:this={cardElements[role.name]} class="flex items-center justify-center h-full p-4">
-				{#if isUtilityRole(role)}
+				{#if role.type === 'util'}
 					<RoleUtilCard {role} />
 				{:else}
 					<RoleGameCard {role} />

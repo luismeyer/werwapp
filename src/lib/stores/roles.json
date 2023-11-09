@@ -1,0 +1,72 @@
+{
+	"roles": [
+		{
+			"name": "night",
+			"state": "night",
+			"type": "util"
+		},
+		{
+			"name": "amor",
+			"type": "player",
+			"state": "night",
+			"prefix": "masculinum",
+			"isEvil": false,
+			"addable": false,
+			"activeNights": [1]
+		},
+		{
+			"name": "werewolf",
+			"type": "player",
+			"state": "night",
+			"prefix": "masculinum",
+			"isEvil": true,
+			"addable": true
+		},
+		{
+			"name": "girl",
+			"type": "player",
+			"state": "night",
+			"combinedWith": "werewolf",
+			"prefix": "neutrum",
+			"isEvil": false,
+			"addable": false
+		},
+		{
+			"name": "witch",
+			"type": "player",
+			"state": "night",
+			"prefix": "feminimum",
+			"isEvil": false,
+			"addable": false
+		},
+		{
+			"name": "seer",
+			"type": "player",
+			"state": "night",
+			"prefix": "feminimum",
+			"isEvil": false,
+			"addable": false
+		},
+		{
+			"name": "day",
+			"state": "day",
+			"type": "util"
+		},
+		{
+			"name": "hunter",
+			"type": "player",
+			"state": "day",
+			"prefix": "masculinum",
+			"isEvil": false,
+			"addable": false
+		},
+		{
+			"name": "villager",
+			"type": "player",
+			"state": "day",
+			"prefix": "feminimum",
+			"isEvil": false,
+			"addable": true
+		}
+	]
+}
