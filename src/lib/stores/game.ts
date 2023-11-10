@@ -59,13 +59,13 @@ export const gameStore = createGameStateStore();
 roleDefinitionsStore.store.subscribe((roleDefinitions) => {
 	const { state } = get(gameStore);
 
-	if (state !== 'setup' || !roleDefinitions?.roles) {
+	if (state !== 'setup' || !roleDefinitions) {
 		return;
 	}
 
-	const init = roleDefinitions.roles.map((role) =>
-		role.type === 'player' ? { ...role, amount: 1 } : role
-	);
+	const init = Object.values(roleDefinitions)
+		.sort((a, b) => a.order - b.order)
+		.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role));
 
 	gameStore.updateStore({ roles: new Set(init) });
 });

@@ -1,8 +1,7 @@
 import { derived, get } from 'svelte/store';
 import { localeStore } from './i18n';
 import { createAsyncStore } from './async-store';
-
-const storeId = import.meta.env.VITE_BLOB_STORE_ID;
+import { fetchAdmin } from '$lib/blob';
 
 const { revalidate, store } = createAsyncStore<Record<string, string>>({
 	createStorageKey: () => {
@@ -11,11 +10,7 @@ const { revalidate, store } = createAsyncStore<Record<string, string>>({
 	},
 	async fetchValue() {
 		const locale = get(localeStore);
-		const translations = await fetch(
-			`https://${storeId}.public.blob.vercel-storage.com/translations/${locale}.json`
-		);
-
-		return translations.json();
+		return fetchAdmin(`/translations/${locale}`);
 	}
 });
 

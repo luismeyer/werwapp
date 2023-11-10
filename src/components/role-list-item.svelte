@@ -9,7 +9,7 @@
 
 <button class="avatar indicator w-full" on:click>
 	<div class="rounded w-8">
-		<img alt="char" src={`/chars/${role.name}.png`} />
+		<img alt="{role.name} character image" src={role.image} />
 	</div>
 
 	<span>
