@@ -10,6 +10,6 @@
 	{/if}
 
 	<div class="rounded w-24">
-		<img alt="char" src={`/chars/${role.name}.png`} />
+		<img alt="{role.name} character image" src={role.image} />
 	</div>
 </div>
