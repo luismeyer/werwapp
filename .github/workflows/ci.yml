@@ -13,19 +13,20 @@ jobs:
         with:
           node-version: 16
 
-      - uses: oven-sh/setup-bun@v1
-
-      - name: Install
-        run: bun install
+      - uses: pnpm/action-setup@v2
+        name: Install
+        with:
+          version: 8
+          run_install: true
 
       - name: Build
-        run: bun run build
+        run: pnpm run build
 
       - name: Check
-        run: bun run check
+        run: pnpm run check
 
       - name: Lint check
-        run: bun lint:check
+        run: pnpm lint:check
 
       - name: Prettier check
-        run: bun prettier:check
+        run: pnpm prettier:check

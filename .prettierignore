@@ -7,7 +7,7 @@ node_modules
 .env.*
 !.env.example
 
-bun.lockb
+pnpm-lock.yaml
 
 
 # Ignore generated licenses.json
