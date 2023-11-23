@@ -37,17 +37,19 @@ export async function GET({ url }: RequestEvent) {
 	ensureEnvVars();
 
 	const songType = url.searchParams.get('type');
-	const excludedId = url.searchParams.get('exclude');
+	const excluded = url.searchParams.get('exclude');
 
 	if (!songType) {
 		return new Response('Missing songType in request', { status: 404 });
 	}
 
-	const idQuery = excludedId ? ' AND id != ? ' : ' ';
+	const excludedIds = excluded?.split(',') ?? [];
+
+	const idQuery = excludedIds?.length ? excludedIds.map(() => ' AND id != ? ').join('') : ' ';
 
 	const result = await dbConnection.execute(
 		`SELECT * FROM songs WHERE type = ?${idQuery}ORDER BY RAND() LIMIT 1;`,
-		[songType, excludedId]
+		[songType, ...excludedIds]
 	);
 
 	const [song] = result.rows;

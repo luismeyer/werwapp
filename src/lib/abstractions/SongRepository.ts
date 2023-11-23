@@ -1,36 +1,58 @@
 import type { Song } from '../song';
 
 export interface SongRepository {
-	getSong(excludeSong?: Song): Promise<Song>;
+	getSong(): Promise<Song>;
 }
 
-const getRandomSong = async (type: 'day' | 'night', excludedSong?: Song) => {
-	const params = new URLSearchParams();
-	params.set('type', type);
+class SongRepositoryBase {
+	private songHistory: Song[] = [];
 
-	if (excludedSong) {
-		params.set('exclude', String(excludedSong.id));
+	private fetchRandomSong = async (type: 'day' | 'night') => {
+		const params = new URLSearchParams();
+		params.set('type', type);
+
+		if (this.songHistory.length) {
+			params.set('exclude', this.songHistory.map(({ id }) => id).join(','));
+		}
+
+		const song: Song | undefined = await fetch(`/api/song?${params.toString()}`, {
+			cache: 'no-store'
+		})
+			.then((res) => res.json())
+			.catch(() => undefined);
+
+		if (!song) {
+			throw new Error('No new song');
+		}
+
+		return song;
+	};
+
+	private pushSongHistory(song: Song) {
+		this.songHistory.push(song);
+
+		if (this.songHistory.length > 5) {
+			this.songHistory.shift();
+		}
 	}
 
-	const song: Song | undefined = await fetch(`/api/song?${params.toString()}`)
-		.then((res) => res.json())
-		.catch(() => undefined);
+	protected async loadSong(type: 'day' | 'night') {
+		const song = await this.fetchRandomSong(type);
 
-	if (!song) {
-		throw new Error('No new song');
-	}
+		this.pushSongHistory(song);
 
-	return song;
-};
-
-export class DaySongs implements SongRepository {
-	public getSong(excludeSong?: Song) {
-		return getRandomSong('day', excludeSong);
+		return song;
 	}
 }
 
-export class NightSongs implements SongRepository {
-	public getSong(excludeSong?: Song) {
-		return getRandomSong('night', excludeSong);
+export class DaySongs extends SongRepositoryBase implements SongRepository {
+	public async getSong() {
+		return this.loadSong('day');
+	}
+}
+
+export class NightSongs extends SongRepositoryBase implements SongRepository {
+	public getSong() {
+		return this.loadSong('night');
 	}
 }
