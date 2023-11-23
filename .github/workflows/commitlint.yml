@@ -23,8 +23,5 @@ jobs:
           version: 8
           run_install: true
 
-      - name: Build
-        run: pnpm run build
-
       - name: Validate commits
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
