@@ -38,3 +38,5 @@ export const t = derived(
 			return text;
 		}
 );
+
+export const translationsStore = store;

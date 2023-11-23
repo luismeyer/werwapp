@@ -39,3 +39,5 @@ export const roleDefinitionsStore = createAsyncStore<RoleDefRecord>({
 	createRequestPathname: () => '/roles',
 	parseResponse: (response) => RoleDefRecordSchema.parse(response)
 });
+
+export const rolesStore = roleDefinitionsStore.store;

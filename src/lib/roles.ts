@@ -126,7 +126,7 @@ export const showRole = (role?: Role) => {
 	gameStore.updateStore({ currentRole: role });
 };
 
-export const getRole = (name: string): Role => {
+const getRole = (name: string): Role => {
 	const { roles } = get(gameStore);
 
 	const searchedRole = [...roles].find((role) => role.name === name);
