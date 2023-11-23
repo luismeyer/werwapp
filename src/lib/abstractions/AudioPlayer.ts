@@ -38,7 +38,7 @@ export class AudioPlayer {
 	}
 
 	private async loadNextSong() {
-		const song = await this.songRepository.getSong(this.song);
+		const song = await this.songRepository.getSong();
 
 		this.nextReady.set(false);
 
@@ -50,7 +50,7 @@ export class AudioPlayer {
 	}
 
 	public async loadSong() {
-		const song = this.nextSong ?? (await this.songRepository.getSong(this.song));
+		const song = this.nextSong ?? (await this.songRepository.getSong());
 
 		this.ready.set(false);
 
