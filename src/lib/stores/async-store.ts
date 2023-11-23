@@ -3,36 +3,75 @@ import { browser } from '$app/environment';
 
 type Options<T> = {
 	createStorageKey: () => string;
-	fetchValue: () => Promise<T>;
+	fetchFunction: (pathname: string) => Promise<unknown>;
+	createRequestPathname: () => string;
+	parseResponse: (response: unknown) => T;
 };
 
-export function createAsyncStore<T>({ createStorageKey, fetchValue }: Options<T>) {
-	function readValueFromStorage(): T | undefined {
-		if (!browser) {
-			return undefined;
-		}
-
-		const stored = localStorage.getItem(createStorageKey());
-
-		if (!stored) {
-			return undefined;
-		}
-
-		return JSON.parse(stored);
+function readValueFromStorage<T>(key: string): T | undefined {
+	if (!browser) {
+		return undefined;
 	}
 
-	function writeValueToStorage(value: T) {
-		if (!browser) {
-			return;
-		}
+	const stored = localStorage.getItem(key);
 
-		localStorage.setItem(createStorageKey(), JSON.stringify(value));
+	if (!stored) {
+		return undefined;
 	}
+
+	return JSON.parse(stored);
+}
+
+function writeValueToStorage<T>(key: string, value: T) {
+	if (!browser) {
+		return;
+	}
+
+	localStorage.setItem(key, JSON.stringify(value));
+}
+
+export function createAsyncStore<T>({
+	createStorageKey,
+	createRequestPathname,
+	fetchFunction,
+	parseResponse
+}: Options<T>) {
+	const createStorageVersionKey = () => `${createStorageKey()}-version`;
+	const getStoredValue = () => readValueFromStorage<T>(createStorageKey());
 
 	const inMemoryCache = new Map<string, T>();
 
-	const intialValue = readValueFromStorage();
-	const store = writable<T | undefined>(intialValue);
+	const store = writable<T | undefined>(getStoredValue());
+
+	async function fetchVersion() {
+		const requestPathname = `version${createRequestPathname()}`;
+		return fetchFunction(requestPathname);
+	}
+
+	async function fetchValue() {
+		const storageVersionKey = createStorageVersionKey();
+
+		const version = await fetchVersion();
+		const currentVersion = readValueFromStorage(storageVersionKey);
+
+		if (version === currentVersion) {
+			const storedValue = getStoredValue();
+			if (!storedValue) {
+				throw new Error('No stored value found, event though the version matched');
+			}
+
+			return storedValue;
+		}
+
+		const requestPathname = createRequestPathname();
+		const response = await fetchFunction(requestPathname);
+
+		const result = parseResponse(response);
+
+		writeValueToStorage(storageVersionKey, version);
+
+		return result;
+	}
 
 	async function revalidate() {
 		const storageKey = createStorageKey();
@@ -46,7 +85,7 @@ export function createAsyncStore<T>({ createStorageKey, fetchValue }: Options<T>
 		const value = await fetchValue();
 
 		inMemoryCache.set(storageKey, value);
-		writeValueToStorage(value);
+		writeValueToStorage(storageKey, value);
 
 		store.set(value);
 	}

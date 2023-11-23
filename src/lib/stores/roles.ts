@@ -1,4 +1,4 @@
-import { fetchAdmin } from '$lib/blob';
+import { fetchAdmin } from '$lib/admin';
 import { z } from 'zod';
 
 import { createAsyncStore } from './async-store';
@@ -35,10 +35,7 @@ export type RoleDefRecord = z.infer<typeof RoleDefRecordSchema>;
 
 export const roleDefinitionsStore = createAsyncStore<RoleDefRecord>({
 	createStorageKey: () => 'werwapp-roles',
-	fetchValue: async () => {
-		const response = await fetchAdmin('/roles');
-		const roleDefinitions = RoleDefRecordSchema.parse(response);
-
-		return roleDefinitions;
-	}
+	fetchFunction: fetchAdmin,
+	createRequestPathname: () => '/roles',
+	parseResponse: (response) => RoleDefRecordSchema.parse(response)
 });

@@ -51,18 +51,16 @@ export const addablePlayerRoles = derived(playerRolesArray, (roles) =>
 		const evils = evilRolesCount(roles);
 		const innocents = innocentRolesCount(roles);
 
+		if (!role.addable) {
+			return role.amount === 0;
+		}
+
 		if (role.isEvil) {
 			// there is alway one more werewolf than other roles
 			return innocents > evils + 1;
 		}
 
-		if (role.addable) {
-			// role can be added infitely
-			return true;
-		}
-
-		// the other roles can only be added once
-		return role.amount === 0;
+		return true;
 	})
 );
 

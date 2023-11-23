@@ -1,17 +1,16 @@
 import { derived, get } from 'svelte/store';
 import { localeStore } from './i18n';
 import { createAsyncStore } from './async-store';
-import { fetchAdmin } from '$lib/blob';
+import { fetchAdmin } from '$lib/admin';
+import { z } from 'zod';
+
+export const TranslationsSchema = z.record(z.string(), z.string());
 
 const { revalidate, store } = createAsyncStore<Record<string, string>>({
-	createStorageKey: () => {
-		const locale = get(localeStore);
-		return `werwapp-translations-${locale}`;
-	},
-	async fetchValue() {
-		const locale = get(localeStore);
-		return fetchAdmin(`/translations/${locale}`);
-	}
+	createStorageKey: () => `werwapp-translations-${get(localeStore)}`,
+	fetchFunction: fetchAdmin,
+	createRequestPathname: () => `/translations/${get(localeStore)}`,
+	parseResponse: (response) => TranslationsSchema.parse(response)
 });
 
 localeStore.subscribe(async () => {
