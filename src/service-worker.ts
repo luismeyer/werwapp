@@ -45,7 +45,7 @@ self.addEventListener('fetch', (event: any) => {
 			return cache.match(event.request);
 		}
 
-		// Server cached songs
+		// cache songs
 		if (url.pathname.startsWith('storage-freemusicarchive-org')) {
 			const cachedSong = await cache.match(event.request);
 			if (cachedSong) {
@@ -53,12 +53,19 @@ self.addEventListener('fetch', (event: any) => {
 			}
 		}
 
-		// for everything else, try the network first, but
-		// fall back to the cache if we're offline
+		// cache avatar images
+		if (url.host.includes('utfs.io')) {
+			const cachedImage = await cache.match(event.request);
+
+			if (cachedImage) {
+				return cachedImage;
+			}
+		}
+
 		try {
 			const response = await fetch(event.request);
 
-			if (response.status === 200) {
+			if (response.status <= 200) {
 				cache.put(event.request, response.clone());
 			}
 
