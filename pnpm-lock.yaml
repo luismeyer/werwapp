@@ -71,8 +71,8 @@ devDependencies:
     specifier: ^3.58.0
     version: 3.59.2
   svelte-check:
-    specifier: ^3.4.5
-    version: 3.6.0(postcss@8.4.31)(svelte@3.59.2)
+    specifier: ^3.6.1
+    version: 3.6.1(postcss@8.4.31)(svelte@3.59.2)
   tailwindcss:
     specifier: ^3.2.4
     version: 3.3.5
@@ -3122,8 +3122,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-check@3.6.0(postcss@8.4.31)(svelte@3.59.2):
-    resolution: {integrity: sha512-8VfqhfuRJ1sKW+o8isH2kPi0RhjXH1nNsIbCFGyoUHG+ZxVxHYRKcb+S8eaL/1tyj3VGvWYx3Y5+oCUsJgnzcw==}
+  /svelte-check@3.6.1(postcss@8.4.31)(svelte@3.59.2):
+    resolution: {integrity: sha512-v+mmXKp+hZ+mZ/n9MQpAe+0q/GhRKXmhQOkWYAdRozXRkPiuLOdhsjp9KtNBpP0TRqvvrB0cwWL5HUjCLpI46g==}
     hasBin: true
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
