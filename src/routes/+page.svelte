@@ -4,7 +4,6 @@
 	import { t } from '$lib/stores/translations';
 	import { registerSwipeGestures } from '$lib/swipe';
 	import { gameStore } from '$lib/stores/game';
-	import { mountWakeLock } from '$lib/stores/wakelock';
 	import { slideTransition } from '$lib/view-transitions';
 
 	import Forest from '../components/forest.svelte';
@@ -30,8 +29,6 @@
 	};
 
 	onMount(() => {
-		mountWakeLock();
-
 		registerSwipeGestures({
 			handleLeft: () => {
 				if ($gameStore.isNarratorVisible && $gameStore.state === 'running') {
