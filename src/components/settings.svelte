@@ -25,9 +25,11 @@
 
 	<div class="divider" />
 
+	<SettingsTheme />
+
+	<div class="divider" />
+
 	{#if wakelockAvailable()}
 		<SettingsWakelock />
 	{/if}
-
-	<SettingsTheme />
 </div>

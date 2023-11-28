@@ -7,8 +7,7 @@ export const requestWakeLock = async () => {
 	}
 
 	try {
-		console.info('Requesting wakelock');
-		return await navigator.wakeLock.request('screen');
+		return navigator.wakeLock.request('screen');
 	} catch (err) {
 		console.info(`Wakelock error: ${err}`);
 	}

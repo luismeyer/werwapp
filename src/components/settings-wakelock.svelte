@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { t } from '$lib/stores/translations';
-	import { wakeLockStore } from '$lib/stores/wakelock';
-	import { releaseWakeLock, requestWakeLock, wakelockAvailable } from '$lib/wakelock';
+	import { mountWakeLock, wakeLockStore } from '$lib/stores/wakelock';
+	import { wakelockAvailable } from '$lib/wakelock';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		// wakelock can only be mounted after user interaction
+		mountWakeLock();
+	});
 
 	const handleChange = async () => {
 		if ($wakeLockStore.state === 'enabled') {
-			await releaseWakeLock($wakeLockStore.wakeLockSentinel);
-			wakeLockStore.update({ state: 'disabled' });
-			return;
+			wakeLockStore.disable();
 		}
 
-		const wakeLockSentinel = await requestWakeLock();
-		if (!wakeLockSentinel) {
-			wakeLockStore.update({ state: 'disabled' });
-			return;
+		if ($wakeLockStore.state === 'disabled') {
+			wakeLockStore.enable();
 		}
-
-		wakeLockStore.update({ state: 'enabled', wakeLockSentinel });
 	};
 </script>
 
