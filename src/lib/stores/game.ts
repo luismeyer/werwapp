@@ -39,7 +39,9 @@ export function createGameStateStore() {
 	};
 
 	const reset = () => {
-		set(init);
+		const { roles } = get(gameStore);
+
+		set({ ...init, roles });
 	};
 
 	const updateStore = (input: Partial<GameStore>) => {
