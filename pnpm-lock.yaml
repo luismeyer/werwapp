@@ -9,8 +9,8 @@ dependencies:
     specifier: ^1.7.0
     version: 1.11.0
   daisyui:
-    specifier: ^4.4.10
-    version: 4.4.10(postcss@8.4.31)
+    specifier: ^4.4.19
+    version: 4.4.19(postcss@8.4.31)
   string-similarity:
     specifier: ^4.0.4
     version: 4.0.4
@@ -1492,8 +1492,8 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: false
 
-  /daisyui@4.4.10(postcss@8.4.31):
-    resolution: {integrity: sha512-NGDsOLtCQ9UzfeOUlKn1lwneQte4UoINmAaDBcrMAbZviu/jWm7PSR9DqH3eE/AY/TpkImdAPVK+kGsZlpEFkQ==}
+  /daisyui@4.4.19(postcss@8.4.31):
+    resolution: {integrity: sha512-IjOLWwnndD4N7Ut5CDxbUsaVtbqXPeVHM92IcgxGFxpuOd3CCKW/PAXZH6JoBTHFRaN57vB9XqEhdWm5yC+bPA==}
     engines: {node: '>=16.9.0'}
     dependencies:
       css-selector-tokenizer: 0.8.0
