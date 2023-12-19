@@ -71,5 +71,3 @@ roleDefinitionsStore.store.subscribe((roleDefinitions) => {
 
 	gameStore.updateStore({ roles: new Set(init) });
 });
-
-void roleDefinitionsStore.revalidate();

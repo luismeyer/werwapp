@@ -3,9 +3,10 @@ import { readable, writable, type Readable } from 'svelte/store';
 import { showSongToast } from '../stores/toast';
 import type { SongRepository } from './SongRepository';
 import type { Song } from '../song';
+import { createAudio, type AudioInterface } from './audio';
 
 export class AudioPlayer {
-	private audio: HTMLAudioElement;
+	private audio: AudioInterface;
 	private song?: Song;
 	public readonly ready = writable(false);
 
@@ -14,8 +15,7 @@ export class AudioPlayer {
 	public readonly nextReady = writable(false);
 
 	constructor(private songRepository: SongRepository) {
-		this.audio = new Audio();
-		this.audio.id = `${songRepository.name}-audio`;
+		this.audio = createAudio(songRepository);
 		this.audio.autoplay = false;
 
 		this.progress.subscribe((progress) => {
@@ -29,8 +29,6 @@ export class AudioPlayer {
 
 			this.next();
 		});
-
-		document.body.appendChild(this.audio);
 	}
 
 	private async loadAudio(url: string) {
