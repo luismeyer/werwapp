@@ -37,9 +37,6 @@ devDependencies:
   '@types/dom-screen-wake-lock':
     specifier: ^1.0.1
     version: 1.0.3
-  '@types/dom-view-transitions':
-    specifier: ^1.0.2
-    version: 1.0.4
   '@types/string-similarity':
     specifier: ^4.0.0
     version: 4.0.2
@@ -767,10 +764,6 @@ packages:
 
   /@types/dom-screen-wake-lock@1.0.3:
     resolution: {integrity: sha512-3Iten7X3Zgwvk6kh6/NRdwN7WbZ760YgFCsF5AxDifltUQzW1RaW+WRmcVtgwFzLjaNu64H+0MPJ13yRa8g3Dw==}
-    dev: true
-
-  /@types/dom-view-transitions@1.0.4:
-    resolution: {integrity: sha512-oDuagM6G+xPLrLU4KeCKlr1oalMF5mJqV5pDPMDVIEaa8AkUW00i6u+5P02XCjdEEUQJC9dpnxqSLsZeAciSLQ==}
     dev: true
 
   /@types/http-cache-semantics@4.0.4:

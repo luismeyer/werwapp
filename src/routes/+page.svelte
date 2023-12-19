@@ -1,133 +1,110 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	import { rolesStore } from '$lib/stores/roles';
+	import { translationsStore } from '$lib/stores/translations';
+	import { startFirstNightPhase } from '$lib/game';
+	import {
+		addablePlayerRoles,
+		playerRoleRemovable,
+		playerRolesArray,
+		playerRolesValid
+	} from '$lib/roles';
+	import { gameStore, type PlayerRole } from '$lib/stores/game';
+	import { nightPlayer } from '$lib/stores/player';
 	import { t } from '$lib/stores/translations';
-	import { registerSwipeGestures } from '$lib/swipe';
-	import { gameStore } from '$lib/stores/game';
-	import { slideTransition } from '$lib/view-transitions';
 
-	import Forest from '../components/forest.svelte';
-	import Settings from '../components/settings.svelte';
-	import Setup from '../components/setup.svelte';
-	import Narrator from '../components/narrator.svelte';
-	import Toast from '../components/toast.svelte';
+	import RoleImage from '../components/role/image.svelte';
+	import RoleListItem from '../components/role/list-item.svelte';
 
-	import '../app.css';
+	const removeRole = (role: PlayerRole) => () => {
+		if (!role.amount || role.amount === 0) {
+			return;
+		}
 
-	type Tab = 'game' | 'settings';
+		role.amount = role.amount - 1;
+		$gameStore.roles.add(role);
 
-	let tabs: Tab[] = ['game', 'settings'];
-	let activeTab = 0;
-
-	const changeTab = (index: number) => {
-		const animate = slideTransition(
-			() => (activeTab = index),
-			activeTab < index ? 'left' : 'right'
-		);
-
-		animate();
+		gameStore.updateStore({ roles: $gameStore.roles });
 	};
 
-	onMount(() => {
-		registerSwipeGestures({
-			handleLeft: () => {
-				if ($gameStore.isNarratorVisible && $gameStore.state === 'running') {
-					gameStore.updateStore({ isNarratorVisible: false });
-					return;
-				}
+	const addRole = (role: PlayerRole) => () => {
+		role.amount = (role.amount ?? 0) + 1;
+		$gameStore.roles.add(role);
 
-				if (activeTab === 0) {
-					changeTab(activeTab + 1);
-					return;
-				}
-			},
-			handleRight: () => {
-				if (activeTab === 0 && !$gameStore.isNarratorVisible && $gameStore.state === 'running') {
-					gameStore.updateStore({ isNarratorVisible: true });
-					return;
-				}
+		gameStore.updateStore({ roles: $gameStore.roles });
+	};
 
-				if (activeTab === 1) {
-					changeTab(activeTab - 1);
-				}
-			}
-		});
+	$: roleAmount = $playerRolesArray.reduce((acc, role) => acc + role.amount, 0);
+	$: usedRoles = $playerRolesArray.filter(({ amount }) => amount > 0);
+
+	$: ({ ready } = nightPlayer);
+
+	onMount(async () => {
+		nightPlayer.loadSong();
 	});
 </script>
 
-<div class="drawer">
-	<input
-		id="my-drawer"
-		type="checkbox"
-		class="drawer-toggle"
-		bind:checked={$gameStore.isNarratorVisible}
-	/>
+{#if !$translationsStore || !$rolesStore}
+	<div class="loadingContainer">loading...</div>
+{:else}
+	<!-- This is needed because daisy ui requires the tabindex -->
+	<!-- svelte-ignore a11y-label-has-associated-control -->
+	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 
-	<div class="drawer-content">
-		<div id="main" class="content gap-5">
-			<header>
-				<div class="flex justify-around py-5">
-					<h1 class="text-5xl font-bold">{$t('game.name')}</h1>
-				</div>
-			</header>
+	<div class="h-full flex flex-col items-center justify-between">
+		<div>
+			<h2 class="mb-3">{roleAmount} {$t('narrator.selected')}</h2>
 
-			<main class="slide-transition">
-				{#if activeTab === 0}
-					<Setup />
-				{:else if activeTab === 1}
-					<Settings />
-				{/if}
-			</main>
-
-			<Forest />
+			<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
+				{#each usedRoles as role}
+					<button disabled={!$playerRoleRemovable(role)} on:click={removeRole(role)}>
+						<RoleImage {role} />
+					</button>
+				{/each}
+			</div>
 		</div>
 
-		<div class="btm-nav navigation theme">
-			{#each tabs as tab, index}
-				<button
-					class="theme"
-					on:click={slideTransition(
-						() => (activeTab = index),
-						activeTab < index ? 'left' : 'right'
-					)}
-					class:active={index === activeTab}
-				>
-					{$t(tab)}
-				</button>
-			{/each}
+		<div class="flex gap-5">
+			<button
+				class="btn btn-primary"
+				disabled={!$playerRolesValid || !$ready}
+				on:click={startFirstNightPhase}
+			>
+				{$t('game.start')}
+			</button>
+
+			<div class="dropdown dropdown-top dropdown-end">
+				<label tabindex="0" class="btn">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill={'hsl(var(--nc) / var(--tw-text-opacity))'}
+					>
+						<path
+							d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-10h4V7h2v4h4v2h-4v4h-2v-4H7v-2z"
+						/>
+					</svg>
+				</label>
+
+				<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box mb-1">
+					{#each $addablePlayerRoles as role}
+						<li class="mb-1">
+							<RoleListItem on:click={addRole(role)} {role} />
+						</li>
+					{/each}
+				</ul>
+			</div>
 		</div>
 	</div>
-
-	<div class="drawer-side">
-		<label for="my-drawer" class="drawer-overlay" />
-
-		<div class="w-screen bg-base-100">
-			<Narrator />
-		</div>
-	</div>
-</div>
-
-<Toast />
+{/if}
 
 <style>
-	.content {
+	.loadingContainer {
 		display: grid;
-		width: 100vw;
-		/* Substract height of bottom nav */
-		height: calc(100dvh - 9rem);
-		grid-template-rows: auto 1fr;
-		position: relative;
-		overflow-y: scroll;
-	}
-
-	.navigation {
-		margin: auto;
-		/* Safe space for mobile devices with home bar */
-		bottom: 1rem;
-	}
-
-	.slide-transition {
-		view-transition-name: slide;
-		transform: translate3D(0, 0, 0);
+		place-items: center;
+		height: 100%;
 	}
 </style>
