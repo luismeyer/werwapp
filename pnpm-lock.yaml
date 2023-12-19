@@ -8,6 +8,9 @@ dependencies:
   '@planetscale/database':
     specifier: ^1.7.0
     version: 1.11.0
+  '@vercel/speed-insights':
+    specifier: ^1.0.2
+    version: 1.0.2
   daisyui:
     specifier: ^4.4.10
     version: 4.4.10(postcss@8.4.31)
@@ -1003,6 +1006,11 @@ packages:
       - encoding
       - supports-color
     dev: true
+
+  /@vercel/speed-insights@1.0.2:
+    resolution: {integrity: sha512-y5HWeB6RmlyVYxJAMrjiDEz8qAIy2cit0fhBq+MD78WaUwQvuBnQlX4+5MuwVTWi46bV3klaRMq83u9zUy1KOg==}
+    requiresBuild: true
+    dev: false
 
   /@vitest/expect@0.34.6:
     resolution: {integrity: sha512-QUzKpUQRc1qC7qdGo7rMK3AkETI7w18gTCUrsNnyjjJKYiuUB9+TQK3QnR1unhCnWRC0AbKv2omLGQDF/mIjOw==}
