@@ -9,6 +9,6 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"types": ["dom-screen-wake-lock", "dom-view-transitions"]
+		"types": ["dom-screen-wake-lock"]
 	}
 }

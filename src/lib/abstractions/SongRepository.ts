@@ -1,6 +1,7 @@
 import type { Song } from '../song';
 
 export interface SongRepository {
+	name: string;
 	getSong(): Promise<Song>;
 }
 
@@ -46,12 +47,16 @@ class SongRepositoryBase {
 }
 
 export class DaySongs extends SongRepositoryBase implements SongRepository {
+	public name = 'day';
+
 	public async getSong() {
 		return this.loadSong('day');
 	}
 }
 
 export class NightSongs extends SongRepositoryBase implements SongRepository {
+	public name = 'night';
+
 	public getSong() {
 		return this.loadSong('night');
 	}

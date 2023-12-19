@@ -3,8 +3,8 @@
 	import { gameStore } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
 
-	import RoleUtilCard from './role-util-card.svelte';
-	import RoleGameCard from './role-game-card.svelte';
+	import RoleUtilCard from '../role/util-card.svelte';
+	import RoleGameCard from '../role/game-card.svelte';
 
 	let cardElements: Record<string, HTMLDivElement> = {};
 

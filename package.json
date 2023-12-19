@@ -31,7 +31,6 @@
 		"@sveltejs/adapter-vercel": "^3.1.0",
 		"@sveltejs/kit": "^1.27.1",
 		"@types/dom-screen-wake-lock": "^1.0.1",
-		"@types/dom-view-transitions": "^1.0.2",
 		"@types/string-similarity": "^4.0.0",
 		"@typescript-eslint/eslint-plugin": "^6.12.0",
 		"@typescript-eslint/parser": "^6.13.0",

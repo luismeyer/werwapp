@@ -4,8 +4,11 @@ import { gameStore } from '$lib/stores/game';
 import { nightPlayer, isFading, dayPlayer, nextPlayer } from '$lib/stores/player';
 
 import { fadeSongs } from './song';
+import { goto } from '$app/navigation';
 
 export const startFirstNightPhase = async () => {
+	goto('/game');
+
 	gameStore.start();
 
 	// start the music

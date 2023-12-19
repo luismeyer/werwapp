@@ -30,12 +30,11 @@ export function createThemeStore() {
 
 	const { subscribe, update } = writable(initialData);
 
-	if (browser) {
-		updateThemeOnBody(initialData.darkTheme);
-	}
-
 	return {
 		subscribe,
+		init: () => {
+			updateThemeOnBody(initialData.darkTheme);
+		},
 		setLightTheme: (newTheme: string) =>
 			update((currentState) => ({ ...currentState, lightTheme: newTheme })),
 		setDarkTheme: (newTheme: string) =>

@@ -15,7 +15,7 @@ export class AudioPlayer {
 
 	constructor(private songRepository: SongRepository) {
 		this.audio = new Audio();
-
+		this.audio.id = `${songRepository.name}-audio`;
 		this.audio.autoplay = false;
 
 		this.progress.subscribe((progress) => {
@@ -29,6 +29,8 @@ export class AudioPlayer {
 
 			this.next();
 		});
+
+		document.body.appendChild(this.audio);
 	}
 
 	private async loadAudio(url: string) {

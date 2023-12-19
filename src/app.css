@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.theme {
+	/* time = FadeDuration / 2 */
+	transition: background-color 3s ease, fill 3s ease;
+}
+
+body {
+	height: 100dvh;
+	overflow: hidden;
+}

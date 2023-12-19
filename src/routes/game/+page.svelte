@@ -1,11 +1,17 @@
 <script lang="ts">
-	import { startNextGamePhase } from '$lib/game';
+	import { goto } from '$app/navigation';
+
 	import { gameStore } from '$lib/stores/game';
+	import { startNextGamePhase } from '$lib/game';
 	import { getUtilityRole, showRole } from '$lib/roles';
 
-	import SunAndMoon from './sunAndMoon.svelte';
-	import Counter from './counter.svelte';
-	import Controls from './controls.svelte';
+	import Controls from '../../components/game/controls.svelte';
+	import Counter from '../../components/game/counter.svelte';
+	import SunAndMoon from '../../components/game/sunAndMoon.svelte';
+
+	if ($gameStore.state !== 'running') {
+		goto('/');
+	}
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 

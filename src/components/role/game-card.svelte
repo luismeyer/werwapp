@@ -3,7 +3,7 @@
 	import { t } from '$lib/stores/translations';
 	import { getNextGameRole, getPrevGameRole, showRole } from '$lib/roles';
 
-	import RoleImage from './role-image.svelte';
+	import RoleImage from './image.svelte';
 
 	export let role: PlayerRole;
 
