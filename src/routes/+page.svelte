@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { rolesStore } from '$lib/stores/roles';
+	import { roleDefinitionsStore, rolesStore } from '$lib/stores/roles';
 	import { translationsStore } from '$lib/stores/translations';
 	import { startFirstNightPhase } from '$lib/game';
 	import {
@@ -42,6 +42,9 @@
 
 	onMount(async () => {
 		nightPlayer.loadSong();
+
+		// load roles
+		roleDefinitionsStore.revalidate();
 	});
 </script>
 

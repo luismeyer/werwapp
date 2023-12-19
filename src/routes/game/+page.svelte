@@ -8,10 +8,13 @@
 	import Controls from '../../components/game/controls.svelte';
 	import Counter from '../../components/game/counter.svelte';
 	import SunAndMoon from '../../components/game/sunAndMoon.svelte';
+	import { onMount } from 'svelte';
 
-	if ($gameStore.state !== 'running') {
-		goto('/');
-	}
+	onMount(() => {
+		if ($gameStore.state !== 'running') {
+			goto('/');
+		}
+	});
 
 	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
 

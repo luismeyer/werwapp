@@ -1,8 +1,10 @@
-import { derived, get } from 'svelte/store';
-import { localeStore } from './i18n';
-import { createAsyncStore } from './async-store';
+import { browser } from '$app/environment';
 import { fetchAdmin } from '$lib/admin';
+import { derived, get } from 'svelte/store';
 import { z } from 'zod';
+
+import { createAsyncStore } from './async-store';
+import { localeStore } from './i18n';
 
 export const TranslationsSchema = z.record(z.string(), z.string());
 
@@ -14,6 +16,10 @@ const { revalidate, store } = createAsyncStore<Record<string, string>>({
 });
 
 localeStore.subscribe(async () => {
+	if (!browser) {
+		return;
+	}
+
 	await revalidate();
 });
 
