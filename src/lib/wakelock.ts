@@ -1,4 +1,10 @@
-export const wakelockAvailable = () => 'wakeLock' in navigator;
+export const wakelockAvailable = () => {
+	try {
+		return 'wakeLock' in navigator;
+	} catch {
+		return false;
+	}
+};
 
 export const requestWakeLock = async () => {
 	if (!wakelockAvailable()) {
