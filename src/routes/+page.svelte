@@ -35,6 +35,13 @@
 		gameStore.updateStore({ roles: $gameStore.roles });
 	};
 
+	const showRole = (role: PlayerRole) => () => {
+		gameStore.updateStore({
+			currentRole: role,
+			isNarratorVisible: true
+		});
+	};
+
 	$: roleAmount = $playerRolesArray.reduce((acc, role) => acc + role.amount, 0);
 	$: usedRoles = $playerRolesArray.filter(({ amount }) => amount > 0);
 
@@ -61,8 +68,8 @@
 
 			<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 				{#each usedRoles as role}
-					<button disabled={!$playerRoleRemovable(role)} on:click={removeRole(role)}>
-						<RoleImage {role} />
+					<button disabled={!$playerRoleRemovable(role)} on:click={showRole(role)}>
+						<RoleImage on:click={removeRole(role)} {role} />
 					</button>
 				{/each}
 			</div>

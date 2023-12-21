@@ -38,7 +38,7 @@
 
 		registerSwipeGestures({
 			handleLeft: () => {
-				if ($gameStore.isNarratorVisible && $gameStore.state === 'running') {
+				if ($gameStore.isNarratorVisible) {
 					gameStore.updateStore({ isNarratorVisible: false });
 					return;
 				}
@@ -49,7 +49,7 @@
 				}
 			},
 			handleRight: () => {
-				if (activeTab === 0 && !$gameStore.isNarratorVisible && $gameStore.state === 'running') {
+				if (activeTab === 0 && $gameStore.state === 'running') {
 					gameStore.updateStore({ isNarratorVisible: true });
 					return;
 				}
@@ -94,7 +94,7 @@
 		</div>
 	</div>
 
-	<div class="drawer-side">
+	<div class="drawer-side force-top">
 		<label for="my-drawer" class="drawer-overlay" />
 
 		<div class="w-screen bg-base-100">
@@ -120,5 +120,9 @@
 		margin: auto;
 		/* Safe space for mobile devices with home bar */
 		bottom: 1rem;
+	}
+
+	.force-top {
+		z-index: 100;
 	}
 </style>

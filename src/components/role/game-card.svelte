@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PlayerRole } from '$lib/stores/game';
+	import { gameStore, type PlayerRole } from '$lib/stores/game';
 	import { t } from '$lib/stores/translations';
 	import { getNextGameRole, getPrevGameRole, showRole } from '$lib/roles';
 
@@ -29,22 +29,26 @@
 	<div class="card-body items-center text-center">
 		<h2 class="card-title">{title}</h2>
 		<p class="max-w-sm">{description}</p>
-		<div class="w-full mt-6 grid grid-flow-col gap-4">
-			{#if prevRole}
-				<button on:click={() => showRole(prevRole)} class="btn btn-secondary w-full">
-					{$t('narrator.prev')}
-				</button>
-			{/if}
 
-			<div class="indicator w-full">
-				{#if nextRole.type === 'player' && nextRole.combinedWith === role.name}
-					<span class="indicator-item badge badge-accent bounce">1</span>
+		{#if $gameStore.state === 'running'}
+			<div class="w-full mt-6 grid grid-flow-col gap-4">
+				{#if prevRole}
+					<button on:click={() => showRole(prevRole)} class="btn btn-secondary w-full">
+						{$t('narrator.prev')}
+					</button>
 				{/if}
-				<button on:click={() => showRole(nextRole)} class="btn btn-secondary w-full">
-					{$t('narrator.next')}
-				</button>
+
+				<div class="indicator w-full">
+					{#if nextRole.type === 'player' && nextRole.combinedWith === role.name}
+						<span class="indicator-item badge badge-accent bounce">1</span>
+					{/if}
+
+					<button on:click={() => showRole(nextRole)} class="btn btn-secondary w-full">
+						{$t('narrator.next')}
+					</button>
+				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 </div>
 

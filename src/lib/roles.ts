@@ -16,10 +16,10 @@ const innocentRolesCount = (roles: Role[]) =>
 		.filter((role): role is PlayerRole => role.type === 'player' && !role.isEvil)
 		.reduce((acc, { amount = 0 }) => acc + amount, 0);
 
-export const activeGameRoles = derived(gameStore, ({ roles, nightCount }) =>
+export const activeGameRoles = derived(gameStore, ({ state, roles, nightCount }) =>
 	[...roles].filter(
 		(role) =>
-			role.type === 'util' ||
+			(state === 'running' && role.type === 'util') ||
 			// player
 			(role.type === 'player' &&
 				// user selected the role in setup

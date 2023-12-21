@@ -5,9 +5,7 @@
 </script>
 
 <div class="avatar indicator">
-	{#if role.amount > 1}
-		<span class="indicator-item badge badge-secondary">{role.amount}</span>
-	{/if}
+	<button on:click class="indicator-item badge badge-secondary">{role.amount}</button>
 
 	<div class="rounded w-24">
 		<img alt="{role.name} character image" src={role.image} />

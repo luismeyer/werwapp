@@ -33,6 +33,7 @@ export function createGameStateStore() {
 	const start = () => {
 		update((currentState) => ({
 			...currentState,
+			currentRole: undefined,
 			state: 'running',
 			phase: 'night'
 		}));
