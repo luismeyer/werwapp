@@ -21,8 +21,8 @@
 	$: enterScreenClass = $isFading ? 'in-top' : 'out-top';
 	$: leaveScreenClass = $isFading ? 'out-bottom' : 'in-bottom';
 
-	$: sunClass = $gameStore.gamestate === 'day' ? enterScreenClass : leaveScreenClass;
-	$: moonClass = $gameStore.gamestate === 'night' ? enterScreenClass : leaveScreenClass;
+	$: sunClass = $gameStore.phase === 'day' ? enterScreenClass : leaveScreenClass;
+	$: moonClass = $gameStore.phase === 'night' ? enterScreenClass : leaveScreenClass;
 </script>
 
 <div class="w-full h-full relative">

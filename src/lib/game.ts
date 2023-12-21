@@ -19,12 +19,12 @@ export const startFirstNightPhase = async () => {
 };
 
 export const startNextGamePhase = async () => {
-	const { nightCount, gamestate } = get(gameStore);
+	const { nightCount, phase } = get(gameStore);
 
-	const nextPhase = gamestate === 'day' ? 'night' : 'day';
+	const nextPhase = phase === 'day' ? 'night' : 'day';
 
 	gameStore.updateStore({
-		gamestate: nextPhase,
+		phase: nextPhase,
 		nightCount: nextPhase === 'night' ? nightCount + 1 : nightCount
 	});
 

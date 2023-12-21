@@ -11,7 +11,7 @@ export type Role = PlayerRole | UtilityRoleDef;
 
 export type GameStore = {
 	state: 'setup' | 'running' | 'finished';
-	gamestate: 'day' | 'night';
+	phase: 'day' | 'night';
 	nightCount: number;
 	isNarratorVisible: boolean;
 	roles: Set<Role>;
@@ -21,7 +21,7 @@ export type GameStore = {
 export function createGameStateStore() {
 	const init: GameStore = {
 		state: 'setup',
-		gamestate: 'night',
+		phase: 'night',
 		nightCount: 1,
 		roles: new Set(),
 		isNarratorVisible: false,
@@ -34,7 +34,7 @@ export function createGameStateStore() {
 		update((currentState) => ({
 			...currentState,
 			state: 'running',
-			gamestate: 'night'
+			phase: 'night'
 		}));
 	};
 

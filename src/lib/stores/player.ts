@@ -13,9 +13,9 @@ export const nightPlayer = new AudioPlayer(nightSongs);
 export const dayPlayer = new AudioPlayer(daySongs);
 
 export const currentPlayer = derived(gameStore, ($game) =>
-	$game.gamestate === 'day' ? dayPlayer : nightPlayer
+	$game.phase === 'day' ? dayPlayer : nightPlayer
 );
 
 export const nextPlayer = derived(gameStore, ($game) =>
-	$game.gamestate === 'day' ? nightPlayer : dayPlayer
+	$game.phase === 'day' ? nightPlayer : dayPlayer
 );

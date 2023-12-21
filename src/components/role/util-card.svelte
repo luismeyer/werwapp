@@ -24,13 +24,13 @@
 		<h1 class="card-title text-5xl">{title}</h1>
 
 		<div class="card-actions w-full mt-6">
-			{#if $gameStore.gamestate === role.name}
+			{#if $gameStore.phase === role.name}
 				<button class="btn btn-secondary w-full" on:click={() => showRole(nextRole)}>
 					{$t('narrator.next')}
 				</button>
 			{/if}
 
-			{#if $gameStore.gamestate !== role.name}
+			{#if $gameStore.phase !== role.name}
 				<button class="btn btn-secondary w-full" on:click={changeMusic}>
 					{$t('narrator.music.button')}
 				</button>

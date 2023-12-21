@@ -11,9 +11,9 @@ const updateThemeOnBody = (theme: string) => {
 
 const updateThemeInGame = (newState?: ThemeData) => {
 	const { autoSwitching, darkTheme, lightTheme } = newState ?? get(themeStore);
-	const { gamestate } = get(gameStore);
+	const { phase } = get(gameStore);
 
-	const currentTheme = autoSwitching && gamestate === 'day' ? lightTheme : darkTheme;
+	const currentTheme = autoSwitching && phase === 'day' ? lightTheme : darkTheme;
 	updateThemeOnBody(currentTheme);
 };
 

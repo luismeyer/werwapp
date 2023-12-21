@@ -16,7 +16,7 @@
 		}
 	});
 
-	$: handleBtnClick = $gameStore.gamestate === 'day' ? startNight : startDay;
+	$: handleBtnClick = $gameStore.phase === 'day' ? startNight : startDay;
 
 	const startNight = async () => {
 		showRole(getUtilityRole('night'));

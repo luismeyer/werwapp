@@ -19,12 +19,12 @@
 
 	$: {
 		const notUtilRole = $gameStore.currentRole?.type !== 'util';
-		const notSameRole = $gameStore.gamestate !== $gameStore.currentRole?.state;
+		const notSameRole = $gameStore.phase !== $gameStore.currentRole?.state;
 		const notSetup = $gameStore.state !== 'setup';
 
 		// update the current role if user clicked sun or moon
 		if (notUtilRole && notSameRole && notSetup) {
-			const currentRole = getUtilityRole($gameStore.gamestate);
+			const currentRole = getUtilityRole($gameStore.phase);
 			gameStore.updateStore({ currentRole });
 		}
 	}
