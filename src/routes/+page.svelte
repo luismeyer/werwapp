@@ -17,7 +17,9 @@
 	import RoleImage from '../components/role/image.svelte';
 	import RoleListItem from '../components/role/list-item.svelte';
 
-	const removeRole = (role: PlayerRole) => () => {
+	const removeRole = (role: PlayerRole) => (event: MouseEvent) => {
+		event.stopPropagation();
+
 		if (!role.amount || role.amount === 0) {
 			return;
 		}
@@ -64,13 +66,16 @@
 
 	<div class="h-full flex flex-col items-center justify-between">
 		<div>
-			<h2 class="mb-3">{roleAmount} {$t('narrator.selected')}</h2>
+			<h2 class="mb-4">{roleAmount} {$t('narrator.selected')}</h2>
 
 			<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 				{#each usedRoles as role}
-					<button disabled={!$playerRoleRemovable(role)} on:click={showRole(role)}>
-						<RoleImage on:click={removeRole(role)} {role} />
-					</button>
+					<RoleImage
+						{role}
+						on:click={showRole(role)}
+						indicatorDisabled={!$playerRoleRemovable(role)}
+						onIndicatorClick={removeRole(role)}
+					/>
 				{/each}
 			</div>
 		</div>
