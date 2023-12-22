@@ -71,10 +71,10 @@
 			<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 				{#each usedRoles as role}
 					<RoleImage
-						{role}
 						on:click={showRole(role)}
 						indicatorDisabled={!$playerRoleRemovable(role)}
 						onIndicatorClick={removeRole(role)}
+						{role}
 					/>
 				{/each}
 			</div>

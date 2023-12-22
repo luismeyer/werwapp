@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PlayerRole } from '$lib/stores/game';
 
-	export let onIndicatorClick: (event: MouseEvent) => void;
-	export let indicatorDisabled: boolean;
+	export let onIndicatorClick: (event: MouseEvent) => void | undefined = undefined;
+	export let indicatorDisabled: boolean | undefined = undefined;
 
 	export let role: PlayerRole;
 </script>
