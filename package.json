@@ -22,7 +22,7 @@
 		"@planetscale/database": "^1.7.0",
 		"@vercel/analytics": "^1.1.1",
 		"@vercel/speed-insights": "^1.0.2",
-		"daisyui": "^4.4.10",
+		"daisyui": "^4.7.2",
 		"string-similarity": "^4.0.4",
 		"zod": "^3.22.4"
 	},
