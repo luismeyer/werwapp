@@ -83,11 +83,11 @@ export type Translations = {
 export const t = derived(
 	localeStore,
 	(locale) =>
-		(key: keyof Translations, vars: Record<string, string> = {}) => {
+		(key: string, vars: Record<string, string> = {}) => {
 			const translations = locale === 'en' ? EN : DE;
 
 			// Grab the translation from the translations object.
-			let text = translations[key];
+			let text = translations[key as keyof Translations];
 
 			if (!text || (typeof window !== 'undefined' && window.location.search.includes('debug'))) {
 				return key;
