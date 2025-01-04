@@ -1,3 +1,4 @@
+import { Songs } from '../../const/songs';
 import type { Song } from '../song';
 
 export interface SongRepository {
@@ -9,18 +10,10 @@ class SongRepositoryBase {
 	private songHistory: Song[] = [];
 
 	private fetchRandomSong = async (type: 'day' | 'night') => {
-		const params = new URLSearchParams();
-		params.set('type', type);
+		const exclude = this.songHistory.map(({ id }) => id);
+		const songs = Songs.filter((song) => song.type === type && !exclude?.includes(song.id));
 
-		if (this.songHistory.length) {
-			params.set('exclude', this.songHistory.map(({ id }) => id).join(','));
-		}
-
-		const song: Song | undefined = await fetch(`/api/song?${params.toString()}`, {
-			cache: 'no-store'
-		})
-			.then((res) => res.json())
-			.catch(() => undefined);
+		const song = songs[Math.floor(Math.random() * songs.length)];
 
 		if (!song) {
 			throw new Error('No new song');

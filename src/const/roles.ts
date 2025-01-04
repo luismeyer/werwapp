@@ -22,7 +22,7 @@ export type RoleDef = PlayerRoleDef | UtilityRoleDef;
 
 export type RoleDefRecord = Record<string, RoleDef>;
 
-const Roles: RoleDefRecord = {
+export const RolesDefition: RoleDefRecord = {
 	'1700350996665': {
 		type: 'player',
 		image: 'https://nya4nu733jp3xe0c.public.blob.vercel-storage.com/roles/thief.png',
@@ -119,9 +119,3 @@ const Roles: RoleDefRecord = {
 		order: 9
 	}
 };
-
-export const RoleDefinitions = new Set(
-	Object.values(Roles)
-		.sort((a, b) => a.order - b.order)
-		.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role))
-);

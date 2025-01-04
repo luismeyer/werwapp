@@ -1,10 +1,14 @@
-export const DE = {
+import type { Translations } from '$lib/stores/translations';
+
+export const DE: Translations = {
 	'about.title': 'Über Werwapp',
 	'about.github': 'Hier findest du uns bei Github!',
 	'narrator.thief.name.plural': 'Diebe',
 	'about.licenses.loading': 'Lade Lizenzen',
 	'about.licenses.description': 'Von {{author}} mit einer {{licenseType}} Lizenz',
 	'about.licenses.project': 'Projekt',
+	'about.licenses.title':
+		'Das sind die Lizenses der Bibliotheken, die wir zum Erstellen von Werwapp verwendet haben:',
 	night: 'Nacht',
 	day: 'Tag',
 	game: 'Spiel',

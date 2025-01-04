@@ -1,4 +1,6 @@
-export const Songs = [
+import type { Song } from '$lib/song';
+
+export const Songs: Song[] = [
 	{
 		id: 1,
 		type: 'day',

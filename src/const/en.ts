@@ -1,4 +1,6 @@
-export const EN = {
+import type { Translations } from '$lib/stores/translations';
+
+export const EN: Translations = {
 	'about.title': 'About Werwapp',
 	'about.github': 'Find us on Github!',
 	'about.licenses.title': 'These are the Licenses of the libaries that we used to create Werwapp:',
