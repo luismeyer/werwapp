@@ -1,5 +1,6 @@
-import { get, writable } from 'svelte/store';
-import { roleDefinitionsStore, type PlayerRoleDef, type UtilityRoleDef } from './roles';
+import { writable } from 'svelte/store';
+
+import { RoleDefinitions, type PlayerRoleDef, type UtilityRoleDef } from '../../const/roles';
 
 export type PlayerRole = PlayerRoleDef & {
 	amount: number;
@@ -23,7 +24,7 @@ export function createGameStateStore() {
 		state: 'setup',
 		phase: 'night',
 		nightCount: 1,
-		roles: new Set(),
+		roles: RoleDefinitions,
 		isNarratorVisible: false,
 		currentRole: undefined
 	};
@@ -40,9 +41,7 @@ export function createGameStateStore() {
 	};
 
 	const reset = () => {
-		const { roles } = get(gameStore);
-
-		set({ ...init, roles });
+		set({ ...init, roles: RoleDefinitions });
 	};
 
 	const updateStore = (input: Partial<GameStore>) => {
@@ -58,17 +57,3 @@ export function createGameStateStore() {
 }
 
 export const gameStore = createGameStateStore();
-
-roleDefinitionsStore.store.subscribe((roleDefinitions) => {
-	const { state } = get(gameStore);
-
-	if (state !== 'setup' || !roleDefinitions) {
-		return;
-	}
-
-	const init = Object.values(roleDefinitions)
-		.sort((a, b) => a.order - b.order)
-		.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role));
-
-	gameStore.updateStore({ roles: new Set(init) });
-});

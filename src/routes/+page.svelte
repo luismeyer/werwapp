@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { roleDefinitionsStore, rolesStore } from '$lib/stores/roles';
 	import { translationsStore } from '$lib/stores/translations';
 	import { startFirstNightPhase } from '$lib/game';
 	import {
@@ -51,13 +50,10 @@
 
 	onMount(async () => {
 		nightPlayer.loadSong();
-
-		// load roles
-		roleDefinitionsStore.revalidate();
 	});
 </script>
 
-{#if !$translationsStore || !$rolesStore}
+{#if !$translationsStore}
 	<div class="loadingContainer">loading...</div>
 {:else}
 	<!-- This is needed because daisy ui requires the tabindex -->

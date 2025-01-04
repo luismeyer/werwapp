@@ -1,5 +1,6 @@
 import { findBestMatch } from 'string-similarity';
-import type { Locale } from './stores/i18n';
+import { localeStore, type Locale } from './stores/i18n';
+import { get } from 'svelte/store';
 
 type Question = {
 	[Property in Locale]: Array<string>;
@@ -68,11 +69,13 @@ const QA: QA = [
 	}
 ];
 
-export const findAnswer = (input: string, language: Locale): string => {
-	const targetStrings = QA.reduce<string[]>(
-		(acc, curr) => [...acc, ...curr.question[language]],
-		[]
-	);
+export const findAnswer = (input: string): string => {
+	const language = get(localeStore);
+
+	const targetStrings = QA.reduce<string[]>((acc, curr) => {
+		acc.push(...curr.question[language]);
+		return acc;
+	}, []);
 
 	const { bestMatch } = findBestMatch(input.toLowerCase(), targetStrings);
 

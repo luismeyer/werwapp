@@ -132,7 +132,7 @@ const getRole = (name: string): Role => {
 	const searchedRole = [...roles].find((role) => role.name === name);
 
 	if (!searchedRole) {
-		throw new Error('Missing role ' + name);
+		throw new Error(`Missing role ${name}`);
 	}
 
 	return searchedRole;
@@ -142,7 +142,7 @@ export const getUtilityRole = (name: string): UtilityRole => {
 	const role = getRole(name);
 
 	if (role.type === 'player') {
-		throw new Error('Missing util role ' + name);
+		throw new Error(`Missing util role ${name}`);
 	}
 
 	return role;

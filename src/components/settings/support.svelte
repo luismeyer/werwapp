@@ -2,7 +2,6 @@
 	import { afterUpdate } from 'svelte';
 
 	import { findAnswer } from '$lib/support';
-	import { localeStore } from '$lib/stores/i18n';
 	import { t } from '$lib/stores/translations';
 
 	let inputValue: string;
@@ -29,7 +28,7 @@
 		bubbles = [...bubbles, { left: false, text: inputValue }];
 		inputValue = '';
 
-		const answer = findAnswer(parsedInput, $localeStore);
+		const answer = findAnswer(parsedInput);
 		bubbles = [...bubbles, { left: true, text: $t(answer) }];
 
 		disabled = false;
