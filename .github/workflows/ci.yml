@@ -21,7 +21,6 @@ jobs:
 
       - name: Build
         env:
-          ADMIN_URL: PLACEHOLDER
           WERWAPP_SECRET: PLACEHOLDER
         run: pnpm run build
 

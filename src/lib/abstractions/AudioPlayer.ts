@@ -19,7 +19,7 @@ export class AudioPlayer {
 		this.audio.autoplay = false;
 
 		this.progress.subscribe((progress) => {
-			if (!this.song || isNaN(this.audio.duration)) {
+			if (!this.song || Number.isNaN(this.audio.duration)) {
 				return;
 			}
 
@@ -110,7 +110,7 @@ export class AudioPlayer {
 	}
 
 	public get duration(): Readable<number> {
-		const defaultDuration = isNaN(this.audio.duration) ? 0 : this.audio.duration;
+		const defaultDuration = Number.isNaN(this.audio.duration) ? 0 : this.audio.duration;
 
 		return readable(defaultDuration, (set) => {
 			const updateDuration = () => {

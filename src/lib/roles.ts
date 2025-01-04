@@ -1,9 +1,8 @@
 import { derived, get } from 'svelte/store';
 import { gameStore, type PlayerRole, type Role, type UtilityRole } from './stores/game';
 
-export const rolesArray = derived(gameStore, ({ roles }) => [...roles]);
-export const playerRolesArray = derived(rolesArray, (roles) =>
-	roles.filter((role): role is PlayerRole => role.type === 'player')
+export const playerRolesArray = derived(gameStore, ({ roles }) =>
+	[...roles].filter((role): role is PlayerRole => role.type === 'player')
 );
 
 const evilRolesCount = (roles: Role[]) =>
@@ -132,7 +131,7 @@ const getRole = (name: string): Role => {
 	const searchedRole = [...roles].find((role) => role.name === name);
 
 	if (!searchedRole) {
-		throw new Error('Missing role ' + name);
+		throw new Error(`Missing role ${name}`);
 	}
 
 	return searchedRole;
@@ -142,7 +141,7 @@ export const getUtilityRole = (name: string): UtilityRole => {
 	const role = getRole(name);
 
 	if (role.type === 'player') {
-		throw new Error('Missing util role ' + name);
+		throw new Error(`Missing util role ${name}`);
 	}
 
 	return role;

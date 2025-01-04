@@ -16,8 +16,6 @@
 		}
 	});
 
-	$: handleBtnClick = $gameStore.phase === 'day' ? startNight : startDay;
-
 	const startNight = async () => {
 		showRole(getUtilityRole('night'));
 		await startNextGamePhase();
@@ -27,6 +25,8 @@
 		showRole(getUtilityRole('day'));
 		await startNextGamePhase();
 	};
+
+	$: handleBtnClick = $gameStore.phase === 'day' ? startNight : startDay;
 </script>
 
 <div class="game">
