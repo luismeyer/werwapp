@@ -6,7 +6,10 @@ const FADE_INTERVAL = 60;
 export const FADE_DURATION = (1 / FADE_STEPS) * FADE_INTERVAL;
 
 export class Crossfade {
-	constructor(private playerA: AudioPlayer, private playerB: AudioPlayer) {}
+	constructor(
+		private playerA: AudioPlayer,
+		private playerB: AudioPlayer
+	) {}
 
 	private get iOS() {
 		const touch = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;

@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<div id="forest" class="forest" />
+<div id="forest" class="forest"></div>
 
 <style>
 	.forest {

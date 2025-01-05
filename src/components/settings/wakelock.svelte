@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 	import { mountWakeLock, wakeLockStore } from '$lib/stores/wakelock';
 	import { wakelockAvailable } from '$lib/wakelock';
 	import { onMount } from 'svelte';
@@ -21,12 +21,12 @@
 </script>
 
 <label class="flex justify-between items-center mb-2 cursor-pointer">
-	<span class="label-text">{$t('settings.wakelock')}</span>
+	<span class="label-text">{t('settings.wakelock')}</span>
 	<input
 		disabled={!wakelockAvailable()}
 		checked={$wakeLockStore.state === 'enabled'}
 		type="checkbox"
 		class="toggle toggle-primary"
-		on:change={handleChange}
+		onchange={handleChange}
 	/>
 </label>

@@ -1,19 +1,24 @@
 <script lang="ts">
-	import { gameStore } from '$lib/stores/game';
-	import { t } from '$lib/stores/translations';
-	import { dayPlayer, nightPlayer } from '$lib/stores/player';
+	import { resetGame } from '$lib/stores/game.svelte';
+	import { t } from '$lib/stores/translations.svelte';
+	import { dayPlayer, nightPlayer } from '$lib/stores/player.svelte';
 
 	import About from './about.svelte';
 	import Support from './support.svelte';
+	import { goto } from '$app/navigation';
 
 	const iconColor = 'hsl(var(--pc) / var(--tw-text-opacity))';
 
-	$: isAboutModalOpen = false;
+	// biome-ignore lint/style/useConst: TODO: fix
+	let isAboutModalOpen = $state(false);
 
 	const reset = () => {
-		gameStore.reset();
+		resetGame();
+
 		dayPlayer.stop();
 		nightPlayer.stop();
+
+		goto('/');
 	};
 </script>
 
@@ -34,7 +39,7 @@
 			</svg>
 		</label>
 
-		<span class="label-text text-center">{$t('settings.qa')}</span>
+		<span class="label-text text-center">{t('settings.qa')}</span>
 	</label>
 
 	<!-- Reset item -->
@@ -54,7 +59,7 @@
 			</svg>
 		</label>
 
-		<span class="label-text primary-label text-center">{$t('settings.reset')}</span>
+		<span class="label-text primary-label text-center">{t('settings.reset')}</span>
 	</label>
 
 	<!-- About item -->
@@ -74,7 +79,7 @@
 			</svg>
 		</label>
 
-		<span class="label-text primary-label text-center">{$t('settings.about.button')}</span>
+		<span class="label-text primary-label text-center">{t('settings.about.button')}</span>
 	</label>
 </div>
 
@@ -92,19 +97,21 @@
 <input type="checkbox" id="reset-modal" class="modal-toggle" />
 <div class="modal">
 	<div class="modal-box">
-		<h3 class="font-bold text-lg">{$t('reset.headline')}</h3>
+		<h3 class="font-bold text-lg">{t('reset.headline')}</h3>
 
 		<p class="pt-5 pb-10">
-			{$t('reset.body')}
+			{t('reset.body')}
 		</p>
 
 		<div class="flex justify-evenly gap-2">
-			<label on:click={reset} on:keypress={reset} for="reset-modal" class="btn">
-				{$t('reset.yes')}
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+			<label for="reset-modal" onclick={reset} class="btn">
+				{t('reset.yes')}
 			</label>
 
 			<label for="reset-modal" class="btn btn-primary">
-				{$t('reset.no')}
+				{t('reset.no')}
 			</label>
 		</div>
 	</div>
@@ -116,7 +123,7 @@
 	<label class="modal-box relative" for="">
 		<label for="about-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 
-		<About visible={isAboutModalOpen} />
+		<About />
 	</label>
 </label>
 

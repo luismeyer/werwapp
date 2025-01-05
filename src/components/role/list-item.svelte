@@ -1,18 +1,21 @@
 <script lang="ts">
-	import type { PlayerRole } from '$lib/stores/game';
-	import { t } from '$lib/stores/translations';
+	import type { PlayerRole } from '$lib/stores/game.svelte';
+	import { t } from '$lib/stores/translations.svelte';
 
-	export let role: PlayerRole;
+	interface Props {
+		role: PlayerRole;
+		onclick?: () => void;
+	}
 
-	$: name = $t(`narrator.${role.name}.name`);
+	const { role, onclick }: Props = $props();
 </script>
 
-<button class="avatar indicator w-full" on:click>
+<button class="avatar indicator w-full" {onclick}>
 	<div class="rounded w-8">
 		<img alt="{role.name} character image" src={role.image} />
 	</div>
 
 	<span>
-		{name}
+		{t(`narrator.${role.name}.name`)}
 	</span>
 </button>

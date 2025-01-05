@@ -3,70 +3,75 @@
 
 	import { startFirstNightPhase } from '$lib/game';
 	import {
-		addablePlayerRoles,
-		playerRoleRemovable,
-		playerRolesArray,
-		playerRolesValid
-	} from '$lib/roles';
-	import { gameStore, type PlayerRole } from '$lib/stores/game';
-	import { nightPlayer } from '$lib/stores/player';
-	import { t } from '$lib/stores/translations';
+		evilRolesCount,
+		getPlayerRoles,
+		innocentRolesCount,
+		playerRoleRemovable
+	} from '$lib/roles.svelte';
+	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
+	import { nightPlayer } from '$lib/stores/player.svelte';
+	import { t } from '$lib/stores/translations.svelte';
 
 	import RoleImage from '../components/role/image.svelte';
 	import RoleListItem from '../components/role/list-item.svelte';
 
-	const removeRole = (role: PlayerRole) => (event: MouseEvent) => {
-		event.stopPropagation();
+	const playerRoles = $derived(getPlayerRoles());
 
-		if (!role.amount || role.amount === 0) {
-			return;
-		}
+	const roleAmount = $derived(playerRoles.reduce((acc, role) => acc + role.amount, 0));
+	const usedRoles = $derived(playerRoles.filter(({ amount }) => amount > 0));
 
-		role.amount = role.amount - 1;
-		$gameStore.roles.add(role);
+	const { ready } = nightPlayer;
 
-		gameStore.updateStore({ roles: $gameStore.roles });
-	};
+	const playerRolesValid = $derived.by(() => {
+		const evils = evilRolesCount(playerRoles);
+		const innocents = innocentRolesCount(playerRoles);
 
-	const addRole = (role: PlayerRole) => () => {
-		role.amount = (role.amount ?? 0) + 1;
-		$gameStore.roles.add(role);
+		return evils > 0 && innocents > 0 && innocents > evils;
+	});
 
-		gameStore.updateStore({ roles: $gameStore.roles });
-	};
+	const addablePlayerRoles = $derived(
+		playerRoles.filter((role: PlayerRole): boolean => {
+			const evils = evilRolesCount(playerRoles);
+			const innocents = innocentRolesCount(playerRoles);
 
-	const showRole = (role: PlayerRole) => () => {
-		gameStore.updateStore({
-			currentRole: role,
-			isNarratorVisible: true
-		});
-	};
+			if (!role.addable) {
+				return role.amount === 0;
+			}
 
-	$: roleAmount = $playerRolesArray.reduce((acc, role) => acc + role.amount, 0);
-	$: usedRoles = $playerRolesArray.filter(({ amount }) => amount > 0);
+			if (role.isEvil) {
+				// there is alway one more werewolf than other roles
+				return innocents > evils + 1;
+			}
 
-	$: ({ ready } = nightPlayer);
+			return true;
+		})
+	);
 
 	onMount(async () => {
 		nightPlayer.loadSong();
 	});
 </script>
 
-<!-- This is needed because daisy ui requires the tabindex -->
-<!-- svelte-ignore a11y-label-has-associated-control -->
-<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-
 <div class="h-full flex flex-col items-center justify-between">
 	<div>
-		<h2 class="mb-4">{roleAmount} {$t('narrator.selected')}</h2>
+		<h2 class="mb-4">{roleAmount} {t('narrator.selected')}</h2>
 
 		<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 			{#each usedRoles as role}
 				<RoleImage
-					on:click={showRole(role)}
-					indicatorDisabled={!$playerRoleRemovable(role)}
-					onIndicatorClick={removeRole(role)}
 					{role}
+					indicatorDisabled={!playerRoleRemovable(role)}
+					onIndicatorClick={() => {
+						if (!role.amount || role.amount === 0) {
+							return;
+						}
+
+						role.amount = role.amount - 1;
+					}}
+					onclick={() => {
+						gameState.currentRole = role;
+						gameState.isNarratorVisible = true;
+					}}
 				/>
 			{/each}
 		</div>
@@ -75,14 +80,14 @@
 	<div class="flex gap-5">
 		<button
 			class="btn btn-primary"
-			disabled={!$playerRolesValid || !$ready}
-			on:click={startFirstNightPhase}
+			disabled={!playerRolesValid || !$ready}
+			onclick={startFirstNightPhase}
 		>
-			{$t('game.start')}
+			{t('game.start')}
 		</button>
 
 		<div class="dropdown dropdown-top dropdown-end">
-			<label tabindex="0" class="btn">
+			<div tabindex="0" role="button" class="btn btn-primary">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -94,12 +99,18 @@
 						d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-10h4V7h2v4h4v2h-4v4h-2v-4H7v-2z"
 					/>
 				</svg>
-			</label>
+			</div>
 
-			<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box mb-1">
-				{#each $addablePlayerRoles as role}
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+			<ul tabindex="0" class="dropdown-content menu p-2 w-52 shadow rounded-box mb-1 z-[1]">
+				{#each addablePlayerRoles as role}
 					<li class="mb-1">
-						<RoleListItem on:click={addRole(role)} {role} />
+						<RoleListItem
+							{role}
+							onclick={() => {
+								role.amount = (role.amount ?? 0) + 1;
+							}}
+						/>
 					</li>
 				{/each}
 			</ul>

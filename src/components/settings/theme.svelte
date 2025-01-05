@@ -1,27 +1,27 @@
 <script lang="ts">
-	import { t } from '$lib/stores/translations';
-	import { themes, themeStore } from '$lib/stores/theme';
+	import { t } from '$lib/stores/translations.svelte';
+	import { themes, themeState } from '$lib/stores/theme.svelte';
 
 	const themeNameInUpper = (name: string) => name[0]?.toUpperCase() + name.slice(1);
 </script>
 
 <label class="flex justify-between items-center mb-2 cursor-pointer">
-	<span class="label-text">{$t('settings.theme.toggle')}</span>
+	<span class="label-text">{t('settings.theme.toggle')}</span>
 	<input
-		checked={$themeStore.autoSwitching}
+		checked={themeState.autoSwitching}
 		type="checkbox"
 		class="toggle toggle-primary"
-		on:change={(e) => themeStore.setAutoSwitching(e.currentTarget.checked)}
+		onchange={(e) => (themeState.autoSwitching = e.currentTarget.checked)}
 	/>
 </label>
 
 <label class="grid grid-cols-3 gap-4 mb-2">
 	<div class="flex flex-col gap-1">
-		<span class="label-text">{$t('settings.nighttheme')}</span>
+		<span class="label-text">{t('settings.nighttheme')}</span>
 		<select
-			value={$themeStore.darkTheme}
+			value={themeState.darkTheme}
 			class="select select-primary"
-			on:change={(e) => themeStore.setDarkTheme(e.currentTarget.value)}
+			onchange={(e) => (themeState.darkTheme = e.currentTarget.value)}
 		>
 			{#each themes as theme}
 				<option value={theme}>
@@ -31,13 +31,13 @@
 		</select>
 	</div>
 
-	{#if $themeStore.autoSwitching}
+	{#if themeState.autoSwitching}
 		<div class="flex flex-col gap-1">
-			<span class="label-text">{$t('settings.daytheme')}</span>
+			<span class="label-text">{t('settings.daytheme')}</span>
 			<select
-				value={$themeStore.lightTheme}
+				value={themeState.lightTheme}
 				class="select select-primary"
-				on:change={(e) => themeStore.setLightTheme(e.currentTarget.value)}
+				onchange={(e) => (themeState.lightTheme = e.currentTarget.value)}
 			>
 				{#each themes as theme}
 					<option value={theme}>

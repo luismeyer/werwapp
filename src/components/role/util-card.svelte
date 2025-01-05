@@ -1,21 +1,26 @@
 <script lang="ts">
 	import { startNextGamePhase } from '$lib/game';
-	import { gameStore, type UtilityRole } from '$lib/stores/game';
-	import { t } from '$lib/stores/translations';
-	import { getNextGameRole, showRole } from '$lib/roles';
+	import { gameState, type UtilityRole } from '$lib/stores/game.svelte';
+	import { t } from '$lib/stores/translations.svelte';
+	import { getNextGameRole, showRole } from '$lib/roles.svelte';
 
-	export let role: UtilityRole;
+	interface Props {
+		role: UtilityRole;
+	}
 
-	$: nextRole = $getNextGameRole(role);
+	const { role }: Props = $props();
 
-	const title = role.name === 'day' ? $t('narrator.headline.day') : $t('narrator.headline.night');
+	const nextRole = $derived(getNextGameRole(role));
+
+	const title = role.name === 'day' ? t('narrator.headline.day') : t('narrator.headline.night');
 
 	const changeMusic = async () => {
-		gameStore.updateStore({ isNarratorVisible: false });
+		gameState.isNarratorVisible = false;
 
 		await startNextGamePhase();
 
-		gameStore.updateStore({ isNarratorVisible: true, currentRole: nextRole });
+		gameState.isNarratorVisible = true;
+		gameState.currentRole = nextRole;
 	};
 </script>
 
@@ -24,15 +29,15 @@
 		<h1 class="card-title text-5xl">{title}</h1>
 
 		<div class="card-actions w-full mt-6">
-			{#if $gameStore.phase === role.name}
-				<button class="btn btn-secondary w-full" on:click={() => showRole(nextRole)}>
-					{$t('narrator.next')}
+			{#if gameState.phase === role.name}
+				<button class="btn btn-secondary w-full" onclick={() => showRole(nextRole)}>
+					{t('narrator.next')}
 				</button>
 			{/if}
 
-			{#if $gameStore.phase !== role.name}
-				<button class="btn btn-secondary w-full" on:click={changeMusic}>
-					{$t('narrator.music.button')}
+			{#if gameState.phase !== role.name}
+				<button class="btn btn-secondary w-full" onclick={changeMusic}>
+					{t('narrator.music.button')}
 				</button>
 			{/if}
 		</div>

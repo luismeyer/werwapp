@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { localeStore, locales } from '$lib/stores/i18n';
-	import { t } from '$lib/stores/translations';
+	import { localeState, locales } from '$lib/stores/i18n.svelte';
+	import { t } from '$lib/stores/translations.svelte';
 </script>
 
 <div class="tabs tabs-boxed items-center mb-1">
 	{#each locales as l}
 		<button
 			class="tab flex-1"
-			class:tab-active={$localeStore === l}
+			class:tab-active={localeState.locale === l}
 			value={l}
-			on:click={() => localeStore.updateLocale(l)}
+			onclick={() => (localeState.locale = l)}
 		>
-			{$t(l)}
+			{t(l)}
 		</button>
 	{/each}
 </div>

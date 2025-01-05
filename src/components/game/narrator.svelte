@@ -1,39 +1,43 @@
 <script lang="ts">
-	import { activeGameRoles, getUtilityRole } from '$lib/roles';
-	import { gameStore } from '$lib/stores/game';
-	import { t } from '$lib/stores/translations';
+	import { getActiveGameRoles, getUtilityRole } from '$lib/roles.svelte';
+	import { gameState } from '$lib/stores/game.svelte';
+	import { t } from '$lib/stores/translations.svelte';
 
 	import RoleUtilCard from '../role/util-card.svelte';
 	import RoleGameCard from '../role/game-card.svelte';
 
-	let cardElements: Record<string, HTMLDivElement> = {};
+	const cardElements: Record<string, HTMLDivElement> = $state({});
 
 	const closeLayer = () => {
-		gameStore.updateStore({ isNarratorVisible: false });
+		gameState.isNarratorVisible = false;
 	};
 
-	$: {
-		$gameStore.currentRole &&
-			cardElements[$gameStore.currentRole.name]?.scrollIntoView({ behavior: 'smooth' });
-	}
+	$effect(() => {
+		if (!gameState.currentRole) {
+			return;
+		}
 
-	$: {
-		const notUtilRole = $gameStore.currentRole?.type !== 'util';
-		const notSameRole = $gameStore.phase !== $gameStore.currentRole?.state;
-		const notSetup = $gameStore.state !== 'setup';
+		cardElements[gameState.currentRole.id]?.scrollIntoView({ behavior: 'smooth' });
+	});
+
+	$effect(() => {
+		const notUtilRole = gameState.currentRole?.type !== 'util';
+		const notSameRole = gameState.phase !== gameState.currentRole?.state;
+		const notSetup = gameState.state !== 'setup';
 
 		// update the current role if user clicked sun or moon
 		if (notUtilRole && notSameRole && notSetup) {
-			const currentRole = getUtilityRole($gameStore.phase);
-			gameStore.updateStore({ currentRole });
+			gameState.currentRole = getUtilityRole(gameState.phase);
 		}
-	}
+	});
+
+	const activeGameRoles = $derived(getActiveGameRoles());
 </script>
 
 <div class="flex flex-col justify-between h-screen pb-4">
 	<div class="overflow-hidden">
-		{#each $activeGameRoles as role}
-			<div bind:this={cardElements[role.name]} class="flex items-center justify-center h-full p-4">
+		{#each activeGameRoles as role}
+			<div bind:this={cardElements[role.id]} class="flex items-center justify-center h-full p-4">
 				{#if role.type === 'util'}
 					<RoleUtilCard {role} />
 				{:else}
@@ -44,6 +48,6 @@
 	</div>
 
 	<div class="p-4">
-		<button class="btn w-full" on:click={closeLayer}>{$t('narrator.close')}</button>
+		<button class="btn w-full" onclick={closeLayer}>{t('narrator.close')}</button>
 	</div>
 </div>
