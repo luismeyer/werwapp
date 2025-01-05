@@ -1,23 +1,30 @@
 <script lang="ts">
-	import { gameStore, type PlayerRole } from '$lib/stores/game';
+	import { gameStore, type PlayerRole } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations';
 	import { getNextGameRole, getPrevGameRole, showRole } from '$lib/roles';
 
 	import RoleImage from './image.svelte';
 
-	export let role: PlayerRole;
+	interface Props {
+		role: PlayerRole;
+	}
 
-	$: nextRole = $getNextGameRole(role);
-	$: prevRole = $getPrevGameRole(role);
+	const { role }: Props = $props();
 
-	$: roleName =
-		role.amount === 1 ? $t(`narrator.${role.name}.name`) : $t(`narrator.${role.name}.name.plural`);
+	const nextRole = $derived($getNextGameRole(role));
+	const prevRole = $derived($getPrevGameRole(role));
 
-	$: description = $t(`narrator.${role.name}.description`);
+	const roleName = $derived(
+		role.amount === 1 ? $t(`narrator.${role.name}.name`) : $t(`narrator.${role.name}.name.plural`)
+	);
 
-	$: title = $t(
-		role.amount === 1 ? `narrator.headline.singular.${role.prefix}` : 'narrator.headline.plural',
-		{ role: roleName }
+	const description = $derived($t(`narrator.${role.name}.description`));
+
+	const title = $derived(
+		$t(
+			role.amount === 1 ? `narrator.headline.singular.${role.prefix}` : 'narrator.headline.plural',
+			{ role: roleName }
+		)
 	);
 </script>
 
@@ -33,7 +40,7 @@
 		{#if $gameStore.state === 'running'}
 			<div class="w-full mt-6 grid grid-flow-col gap-4">
 				{#if prevRole}
-					<button on:click={() => showRole(prevRole)} class="btn btn-secondary w-full">
+					<button onclick={() => showRole(prevRole)} class="btn btn-secondary w-full">
 						{$t('narrator.prev')}
 					</button>
 				{/if}
@@ -43,7 +50,7 @@
 						<span class="indicator-item badge badge-accent bounce">1</span>
 					{/if}
 
-					<button on:click={() => showRole(nextRole)} class="btn btn-secondary w-full">
+					<button onclick={() => showRole(nextRole)} class="btn btn-secondary w-full">
 						{$t('narrator.next')}
 					</button>
 				</div>

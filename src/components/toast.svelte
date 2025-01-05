@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { toastStore } from '$lib/stores/toast';
 
-	$: toasts = Object.values($toastStore);
+	const toasts = $derived(Object.values($toastStore));
 </script>
 
 <div class="toast toast-top toast-center w-9/12 text-center">

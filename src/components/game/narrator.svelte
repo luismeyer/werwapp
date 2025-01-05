@@ -1,23 +1,28 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { activeGameRoles, getUtilityRole } from '$lib/roles';
-	import { gameStore } from '$lib/stores/game';
+	import { gameStore } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations';
 
 	import RoleUtilCard from '../role/util-card.svelte';
 	import RoleGameCard from '../role/game-card.svelte';
 
-	let cardElements: Record<string, HTMLDivElement> = {};
+	const cardElements: Record<string, HTMLDivElement> = $state({});
 
 	const closeLayer = () => {
 		gameStore.updateStore({ isNarratorVisible: false });
 	};
 
-	$: {
-		$gameStore.currentRole &&
-			cardElements[$gameStore.currentRole.name]?.scrollIntoView({ behavior: 'smooth' });
-	}
+	$effect(() => {
+		if (!$gameStore.currentRole) {
+			return;
+		}
 
-	$: {
+		cardElements[$gameStore.currentRole.name]?.scrollIntoView({ behavior: 'smooth' });
+	});
+
+	$effect(() => {
 		const notUtilRole = $gameStore.currentRole?.type !== 'util';
 		const notSameRole = $gameStore.phase !== $gameStore.currentRole?.state;
 		const notSetup = $gameStore.state !== 'setup';
@@ -27,7 +32,7 @@
 			const currentRole = getUtilityRole($gameStore.phase);
 			gameStore.updateStore({ currentRole });
 		}
-	}
+	});
 </script>
 
 <div class="flex flex-col justify-between h-screen pb-4">
@@ -44,6 +49,6 @@
 	</div>
 
 	<div class="p-4">
-		<button class="btn w-full" on:click={closeLayer}>{$t('narrator.close')}</button>
+		<button class="btn w-full" onclick={closeLayer}>{$t('narrator.close')}</button>
 	</div>
 </div>

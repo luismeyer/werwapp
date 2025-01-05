@@ -9,7 +9,7 @@
 			class="tab flex-1"
 			class:tab-active={$localeStore === l}
 			value={l}
-			on:click={() => localeStore.updateLocale(l)}
+			onclick={() => localeStore.updateLocale(l)}
 		>
 			{$t(l)}
 		</button>

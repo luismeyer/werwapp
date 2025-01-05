@@ -2,14 +2,9 @@
 	import { onMount } from 'svelte';
 
 	import { startFirstNightPhase } from '$lib/game';
-	import {
-		addablePlayerRoles,
-		playerRoleRemovable,
-		playerRolesArray,
-		playerRolesValid
-	} from '$lib/roles';
-	import { gameStore, type PlayerRole } from '$lib/stores/game';
-	import { nightPlayer } from '$lib/stores/player';
+	import { addablePlayerRoles, playerRolesArray, playerRolesValid } from '$lib/roles';
+	import { gameStore, type PlayerRole } from '$lib/stores/game.svelte';
+	import { nightPlayer } from '$lib/stores/player.svelte';
 	import { t } from '$lib/stores/translations';
 
 	import RoleImage from '../components/role/image.svelte';
@@ -42,19 +37,23 @@
 		});
 	};
 
-	$: roleAmount = $playerRolesArray.reduce((acc, role) => acc + role.amount, 0);
-	$: usedRoles = $playerRolesArray.filter(({ amount }) => amount > 0);
+	$effect(() => {
+		console.log($playerRolesArray);
+	});
 
-	$: ({ ready } = nightPlayer);
+	const roleAmount = $playerRolesArray.reduce((acc, role) => acc + role.amount, 0);
+	const usedRoles = $playerRolesArray.filter(({ amount }) => amount > 0);
+
+	$effect(() => {
+		console.log(usedRoles);
+	});
+
+	const { ready } = nightPlayer;
 
 	onMount(async () => {
 		nightPlayer.loadSong();
 	});
 </script>
-
-<!-- This is needed because daisy ui requires the tabindex -->
-<!-- svelte-ignore a11y-label-has-associated-control -->
-<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 
 <div class="h-full flex flex-col items-center justify-between">
 	<div>
@@ -62,12 +61,7 @@
 
 		<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 			{#each usedRoles as role}
-				<RoleImage
-					on:click={showRole(role)}
-					indicatorDisabled={!$playerRoleRemovable(role)}
-					onIndicatorClick={removeRole(role)}
-					{role}
-				/>
+				<RoleImage on:click={showRole(role)} {role} />
 			{/each}
 		</div>
 	</div>
@@ -76,14 +70,14 @@
 		<button
 			class="btn btn-primary"
 			disabled={!$playerRolesValid || !$ready}
-			on:click={startFirstNightPhase}
+			onclick={startFirstNightPhase}
 		>
 			{$t('game.start')}
 		</button>
 
-		<div class="dropdown dropdown-top dropdown-end">
-			<label tabindex="0" class="btn">
-				<svg
+		<details class="dropdown dropdown-top dropdown-end">
+			<summary class="btn"
+				><svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
 					height="24"
@@ -94,16 +88,22 @@
 						d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-10h4V7h2v4h4v2h-4v4h-2v-4H7v-2z"
 					/>
 				</svg>
-			</label>
+			</summary>
 
-			<ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box mb-1">
+			<ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box mb-1">
 				{#each $addablePlayerRoles as role}
 					<li class="mb-1">
-						<RoleListItem on:click={addRole(role)} {role} />
+						<RoleListItem
+							onclick={() => {
+								console.log('click');
+								addRole(role);
+							}}
+							{role}
+						/>
 					</li>
 				{/each}
 			</ul>
-		</div>
+		</details>
 	</div>
 </div>
 

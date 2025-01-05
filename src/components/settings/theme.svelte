@@ -11,7 +11,7 @@
 		checked={$themeStore.autoSwitching}
 		type="checkbox"
 		class="toggle toggle-primary"
-		on:change={(e) => themeStore.setAutoSwitching(e.currentTarget.checked)}
+		onchange={(e) => themeStore.setAutoSwitching(e.currentTarget.checked)}
 	/>
 </label>
 
@@ -21,7 +21,7 @@
 		<select
 			value={$themeStore.darkTheme}
 			class="select select-primary"
-			on:change={(e) => themeStore.setDarkTheme(e.currentTarget.value)}
+			onchange={(e) => themeStore.setDarkTheme(e.currentTarget.value)}
 		>
 			{#each themes as theme}
 				<option value={theme}>
@@ -37,7 +37,7 @@
 			<select
 				value={$themeStore.lightTheme}
 				class="select select-primary"
-				on:change={(e) => themeStore.setLightTheme(e.currentTarget.value)}
+				onchange={(e) => themeStore.setLightTheme(e.currentTarget.value)}
 			>
 				{#each themes as theme}
 					<option value={theme}>

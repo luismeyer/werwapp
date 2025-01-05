@@ -27,6 +27,6 @@
 		checked={$wakeLockStore.state === 'enabled'}
 		type="checkbox"
 		class="toggle toggle-primary"
-		on:change={handleChange}
+		onchange={handleChange}
 	/>
 </label>

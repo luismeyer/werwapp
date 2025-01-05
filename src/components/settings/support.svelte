@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { afterUpdate } from 'svelte';
-
 	import { findAnswer } from '$lib/support';
 	import { t } from '$lib/stores/translations';
 
-	let inputValue: string;
+	let inputValue = $state('');
 
 	let bubbleContainer: HTMLDivElement;
 
-	$: bubbles = [{ left: true, text: $t('support.welcome') }];
+	let bubbles = $state([{ left: true, text: $t('support.welcome') }]);
 
-	let disabled = false;
+	let disabled = $state(false);
 
 	const onKeyPress = (e: KeyboardEvent) => {
 		if (e.code !== 'Enter') {
@@ -34,7 +32,7 @@
 		disabled = false;
 	};
 
-	afterUpdate(() => {
+	$effect(() => {
 		bubbleContainer.scroll({ top: bubbleContainer.scrollHeight, behavior: 'smooth' });
 	});
 </script>
@@ -43,7 +41,7 @@
 
 <div bind:this={bubbleContainer} class="overflow-y-scroll">
 	<!-- this is a needed hack because otherwise the styles aren't loaded correctly -->
-	<div class="chat-start chat-end" />
+	<div class="chat-start chat-end"></div>
 
 	{#each bubbles as bubble}
 		<div class={`chat chat-${bubble.left ? 'start' : 'end'}`}>
@@ -59,10 +57,10 @@
 		placeholder="What's up?"
 		class="input w-full"
 		bind:value={inputValue}
-		on:keypress={onKeyPress}
+		onkeypress={onKeyPress}
 	/>
 
-	<button on:click={addQuestion} {disabled} class="btn">
+	<button onclick={addQuestion} {disabled} class="btn">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
@@ -70,6 +68,7 @@
 			viewBox="0 0 24 24"
 			fill="hsl(var(--nc) / var(--tw-text-opacity))"
 		>
+			<title>add</title>
 			<path
 				d="m21.426 11.095-17-8A.999.999 0 0 0 3.03 4.242L4.969 12 3.03 19.758a.998.998 0 0 0 1.396 1.147l17-8a1 1 0 0 0 0-1.81zM5.481 18.197l.839-3.357L12 12 6.32 9.16l-.839-3.357L18.651 12l-13.17 6.197z"
 			/>

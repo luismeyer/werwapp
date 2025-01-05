@@ -1,7 +1,5 @@
-import { get } from 'svelte/store';
-
-import { gameStore } from '$lib/stores/game';
-import { nightPlayer, isFading, dayPlayer, nextPlayer } from '$lib/stores/player';
+import { gameStore } from '$lib/stores/game.svelte';
+import { nightPlayer, isFading, dayPlayer, nextPlayer } from '$lib/stores/player.svelte';
 
 import { goto } from '$app/navigation';
 import { Crossfade } from './abstractions/Crossfade';
@@ -9,7 +7,9 @@ import { Crossfade } from './abstractions/Crossfade';
 export const startFirstNightPhase = async () => {
 	goto('/game');
 
-	gameStore.start();
+	gameStore.currentRole = undefined;
+	gameStore.state = 'running';
+	gameStore.phase = 'night';
 
 	// start the music
 	nightPlayer.play();
@@ -19,14 +19,12 @@ export const startFirstNightPhase = async () => {
 };
 
 export const startNextGamePhase = async () => {
-	const { nightCount, phase } = get(gameStore);
+	const { nightCount, phase } = gameStore;
 
 	const nextPhase = phase === 'day' ? 'night' : 'day';
 
-	gameStore.updateStore({
-		phase: nextPhase,
-		nightCount: nextPhase === 'night' ? nightCount + 1 : nightCount
-	});
+	gameStore.phase = nextPhase;
+	gameStore.nightCount = nextPhase === 'night' ? nightCount + 1 : nightCount;
 
 	isFading.set(true);
 
@@ -38,6 +36,6 @@ export const startNextGamePhase = async () => {
 
 	isFading.set(false);
 
-	const player = get(nextPlayer);
+	const player = nextPlayer;
 	player.loadSong();
 };

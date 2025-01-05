@@ -11,21 +11,28 @@
 	import Narrator from '../components/game/narrator.svelte';
 
 	import { t } from '$lib/stores/translations';
-	import { gameStore } from '$lib/stores/game';
+	import { gameStore } from '$lib/stores/game.svelte';
 	import { registerSwipeGestures } from '$lib/swipe';
 	import { themeStore } from '$lib/stores/theme';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	const { children }: Props = $props();
 
 	const tabs = [
 		{ route: ['', 'game'], name: 'game' },
 		{ route: ['settings'], name: 'settings' }
 	];
 
-	$: activeTab = tabs.findIndex(({ route }) => route.includes($page.url.pathname.slice(1)));
+	const activeTab = $derived(
+		tabs.findIndex(({ route }) => route.includes($page.url.pathname.slice(1)))
+	);
 
 	const changeTab = (index: number) => {
 		const newTab = tabs[index];
 
-		let route: string = `/${newTab.route[0]}`;
+		let route = `/${newTab.route[0]}`;
 		if (newTab.name === 'game' && $gameStore.state === 'running') {
 			route = '/game';
 		}
@@ -79,7 +86,7 @@
 			</header>
 
 			<main>
-				<slot />
+				{@render children?.()}
 			</main>
 
 			<Forest />
@@ -87,7 +94,7 @@
 
 		<div class="btm-nav navigation theme">
 			{#each tabs as tab, index}
-				<button class="theme" on:click={() => changeTab(index)} class:active={index === activeTab}>
+				<button class="theme" onclick={() => changeTab(index)} class:active={index === activeTab}>
 					{$t(tab.name)}
 				</button>
 			{/each}
@@ -95,7 +102,7 @@
 	</div>
 
 	<div class="drawer-side force-top">
-		<label for="my-drawer" class="drawer-overlay" />
+		<label for="my-drawer" class="drawer-overlay"></label>
 
 		<div class="w-screen bg-base-100">
 			<Narrator />

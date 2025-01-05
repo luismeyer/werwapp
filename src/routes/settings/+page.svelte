@@ -15,19 +15,19 @@
 		{$t('settings.discribtion')}
 	</div>
 
-	<div class="divider" />
+	<div class="divider"></div>
 
 	<SettingsI18n />
 
-	<div class="divider" />
+	<div class="divider"></div>
 
 	<SettingsItems />
 
-	<div class="divider" />
+	<div class="divider"></div>
 
 	<SettingsTheme />
 
-	<div class="divider" />
+	<div class="divider"></div>
 
 	{#if wakelockAvailable()}
 		<SettingsWakelock />

@@ -1,14 +1,15 @@
 <script lang="ts">
-	import { gameStore } from '$lib/stores/game';
+	import { gameStore } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations';
-	import { dayPlayer, nightPlayer } from '$lib/stores/player';
+	import { dayPlayer, nightPlayer } from '$lib/stores/player.svelte';
 
 	import About from './about.svelte';
 	import Support from './support.svelte';
 
 	const iconColor = 'hsl(var(--pc) / var(--tw-text-opacity))';
 
-	$: isAboutModalOpen = false;
+	// biome-ignore lint/style/useConst: TODO: fix
+	let isAboutModalOpen = $state(false);
 
 	const reset = () => {
 		gameStore.reset();
@@ -99,9 +100,9 @@
 		</p>
 
 		<div class="flex justify-evenly gap-2">
-			<label on:click={reset} on:keypress={reset} for="reset-modal" class="btn">
+			<button onclick={reset} onkeypress={reset} class="btn">
 				{$t('reset.yes')}
-			</label>
+			</button>
 
 			<label for="reset-modal" class="btn btn-primary">
 				{$t('reset.no')}
@@ -116,7 +117,7 @@
 	<label class="modal-box relative" for="">
 		<label for="about-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 
-		<About visible={isAboutModalOpen} />
+		<About />
 	</label>
 </label>
 

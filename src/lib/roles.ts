@@ -1,5 +1,5 @@
 import { derived, get } from 'svelte/store';
-import { gameStore, type PlayerRole, type Role, type UtilityRole } from './stores/game';
+import { gameStore, type PlayerRole, type Role, type UtilityRole } from './stores/game.svelte';
 
 export const playerRolesArray = derived(gameStore, ({ roles }) =>
 	[...roles].filter((role): role is PlayerRole => role.type === 'player')

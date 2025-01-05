@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import { gameStore } from '$lib/stores/game';
+	import { gameStore } from '$lib/stores/game.svelte';
 	import { startNextGamePhase } from '$lib/game';
 	import { getUtilityRole, showRole } from '$lib/roles';
 
@@ -26,7 +26,7 @@
 		await startNextGamePhase();
 	};
 
-	$: handleBtnClick = $gameStore.phase === 'day' ? startNight : startDay;
+	const handleBtnClick = $derived($gameStore.phase === 'day' ? startNight : startDay);
 </script>
 
 <div class="game">

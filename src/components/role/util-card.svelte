@@ -1,12 +1,16 @@
 <script lang="ts">
 	import { startNextGamePhase } from '$lib/game';
-	import { gameStore, type UtilityRole } from '$lib/stores/game';
+	import { gameStore, type UtilityRole } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations';
 	import { getNextGameRole, showRole } from '$lib/roles';
 
-	export let role: UtilityRole;
+	interface Props {
+		role: UtilityRole;
+	}
 
-	$: nextRole = $getNextGameRole(role);
+	const { role }: Props = $props();
+
+	const nextRole = $derived($getNextGameRole(role));
 
 	const title = role.name === 'day' ? $t('narrator.headline.day') : $t('narrator.headline.night');
 
@@ -25,13 +29,13 @@
 
 		<div class="card-actions w-full mt-6">
 			{#if $gameStore.phase === role.name}
-				<button class="btn btn-secondary w-full" on:click={() => showRole(nextRole)}>
+				<button class="btn btn-secondary w-full" onclick={() => showRole(nextRole)}>
 					{$t('narrator.next')}
 				</button>
 			{/if}
 
 			{#if $gameStore.phase !== role.name}
-				<button class="btn btn-secondary w-full" on:click={changeMusic}>
+				<button class="btn btn-secondary w-full" onclick={changeMusic}>
 					{$t('narrator.music.button')}
 				</button>
 			{/if}
