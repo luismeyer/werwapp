@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { findAnswer } from '$lib/support';
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 
 	let inputValue = $state('');
 
 	let bubbleContainer: HTMLDivElement;
 
-	let bubbles = $state([{ left: true, text: $t('support.welcome') }]);
+	let bubbles = $state([{ left: true, text: t('support.welcome') }]);
 
 	let disabled = $state(false);
 
@@ -27,7 +27,7 @@
 		inputValue = '';
 
 		const answer = findAnswer(parsedInput);
-		bubbles = [...bubbles, { left: true, text: $t(answer) }];
+		bubbles = [...bubbles, { left: true, text: t(answer) }];
 
 		disabled = false;
 	};
@@ -37,7 +37,7 @@
 	});
 </script>
 
-<h3 class="text-lg font-bold pb-5">{$t('support.headline')}</h3>
+<h3 class="text-lg font-bold pb-5">{t('support.headline')}</h3>
 
 <div bind:this={bubbleContainer} class="overflow-y-scroll">
 	<!-- this is a needed hack because otherwise the styles aren't loaded correctly -->

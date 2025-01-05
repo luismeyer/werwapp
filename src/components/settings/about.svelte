@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 	import { Licenses } from '../../const/licenses';
 
 	const formatLink = (link: string): string => {
@@ -11,7 +11,7 @@
 </script>
 
 <div class="flex flex-col gap-5">
-	<h3 class="text-lg font-bold">{$t('about.title')}</h3>
+	<h3 class="text-lg font-bold">{t('about.title')}</h3>
 
 	<a
 		target="_blank"
@@ -19,11 +19,11 @@
 		href="https://www.github.com/BjarneRentz/werwapp"
 		class="link"
 	>
-		{$t('about.github')}
+		{t('about.github')}
 	</a>
 
 	<div>
-		<h4 class="mb-1">{$t('about.licenses.title')}</h4>
+		<h4 class="mb-1">{t('about.licenses.title')}</h4>
 
 		<div class="overflow-y-scroll overflow-x-hidden flex flex-col gap-8 max-h-64">
 			{#each Licenses as license}
@@ -32,7 +32,7 @@
 						<h2 class="card-title">{license.name}</h2>
 
 						<p>
-							{$t('about.licenses.description', {
+							{t('about.licenses.description', {
 								author: license.author,
 								licenseType: license.licenseType
 							})}
@@ -45,7 +45,7 @@
 								href={formatLink(license.link)}
 								class="btn btn-primary"
 							>
-								{$t('about.licenses.project')}
+								{t('about.licenses.project')}
 							</a>
 						</div>
 					</div>

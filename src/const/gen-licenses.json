@@ -223,15 +223,15 @@
 	{
 		"department": "kessler",
 		"relatedTo": "stuff",
-		"name": "eslint-plugin-svelte3",
+		"name": "eslint-plugin-svelte",
 		"licensePeriod": "perpetual",
 		"material": "material",
 		"licenseType": "MIT",
-		"link": "git+https://github.com/sveltejs/eslint-plugin-svelte3.git",
-		"remoteVersion": "4.0.0",
-		"installedVersion": "4.0.0",
-		"definedVersion": "^4.0.0",
-		"author": "Conduitry"
+		"link": "git+https://github.com/sveltejs/eslint-plugin-svelte.git",
+		"remoteVersion": "2.46.1",
+		"installedVersion": "2.46.1",
+		"definedVersion": "^2.46.1",
+		"author": "Yosuke Ota (https://github.com/ota-meshi)"
 	},
 	{
 		"department": "kessler",

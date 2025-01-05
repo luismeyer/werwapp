@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 	import { getNextGameRole, getPrevGameRole, showRole } from '$lib/roles.svelte';
 
 	import RoleImage from './image.svelte';
@@ -14,16 +14,15 @@
 	const nextRole = $derived(getNextGameRole(role));
 	const prevRole = $derived(getPrevGameRole(role));
 
-	const roleName = $derived(
-		role.amount === 1 ? $t(`narrator.${role.name}.name`) : $t(`narrator.${role.name}.name.plural`)
-	);
-
-	const description = $derived($t(`narrator.${role.name}.description`));
-
 	const title = $derived(
-		$t(
+		t(
 			role.amount === 1 ? `narrator.headline.singular.${role.prefix}` : 'narrator.headline.plural',
-			{ role: roleName }
+			{
+				role:
+					role.amount === 1
+						? t(`narrator.${role.name}.name`)
+						: t(`narrator.${role.name}.name.plural`)
+			}
 		)
 	);
 </script>
@@ -35,13 +34,13 @@
 
 	<div class="card-body items-center text-center">
 		<h2 class="card-title">{title}</h2>
-		<p class="max-w-sm">{description}</p>
+		<p class="max-w-sm">{t(`narrator.${role.name}.description`)}</p>
 
 		{#if gameState.state === 'running'}
 			<div class="w-full mt-6 grid grid-flow-col gap-4">
 				{#if prevRole}
 					<button onclick={() => showRole(prevRole)} class="btn btn-secondary w-full">
-						{$t('narrator.prev')}
+						{t('narrator.prev')}
 					</button>
 				{/if}
 
@@ -51,7 +50,7 @@
 					{/if}
 
 					<button onclick={() => showRole(nextRole)} class="btn btn-secondary w-full">
-						{$t('narrator.next')}
+						{t('narrator.next')}
 					</button>
 				</div>
 			</div>

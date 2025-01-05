@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { startNextGamePhase } from '$lib/game';
 	import { gameState, type UtilityRole } from '$lib/stores/game.svelte';
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 	import { getNextGameRole, showRole } from '$lib/roles.svelte';
 
 	interface Props {
@@ -12,7 +12,7 @@
 
 	const nextRole = $derived(getNextGameRole(role));
 
-	const title = role.name === 'day' ? $t('narrator.headline.day') : $t('narrator.headline.night');
+	const title = role.name === 'day' ? t('narrator.headline.day') : t('narrator.headline.night');
 
 	const changeMusic = async () => {
 		gameState.isNarratorVisible = false;
@@ -31,13 +31,13 @@
 		<div class="card-actions w-full mt-6">
 			{#if gameState.phase === role.name}
 				<button class="btn btn-secondary w-full" onclick={() => showRole(nextRole)}>
-					{$t('narrator.next')}
+					{t('narrator.next')}
 				</button>
 			{/if}
 
 			{#if gameState.phase !== role.name}
 				<button class="btn btn-secondary w-full" onclick={changeMusic}>
-					{$t('narrator.music.button')}
+					{t('narrator.music.button')}
 				</button>
 			{/if}
 		</div>

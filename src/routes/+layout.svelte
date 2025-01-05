@@ -10,7 +10,7 @@
 	import Toast from '../components/toast.svelte';
 	import Narrator from '../components/game/narrator.svelte';
 
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 	import { gameState } from '$lib/stores/game.svelte';
 	import { registerSwipeGestures } from '$lib/swipe';
 	import { themeState } from '$lib/stores/theme.svelte';
@@ -79,7 +79,7 @@
 		<div id="main" class="content gap-5">
 			<header>
 				<div class="flex justify-around py-5">
-					<h1 class="text-5xl font-bold">{$t('game.name')}</h1>
+					<h1 class="text-5xl font-bold">{t('game.name')}</h1>
 				</div>
 			</header>
 
@@ -93,7 +93,7 @@
 		<div class="btm-nav navigation theme">
 			{#each tabs as tab, index}
 				<button class="theme" onclick={() => changeTab(index)} class:active={index === activeTab}>
-					{$t(tab.name)}
+					{t(tab.name)}
 				</button>
 			{/each}
 		</div>

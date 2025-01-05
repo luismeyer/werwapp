@@ -1,5 +1,4 @@
-import { derived } from 'svelte/store';
-import { localeStore } from './i18n';
+import { localeState } from './i18n.svelte';
 import { EN } from '../../const/en';
 import { DE } from '../../const/de';
 
@@ -80,26 +79,22 @@ export type Translations = {
 	'narrator.thief.name.plural': string;
 };
 
-export const t = derived(
-	localeStore,
-	(locale) =>
-		(key: string, vars: Record<string, string> = {}) => {
-			const translations = locale === 'en' ? EN : DE;
+export const t = (key: string, vars: Record<string, string> = {}) => {
+	const translations = localeState.locale === 'en' ? EN : DE;
 
-			// Grab the translation from the translations object.
-			let text = translations[key as keyof Translations];
+	// Grab the translation from the translations object.
+	let text = translations[key as keyof Translations];
 
-			if (!text || (typeof window !== 'undefined' && window.location.search.includes('debug'))) {
-				return key;
-			}
+	if (!text || (typeof window !== 'undefined' && window.location.search.includes('debug'))) {
+		return key;
+	}
 
-			// Replace any passed in variables in the translation string.
-			Object.entries(vars).map(([key, value]) => {
-				const regex = new RegExp(`{{${key}}}`, 'g');
+	// Replace any passed in variables in the translation string.
+	Object.entries(vars).map(([key, value]) => {
+		const regex = new RegExp(`{{${key}}}`, 'g');
 
-				text = text?.replace(regex, value);
-			});
+		text = text?.replace(regex, value);
+	});
 
-			return text;
-		}
-);
+	return text;
+};

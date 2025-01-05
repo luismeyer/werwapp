@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getActiveGameRoles, getUtilityRole } from '$lib/roles.svelte';
 	import { gameState } from '$lib/stores/game.svelte';
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 
 	import RoleUtilCard from '../role/util-card.svelte';
 	import RoleGameCard from '../role/game-card.svelte';
@@ -48,6 +48,6 @@
 	</div>
 
 	<div class="p-4">
-		<button class="btn w-full" onclick={closeLayer}>{$t('narrator.close')}</button>
+		<button class="btn w-full" onclick={closeLayer}>{t('narrator.close')}</button>
 	</div>
 </div>

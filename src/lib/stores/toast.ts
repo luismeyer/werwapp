@@ -1,7 +1,7 @@
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
 import type { Song } from '../song';
-import { t } from './translations';
+import { t } from './translations.svelte';
 
 export type Toast = SongToast | ErrorToast;
 
@@ -38,18 +38,14 @@ export const showSongToast = (song?: Song): Toast | undefined => {
 
 	const id = Date.now();
 
-	const tFunc = get(t);
-
 	toastStore.addToast(id, {
 		href: song.songPage,
-		text: tFunc('song.title', { song: song.title, artist: song.artist })
+		text: t('song.title', { song: song.title, artist: song.artist })
 	});
 
 	setTimeout(() => toastStore.removeToast(id), 2000);
 };
 
 export const showErrorToast = () => {
-	const tFunc = get(t);
-
-	toastStore.addToast(123, { text: tFunc('game.loadError') });
+	toastStore.addToast(123, { text: t('game.loadError') });
 };

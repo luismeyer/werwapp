@@ -4,30 +4,31 @@ import { gameState } from './game.svelte';
 
 const THEME_STORAGE_KEY = 'theme';
 
-export const themeState = $state({
-	lightTheme: 'light',
-	darkTheme: 'dark',
-	autoSwitching: true
-});
-
 function init() {
 	if (!browser) {
-		return;
+		return {
+			lightTheme: 'light',
+			darkTheme: 'dark',
+			autoSwitching: true
+		};
 	}
+
 	const storageString = localStorage.getItem(THEME_STORAGE_KEY);
 	if (!storageString) {
 		localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(themeState));
 		return;
 	}
 
-	const initialData: ThemeData = JSON.parse(storageString);
-
-	themeState.autoSwitching = initialData.autoSwitching;
-	themeState.darkTheme = initialData.darkTheme;
-	themeState.lightTheme = initialData.lightTheme;
+	return JSON.parse(storageString);
 }
 
-init();
+type Theme = {
+	lightTheme: string;
+	darkTheme: string;
+	autoSwitching: boolean;
+};
+
+export const themeState = $state<Theme>(init());
 
 $effect.root(() => {
 	$effect(() => {
@@ -76,9 +77,3 @@ export const themes = [
 	'coffee',
 	'winter'
 ];
-
-type ThemeData = {
-	lightTheme: string;
-	darkTheme: string;
-	autoSwitching: boolean;
-};

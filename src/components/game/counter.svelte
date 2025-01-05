@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { gameState } from '$lib/stores/game.svelte';
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 </script>
 
 <div
@@ -10,5 +10,5 @@
 		<span style={`--value:${gameState.nightCount};`}></span>
 	</span>
 
-	{$t('night')}
+	{t('night')}
 </div>

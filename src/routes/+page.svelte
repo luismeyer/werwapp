@@ -10,7 +10,7 @@
 	} from '$lib/roles.svelte';
 	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
 	import { nightPlayer } from '$lib/stores/player.svelte';
-	import { t } from '$lib/stores/translations';
+	import { t } from '$lib/stores/translations.svelte';
 
 	import RoleImage from '../components/role/image.svelte';
 	import RoleListItem from '../components/role/list-item.svelte';
@@ -54,7 +54,7 @@
 
 <div class="h-full flex flex-col items-center justify-between">
 	<div>
-		<h2 class="mb-4">{roleAmount} {$t('narrator.selected')}</h2>
+		<h2 class="mb-4">{roleAmount} {t('narrator.selected')}</h2>
 
 		<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 			{#each usedRoles as role}
@@ -83,7 +83,7 @@
 			disabled={!playerRolesValid || !$ready}
 			onclick={startFirstNightPhase}
 		>
-			{$t('game.start')}
+			{t('game.start')}
 		</button>
 
 		<div class="dropdown dropdown-top dropdown-end">

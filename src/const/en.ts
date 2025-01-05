@@ -1,4 +1,4 @@
-import type { Translations } from '$lib/stores/translations';
+import type { Translations } from '$lib/stores/translations.svelte';
 
 export const EN: Translations = {
 	'about.title': 'About Werwapp',
