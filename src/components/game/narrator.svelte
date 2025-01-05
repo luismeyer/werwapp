@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { run } from 'svelte/legacy';
 
-	import { activeGameRoles, getUtilityRole } from '$lib/roles';
-	import { gameStore } from '$lib/stores/game.svelte';
+	import { getActiveGameRoles, getUtilityRole } from '$lib/roles.svelte';
+	import { gameState } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations';
 
 	import RoleUtilCard from '../role/util-card.svelte';
@@ -11,33 +11,34 @@
 	const cardElements: Record<string, HTMLDivElement> = $state({});
 
 	const closeLayer = () => {
-		gameStore.updateStore({ isNarratorVisible: false });
+		gameState.isNarratorVisible = false;
 	};
 
 	$effect(() => {
-		if (!$gameStore.currentRole) {
+		if (!gameState.currentRole) {
 			return;
 		}
 
-		cardElements[$gameStore.currentRole.name]?.scrollIntoView({ behavior: 'smooth' });
+		cardElements[gameState.currentRole.name]?.scrollIntoView({ behavior: 'smooth' });
 	});
 
 	$effect(() => {
-		const notUtilRole = $gameStore.currentRole?.type !== 'util';
-		const notSameRole = $gameStore.phase !== $gameStore.currentRole?.state;
-		const notSetup = $gameStore.state !== 'setup';
+		const notUtilRole = gameState.currentRole?.type !== 'util';
+		const notSameRole = gameState.phase !== gameState.currentRole?.state;
+		const notSetup = gameState.state !== 'setup';
 
 		// update the current role if user clicked sun or moon
 		if (notUtilRole && notSameRole && notSetup) {
-			const currentRole = getUtilityRole($gameStore.phase);
-			gameStore.updateStore({ currentRole });
+			gameState.currentRole = getUtilityRole(gameState.phase);
 		}
 	});
+
+	const activeGameRoles = getActiveGameRoles();
 </script>
 
 <div class="flex flex-col justify-between h-screen pb-4">
 	<div class="overflow-hidden">
-		{#each $activeGameRoles as role}
+		{#each activeGameRoles as role}
 			<div bind:this={cardElements[role.name]} class="flex items-center justify-center h-full p-4">
 				{#if role.type === 'util'}
 					<RoleUtilCard {role} />

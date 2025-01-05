@@ -4,16 +4,16 @@
 	import { onMount } from 'svelte';
 
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	import Forest from '../components/forest.svelte';
 	import Toast from '../components/toast.svelte';
 	import Narrator from '../components/game/narrator.svelte';
 
 	import { t } from '$lib/stores/translations';
-	import { gameStore } from '$lib/stores/game.svelte';
+	import { gameState } from '$lib/stores/game.svelte';
 	import { registerSwipeGestures } from '$lib/swipe';
-	import { themeStore } from '$lib/stores/theme';
+	import { themeState } from '$lib/stores/theme.svelte';
 	interface Props {
 		children?: import('svelte').Snippet;
 	}
@@ -26,14 +26,14 @@
 	];
 
 	const activeTab = $derived(
-		tabs.findIndex(({ route }) => route.includes($page.url.pathname.slice(1)))
+		tabs.findIndex(({ route }) => route.includes(page.url.pathname.slice(1)))
 	);
 
 	const changeTab = (index: number) => {
 		const newTab = tabs[index];
 
 		let route = `/${newTab.route[0]}`;
-		if (newTab.name === 'game' && $gameStore.state === 'running') {
+		if (newTab.name === 'game' && gameState.state === 'running') {
 			route = '/game';
 		}
 
@@ -41,12 +41,10 @@
 	};
 
 	onMount(() => {
-		themeStore.init();
-
 		registerSwipeGestures({
 			handleLeft: () => {
-				if ($gameStore.isNarratorVisible) {
-					gameStore.updateStore({ isNarratorVisible: false });
+				if (gameState.isNarratorVisible) {
+					gameState.isNarratorVisible = false;
 					return;
 				}
 
@@ -56,8 +54,8 @@
 				}
 			},
 			handleRight: () => {
-				if (activeTab === 0 && $gameStore.state === 'running') {
-					gameStore.updateStore({ isNarratorVisible: true });
+				if (activeTab === 0 && gameState.state === 'running') {
+					gameState.isNarratorVisible = true;
 					return;
 				}
 
@@ -74,7 +72,7 @@
 		id="my-drawer"
 		type="checkbox"
 		class="drawer-toggle"
-		bind:checked={$gameStore.isNarratorVisible}
+		bind:checked={gameState.isNarratorVisible}
 	/>
 
 	<div class="drawer-content">

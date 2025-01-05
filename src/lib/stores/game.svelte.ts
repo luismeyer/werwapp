@@ -32,13 +32,13 @@ const init: GameStore = {
 	currentRole: undefined
 };
 
-export const gameStore = $state<GameStore>(init);
+export const gameState = $state<GameStore>(init);
 
 export function resetGame() {
-	gameStore.state = init.state;
-	gameStore.phase = init.phase;
-	gameStore.nightCount = init.nightCount;
-	gameStore.roles = init.roles;
-	gameStore.isNarratorVisible = init.isNarratorVisible;
-	gameStore.currentRole = init.currentRole;
+	gameState.state = init.state;
+	gameState.phase = init.phase;
+	gameState.nightCount = init.nightCount;
+	gameState.roles = init.roles;
+	gameState.isNarratorVisible = init.isNarratorVisible;
+	gameState.currentRole = init.currentRole;
 }

@@ -2,8 +2,8 @@
 	import { onMount } from 'svelte';
 
 	import { startFirstNightPhase } from '$lib/game';
-	import { addablePlayerRoles, playerRolesArray, playerRolesValid } from '$lib/roles';
-	import { gameStore, type PlayerRole } from '$lib/stores/game.svelte';
+	import { evilRolesCount, getPlayerRoles, innocentRolesCount } from '$lib/roles.svelte';
+	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
 	import { nightPlayer } from '$lib/stores/player.svelte';
 	import { t } from '$lib/stores/translations';
 
@@ -18,37 +18,51 @@
 		}
 
 		role.amount = role.amount - 1;
-		$gameStore.roles.add(role);
-
-		gameStore.updateStore({ roles: $gameStore.roles });
+		gameState.roles.add(role);
 	};
 
 	const addRole = (role: PlayerRole) => () => {
 		role.amount = (role.amount ?? 0) + 1;
-		$gameStore.roles.add(role);
 
-		gameStore.updateStore({ roles: $gameStore.roles });
+		gameState.roles.add(role);
 	};
 
 	const showRole = (role: PlayerRole) => () => {
-		gameStore.updateStore({
-			currentRole: role,
-			isNarratorVisible: true
-		});
+		gameState.currentRole = role;
+		gameState.isNarratorVisible = true;
 	};
 
-	$effect(() => {
-		console.log($playerRolesArray);
-	});
+	const playerRoles = getPlayerRoles();
 
-	const roleAmount = $playerRolesArray.reduce((acc, role) => acc + role.amount, 0);
-	const usedRoles = $playerRolesArray.filter(({ amount }) => amount > 0);
-
-	$effect(() => {
-		console.log(usedRoles);
-	});
+	const roleAmount = $derived(playerRoles.reduce((acc, role) => acc + role.amount, 0));
+	const usedRoles = $derived(playerRoles.filter(({ amount }) => amount > 0));
 
 	const { ready } = nightPlayer;
+
+	const playerRolesValid = $derived.by(() => {
+		const evils = evilRolesCount(playerRoles);
+		const innocents = innocentRolesCount(playerRoles);
+
+		return evils > 0 && innocents > 0 && innocents > evils;
+	});
+
+	const addablePlayerRoles = $derived(
+		playerRoles.filter((role: PlayerRole): boolean => {
+			const evils = evilRolesCount(playerRoles);
+			const innocents = innocentRolesCount(playerRoles);
+
+			if (!role.addable) {
+				return role.amount === 0;
+			}
+
+			if (role.isEvil) {
+				// there is alway one more werewolf than other roles
+				return innocents > evils + 1;
+			}
+
+			return true;
+		})
+	);
 
 	onMount(async () => {
 		nightPlayer.loadSong();
@@ -69,7 +83,7 @@
 	<div class="flex gap-5">
 		<button
 			class="btn btn-primary"
-			disabled={!$playerRolesValid || !$ready}
+			disabled={!playerRolesValid || !$ready}
 			onclick={startFirstNightPhase}
 		>
 			{$t('game.start')}
@@ -91,7 +105,7 @@
 			</summary>
 
 			<ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box mb-1">
-				{#each $addablePlayerRoles as role}
+				{#each addablePlayerRoles as role}
 					<li class="mb-1">
 						<RoleListItem
 							onclick={() => {

@@ -1,14 +1,10 @@
 <script lang="ts">
-	import { run, createBubbler } from 'svelte/legacy';
+	import { gameState } from '$lib/stores/game.svelte';
+	import { isFading, getNextPlayer } from '$lib/stores/player.svelte';
 
-	const bubble = createBubbler();
-	import { gameStore } from '$lib/stores/game.svelte';
-	import { isFading, nextPlayer } from '$lib/stores/player.svelte';
+	const nextPlayer = getNextPlayer();
 
-	const { ready } = $derived($nextPlayer);
-
-	const disabled = $derived(!$ready || $isFading);
-
+	const disabled = $derived(!nextPlayer.ready || $isFading);
 	const disabledClass = $derived(disabled ? 'disabled' : '');
 
 	let moonClass = $state('out-top');
@@ -24,16 +20,20 @@
 	const enterScreenClass = $derived($isFading ? 'in-top' : 'out-top');
 	const leaveScreenClass = $derived($isFading ? 'out-bottom' : 'in-bottom');
 
-	run(() => {
-		sunClass = $gameStore.phase === 'day' ? enterScreenClass : leaveScreenClass;
+	$effect(() => {
+		sunClass = gameState.phase === 'day' ? enterScreenClass : leaveScreenClass;
+		moonClass = gameState.phase === 'night' ? enterScreenClass : leaveScreenClass;
 	});
-	run(() => {
-		moonClass = $gameStore.phase === 'night' ? enterScreenClass : leaveScreenClass;
-	});
+
+	type Props = {
+		onclick?: () => void;
+	};
+
+	const { onclick }: Props = $props();
 </script>
 
 <div class="w-full h-full relative">
-	<button onclick={bubble('click')} {disabled}>
+	<button {onclick} {disabled}>
 		<svg
 			class={`icon ${disabledClass} ${moonClass} ${transitionClass}`}
 			xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +49,7 @@
 		</svg>
 	</button>
 
-	<button onclick={bubble('click')} {disabled}>
+	<button {onclick} {disabled}>
 		<svg
 			class={`icon ${disabledClass} ${sunClass} ${transitionClass}`}
 			xmlns="http://www.w3.org/2000/svg"

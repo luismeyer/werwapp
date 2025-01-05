@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { gameStore } from '$lib/stores/game.svelte';
+	import { resetGame } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations';
 	import { dayPlayer, nightPlayer } from '$lib/stores/player.svelte';
 
@@ -12,7 +12,8 @@
 	let isAboutModalOpen = $state(false);
 
 	const reset = () => {
-		gameStore.reset();
+		resetGame();
+
 		dayPlayer.stop();
 		nightPlayer.stop();
 	};

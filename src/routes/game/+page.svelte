@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	import { gameStore } from '$lib/stores/game.svelte';
+	import { gameState } from '$lib/stores/game.svelte';
 	import { startNextGamePhase } from '$lib/game';
-	import { getUtilityRole, showRole } from '$lib/roles';
+	import { getUtilityRole, showRole } from '$lib/roles.svelte';
 
 	import Controls from '../../components/game/controls.svelte';
 	import Counter from '../../components/game/counter.svelte';
@@ -11,7 +11,7 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		if ($gameStore.state !== 'running') {
+		if ($gameState.state !== 'running') {
 			goto('/');
 		}
 	});
@@ -26,7 +26,7 @@
 		await startNextGamePhase();
 	};
 
-	const handleBtnClick = $derived($gameStore.phase === 'day' ? startNight : startDay);
+	const handleBtnClick = $derived($gameState.phase === 'day' ? startNight : startDay);
 </script>
 
 <div class="game">

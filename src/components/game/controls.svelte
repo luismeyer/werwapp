@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { gameStore } from '$lib/stores/game.svelte';
-	import { currentPlayer } from '$lib/stores/player.svelte';
+	import { gameState } from '$lib/stores/game.svelte';
+	import { dayPlayer, nightPlayer } from '$lib/stores/player.svelte';
 
 	const fillColor = 'hsl(var(--nc) / var(--tw-text-opacity))';
 
+	const currentPlayer = $derived(gameState.phase === 'day' ? dayPlayer : nightPlayer);
 	const { playing, progress, duration, nextReady } = $derived(currentPlayer);
 
 	const togglePlayer = () => {
-		if (playing) {
+		if ($playing) {
 			currentPlayer.pause();
 		} else {
 			currentPlayer.resume();
@@ -19,7 +20,7 @@
 	};
 
 	const toggleNarrator = () => {
-		gameStore.isNarratorVisible = !gameStore.isNarratorVisible;
+		gameState.isNarratorVisible = !gameState.isNarratorVisible;
 	};
 </script>
 
