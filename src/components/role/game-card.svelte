@@ -10,14 +10,14 @@
 	$: nextRole = $getNextGameRole(role);
 	$: prevRole = $getPrevGameRole(role);
 
-	$: name =
+	$: roleName =
 		role.amount === 1 ? $t(`narrator.${role.name}.name`) : $t(`narrator.${role.name}.name.plural`);
 
 	$: description = $t(`narrator.${role.name}.description`);
 
 	$: title = $t(
 		role.amount === 1 ? `narrator.headline.singular.${role.prefix}` : 'narrator.headline.plural',
-		{ role: name }
+		{ role: roleName }
 	);
 </script>
 

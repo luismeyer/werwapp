@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-import { RolesDefition, type PlayerRoleDef, type UtilityRoleDef } from '../../const/roles';
+import { RolesDefinition, type PlayerRoleDef, type UtilityRoleDef } from '../../const/roles';
 
 export type PlayerRole = PlayerRoleDef & {
 	amount: number;
@@ -21,7 +21,7 @@ export type GameStore = {
 
 export function createGameStateStore() {
 	const defaultRoles = new Set(
-		Object.values(RolesDefition)
+		Object.values(RolesDefinition)
 			.sort((a, b) => a.order - b.order)
 			.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role))
 	);

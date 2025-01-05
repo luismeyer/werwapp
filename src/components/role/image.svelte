@@ -12,7 +12,7 @@
 		<button
 			disabled={indicatorDisabled}
 			on:click={onIndicatorClick}
-			class="indicator-item badge badge-secondary custom-indicator"
+			class="indicator-item badge badge-secondary"
 		>
 			{role.amount}
 		</button>
@@ -22,12 +22,3 @@
 		</div>
 	</button>
 </div>
-
-<style>
-	.custom-indicator {
-		width: 30px;
-		height: 30px;
-		top: 5px;
-		right: 5px;
-	}
-</style>
