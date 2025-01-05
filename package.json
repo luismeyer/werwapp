@@ -13,9 +13,7 @@
 		"lint:check": "eslint .",
 		"prettier": "prettier --plugin-search-dir . --write .",
 		"prettier:check": "prettier --plugin-search-dir . --check .",
-		"preview": "vite preview",
-		"test": "playwright test",
-		"test:unit": "vitest"
+		"preview": "vite preview"
 	},
 	"dependencies": {
 		"@vercel/analytics": "^1.1.1",

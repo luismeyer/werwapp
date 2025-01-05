@@ -2,8 +2,6 @@
 
 The unoffical App for the Game _Werwolf_. The app plays differnt songs for each day and night time.
 
-![](screenshots/night.png)
-
 Additional features:
 
 - User selectable themes for day and night

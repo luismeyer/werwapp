@@ -13,7 +13,7 @@
 	import { t } from '$lib/stores/translations.svelte';
 	import { gameState } from '$lib/stores/game.svelte';
 	import { registerSwipeGestures } from '$lib/swipe';
-	import { themeState } from '$lib/stores/theme.svelte';
+
 	interface Props {
 		children?: import('svelte').Snippet;
 	}
