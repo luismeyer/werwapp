@@ -1,15 +1,28 @@
 <script lang="ts">
 	import type { PlayerRole } from '$lib/stores/game.svelte';
 
-	export let role: PlayerRole;
+	interface Props {
+		role: PlayerRole;
+		onclick?: () => void;
+		indicatorDisabled?: boolean;
+		onIndicatorClick?: () => void;
+	}
+
+	const { role, onclick, onIndicatorClick, indicatorDisabled }: Props = $props();
 </script>
 
-<button on:click class="avatar indicator">
-	<span class="indicator-item badge badge-secondary">
+<div class="indicator">
+	<button
+		disabled={indicatorDisabled}
+		onclick={onIndicatorClick}
+		class="indicator-item badge badge-secondary"
+	>
 		{role.amount}
-	</span>
+	</button>
 
-	<div class="rounded w-24">
-		<img alt="{role.name} character image" src={role.image} />
-	</div>
-</button>
+	<button {onclick} class="avatar">
+		<div class="rounded w-24">
+			<img alt="{role.name} character image" src={role.image} />
+		</div>
+	</button>
+</div>

@@ -11,7 +11,7 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		if ($gameState.state !== 'running') {
+		if (gameState.state !== 'running') {
 			goto('/');
 		}
 	});
@@ -26,7 +26,7 @@
 		await startNextGamePhase();
 	};
 
-	const handleBtnClick = $derived($gameState.phase === 'day' ? startNight : startDay);
+	const handleBtnClick = $derived(gameState.phase === 'day' ? startNight : startDay);
 </script>
 
 <div class="game">
@@ -36,7 +36,7 @@
 		<Controls />
 	</div>
 
-	<SunAndMoon on:click={handleBtnClick} />
+	<SunAndMoon onclick={handleBtnClick} />
 </div>
 
 <style>

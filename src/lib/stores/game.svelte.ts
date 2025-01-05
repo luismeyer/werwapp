@@ -13,15 +13,13 @@ export type GameStore = {
 	phase: 'day' | 'night';
 	nightCount: number;
 	isNarratorVisible: boolean;
-	roles: Set<Role>;
+	roles: Role[];
 	currentRole?: Role;
 };
 
-const defaultRoles = new Set(
-	Object.values(RolesDefinition)
-		.sort((a, b) => a.order - b.order)
-		.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role))
-);
+const defaultRoles = Object.values(RolesDefinition)
+	.sort((a, b) => a.order - b.order)
+	.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role));
 
 const init: GameStore = {
 	state: 'setup',

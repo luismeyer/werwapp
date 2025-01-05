@@ -10,16 +10,17 @@
 
 	const { role }: Props = $props();
 
-	const nextRole = $derived($getNextGameRole(role));
+	const nextRole = $derived(getNextGameRole(role));
 
 	const title = role.name === 'day' ? $t('narrator.headline.day') : $t('narrator.headline.night');
 
 	const changeMusic = async () => {
-		gameState.updateStore({ isNarratorVisible: false });
+		gameState.isNarratorVisible = false;
 
 		await startNextGamePhase();
 
-		gameState.updateStore({ isNarratorVisible: true, currentRole: nextRole });
+		gameState.isNarratorVisible = true;
+		gameState.currentRole = nextRole;
 	};
 </script>
 
@@ -28,13 +29,13 @@
 		<h1 class="card-title text-5xl">{title}</h1>
 
 		<div class="card-actions w-full mt-6">
-			{#if $gameState.phase === role.name}
+			{#if gameState.phase === role.name}
 				<button class="btn btn-secondary w-full" onclick={() => showRole(nextRole)}>
 					{$t('narrator.next')}
 				</button>
 			{/if}
 
-			{#if $gameState.phase !== role.name}
+			{#if gameState.phase !== role.name}
 				<button class="btn btn-secondary w-full" onclick={changeMusic}>
 					{$t('narrator.music.button')}
 				</button>

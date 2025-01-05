@@ -5,6 +5,7 @@
 
 	import About from './about.svelte';
 	import Support from './support.svelte';
+	import { goto } from '$app/navigation';
 
 	const iconColor = 'hsl(var(--pc) / var(--tw-text-opacity))';
 
@@ -16,6 +17,8 @@
 
 		dayPlayer.stop();
 		nightPlayer.stop();
+
+		goto('/');
 	};
 </script>
 
@@ -101,9 +104,11 @@
 		</p>
 
 		<div class="flex justify-evenly gap-2">
-			<button onclick={reset} onkeypress={reset} class="btn">
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+			<label for="reset-modal" onclick={reset} class="btn">
 				{$t('reset.yes')}
-			</button>
+			</label>
 
 			<label for="reset-modal" class="btn btn-primary">
 				{$t('reset.no')}

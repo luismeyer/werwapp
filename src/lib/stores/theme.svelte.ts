@@ -4,10 +4,6 @@ import { gameState } from './game.svelte';
 
 const THEME_STORAGE_KEY = 'theme';
 
-const updateThemeOnBody = (theme: string) => {
-	document.documentElement.setAttribute('data-theme', theme);
-};
-
 export const themeState = $state({
 	lightTheme: 'light',
 	darkTheme: 'dark',
@@ -34,14 +30,18 @@ function init() {
 init();
 
 $effect.root(() => {
-	if (!themeState.autoSwitching) {
-		return;
-	}
+	$effect(() => {
+		localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(themeState));
+	});
 
-	const { phase } = gameState;
+	$effect(() => {
+		const currentTheme =
+			themeState.autoSwitching && gameState.phase === 'day'
+				? themeState.lightTheme
+				: themeState.darkTheme;
 
-	const currentTheme = phase === 'day' ? themeState.lightTheme : themeState.darkTheme;
-	updateThemeOnBody(currentTheme);
+		document.documentElement.setAttribute('data-theme', currentTheme);
+	});
 });
 
 // this needs to be in sync with the tailwind.config.js file

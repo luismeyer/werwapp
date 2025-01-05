@@ -2,7 +2,12 @@
 	import { onMount } from 'svelte';
 
 	import { startFirstNightPhase } from '$lib/game';
-	import { evilRolesCount, getPlayerRoles, innocentRolesCount } from '$lib/roles.svelte';
+	import {
+		evilRolesCount,
+		getPlayerRoles,
+		innocentRolesCount,
+		playerRoleRemovable
+	} from '$lib/roles.svelte';
 	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
 	import { nightPlayer } from '$lib/stores/player.svelte';
 	import { t } from '$lib/stores/translations';
@@ -10,29 +15,7 @@
 	import RoleImage from '../components/role/image.svelte';
 	import RoleListItem from '../components/role/list-item.svelte';
 
-	const removeRole = (role: PlayerRole) => (event: MouseEvent) => {
-		event.stopPropagation();
-
-		if (!role.amount || role.amount === 0) {
-			return;
-		}
-
-		role.amount = role.amount - 1;
-		gameState.roles.add(role);
-	};
-
-	const addRole = (role: PlayerRole) => () => {
-		role.amount = (role.amount ?? 0) + 1;
-
-		gameState.roles.add(role);
-	};
-
-	const showRole = (role: PlayerRole) => () => {
-		gameState.currentRole = role;
-		gameState.isNarratorVisible = true;
-	};
-
-	const playerRoles = getPlayerRoles();
+	const playerRoles = $derived(getPlayerRoles());
 
 	const roleAmount = $derived(playerRoles.reduce((acc, role) => acc + role.amount, 0));
 	const usedRoles = $derived(playerRoles.filter(({ amount }) => amount > 0));
@@ -75,7 +58,21 @@
 
 		<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
 			{#each usedRoles as role}
-				<RoleImage on:click={showRole(role)} {role} />
+				<RoleImage
+					{role}
+					indicatorDisabled={!playerRoleRemovable(role)}
+					onIndicatorClick={() => {
+						if (!role.amount || role.amount === 0) {
+							return;
+						}
+
+						role.amount = role.amount - 1;
+					}}
+					onclick={() => {
+						gameState.currentRole = role;
+						gameState.isNarratorVisible = true;
+					}}
+				/>
 			{/each}
 		</div>
 	</div>
@@ -89,9 +86,9 @@
 			{$t('game.start')}
 		</button>
 
-		<details class="dropdown dropdown-top dropdown-end">
-			<summary class="btn"
-				><svg
+		<div class="dropdown dropdown-top dropdown-end">
+			<div tabindex="0" role="button" class="btn btn-primary">
+				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
 					height="24"
@@ -102,22 +99,22 @@
 						d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-10h4V7h2v4h4v2h-4v4h-2v-4H7v-2z"
 					/>
 				</svg>
-			</summary>
+			</div>
 
-			<ul class="dropdown-content menu p-2 shadow bg-base-100 rounded-box mb-1">
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+			<ul tabindex="0" class="dropdown-content menu p-2 w-52 shadow rounded-box mb-1 z-[1]">
 				{#each addablePlayerRoles as role}
 					<li class="mb-1">
 						<RoleListItem
-							onclick={() => {
-								console.log('click');
-								addRole(role);
-							}}
 							{role}
+							onclick={() => {
+								role.amount = (role.amount ?? 0) + 1;
+							}}
 						/>
 					</li>
 				{/each}
 			</ul>
-		</details>
+		</div>
 	</div>
 </div>
 

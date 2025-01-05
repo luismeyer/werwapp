@@ -1,7 +1,7 @@
 import { gameState, type PlayerRole, type Role, type UtilityRole } from './stores/game.svelte';
 
 const playerRoles = $derived(
-	[...gameState.roles].filter((role): role is PlayerRole => role.type === 'player')
+	gameState.roles.filter((role): role is PlayerRole => role.type === 'player')
 );
 
 export function getPlayerRoles() {
@@ -19,7 +19,7 @@ export const innocentRolesCount = (roles: Role[]) =>
 		.reduce((acc, { amount = 0 }) => acc + amount, 0);
 
 const activeGameRoles = $derived(
-	[...gameState.roles].filter(
+	gameState.roles.filter(
 		(role) =>
 			(gameState.state === 'running' && role.type === 'util') ||
 			// player
@@ -54,7 +54,7 @@ const firstRole = (roles: Role[]) => {
 	return roles[0];
 };
 
-export const getNextGameRole = (role: Role): Role => {
+export const getNextGameRole = (role: Role) => {
 	// start with first role
 	if (!role) {
 		return firstRole(activeGameRoles);

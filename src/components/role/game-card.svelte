@@ -11,8 +11,8 @@
 
 	const { role }: Props = $props();
 
-	const nextRole = getNextGameRole(role);
-	const prevRole = getPrevGameRole(role);
+	const nextRole = $derived(getNextGameRole(role));
+	const prevRole = $derived(getPrevGameRole(role));
 
 	const roleName = $derived(
 		role.amount === 1 ? $t(`narrator.${role.name}.name`) : $t(`narrator.${role.name}.name.plural`)

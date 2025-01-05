@@ -19,12 +19,12 @@ export const startFirstNightPhase = async () => {
 };
 
 export const startNextGamePhase = async () => {
-	const { nightCount, phase } = gameState;
-
-	const nextPhase = phase === 'day' ? 'night' : 'day';
+	const nextPhase = gameState.phase === 'day' ? 'night' : 'day';
 
 	gameState.phase = nextPhase;
-	gameState.nightCount = nextPhase === 'night' ? nightCount + 1 : nightCount;
+	if (nextPhase === 'night') {
+		gameState.nightCount = gameState.nightCount + 1;
+	}
 
 	isFading.set(true);
 

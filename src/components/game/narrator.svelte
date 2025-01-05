@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from 'svelte/legacy';
-
 	import { getActiveGameRoles, getUtilityRole } from '$lib/roles.svelte';
 	import { gameState } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations';
@@ -19,7 +17,7 @@
 			return;
 		}
 
-		cardElements[gameState.currentRole.name]?.scrollIntoView({ behavior: 'smooth' });
+		cardElements[gameState.currentRole.id]?.scrollIntoView({ behavior: 'smooth' });
 	});
 
 	$effect(() => {
@@ -33,13 +31,13 @@
 		}
 	});
 
-	const activeGameRoles = getActiveGameRoles();
+	const activeGameRoles = $derived(getActiveGameRoles());
 </script>
 
 <div class="flex flex-col justify-between h-screen pb-4">
 	<div class="overflow-hidden">
 		{#each activeGameRoles as role}
-			<div bind:this={cardElements[role.name]} class="flex items-center justify-center h-full p-4">
+			<div bind:this={cardElements[role.id]} class="flex items-center justify-center h-full p-4">
 				{#if role.type === 'util'}
 					<RoleUtilCard {role} />
 				{:else}
