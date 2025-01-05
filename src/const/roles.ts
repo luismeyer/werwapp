@@ -20,7 +20,7 @@ export type UtilityRoleDef = {
 	order: number;
 };
 
-export type RoleDef = PlayerRoleDef | UtilityRoleDef;
+type RoleDef = PlayerRoleDef | UtilityRoleDef;
 
 export const RolesDefinition: RoleDef[] = [
 	{

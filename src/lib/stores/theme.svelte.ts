@@ -34,15 +34,6 @@ $effect.root(() => {
 	$effect(() => {
 		localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(themeState));
 	});
-
-	$effect(() => {
-		const currentTheme =
-			themeState.autoSwitching && gameState.phase === 'day'
-				? themeState.lightTheme
-				: themeState.darkTheme;
-
-		document.documentElement.setAttribute('data-theme', currentTheme);
-	});
 });
 
 // this needs to be in sync with the tailwind.config.js file

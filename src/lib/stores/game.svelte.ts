@@ -1,4 +1,5 @@
 import { RolesDefinition, type PlayerRoleDef, type UtilityRoleDef } from '../../const/roles';
+import { themeState } from './theme.svelte';
 
 export type PlayerRole = PlayerRoleDef & {
 	amount: number;
@@ -17,9 +18,9 @@ export type GameStore = {
 	currentRole?: Role;
 };
 
-const defaultRoles = Object.values(RolesDefinition)
-	.sort((a, b) => a.order - b.order)
-	.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role));
+const defaultRoles = RolesDefinition.sort((a, b) => a.order - b.order).map((role) =>
+	role.type === 'player' ? { ...role, amount: 1 } : role
+);
 
 const init: GameStore = {
 	state: 'setup',
@@ -40,3 +41,14 @@ export function resetGame() {
 	gameState.isNarratorVisible = init.isNarratorVisible;
 	gameState.currentRole = init.currentRole;
 }
+
+$effect.root(() => {
+	$effect(() => {
+		const currentTheme =
+			themeState.autoSwitching && gameState.phase === 'day'
+				? themeState.lightTheme
+				: themeState.darkTheme;
+
+		document.documentElement.setAttribute('data-theme', currentTheme);
+	});
+});
