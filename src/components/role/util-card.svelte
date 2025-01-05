@@ -15,12 +15,8 @@
 	const title = role.name === 'day' ? t('narrator.headline.day') : t('narrator.headline.night');
 
 	const changeMusic = async () => {
-		gameState.isNarratorVisible = false;
-
-		await startNextGamePhase();
-
-		gameState.isNarratorVisible = true;
 		gameState.currentRole = nextRole;
+		await startNextGamePhase();
 	};
 </script>
 

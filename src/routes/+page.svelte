@@ -14,6 +14,7 @@
 
 	import RoleImage from '../components/role/image.svelte';
 	import RoleListItem from '../components/role/list-item.svelte';
+	import { goto } from '$app/navigation';
 
 	const playerRoles = $derived(getPlayerRoles());
 
@@ -54,6 +55,10 @@
 
 <div class="h-full flex flex-col items-center justify-between">
 	<div>
+		<div class="flex justify-around pb-5">
+			<h1 class="text-5xl font-bold">{t('game.name')}</h1>
+		</div>
+
 		<h2 class="mb-4">{roleAmount} {t('narrator.selected')}</h2>
 
 		<div class="grid grid-cols-3 sm:grid-cols-4 gap-5">
@@ -70,7 +75,7 @@
 					}}
 					onclick={() => {
 						gameState.currentRole = role;
-						gameState.isNarratorVisible = true;
+						goto('/narrator');
 					}}
 				/>
 			{/each}

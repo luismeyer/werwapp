@@ -13,7 +13,6 @@ export type GameStore = {
 	state: 'setup' | 'running' | 'finished';
 	phase: 'day' | 'night';
 	nightCount: number;
-	isNarratorVisible: boolean;
 	roles: Role[];
 	currentRole?: Role;
 };
@@ -27,7 +26,6 @@ const init: GameStore = {
 	phase: 'night',
 	nightCount: 1,
 	roles: defaultRoles,
-	isNarratorVisible: false,
 	currentRole: undefined
 };
 
@@ -38,7 +36,6 @@ export function resetGame() {
 	gameState.phase = init.phase;
 	gameState.nightCount = init.nightCount;
 	gameState.roles = init.roles;
-	gameState.isNarratorVisible = init.isNarratorVisible;
 	gameState.currentRole = init.currentRole;
 }
 
