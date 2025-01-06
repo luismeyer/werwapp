@@ -1,22 +1,21 @@
 import { browser } from '$app/environment';
 
-import { gameState } from './game.svelte';
-
 const THEME_STORAGE_KEY = 'theme';
 
 function init() {
+	const fallback = {
+		lightTheme: 'light',
+		darkTheme: 'dark',
+		autoSwitching: true
+	};
+
 	if (!browser) {
-		return {
-			lightTheme: 'light',
-			darkTheme: 'dark',
-			autoSwitching: true
-		};
+		return fallback;
 	}
 
 	const storageString = localStorage.getItem(THEME_STORAGE_KEY);
 	if (!storageString) {
-		localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(themeState));
-		return;
+		return fallback;
 	}
 
 	return JSON.parse(storageString);
@@ -32,6 +31,10 @@ export const themeState = $state<Theme>(init());
 
 $effect.root(() => {
 	$effect(() => {
+		if (!themeState) {
+			return;
+		}
+
 		localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(themeState));
 	});
 });

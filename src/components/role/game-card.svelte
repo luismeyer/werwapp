@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
+	import type { PlayerRole } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations.svelte';
 	import { getNextGameRole, getPrevGameRole, showRole } from '$lib/roles.svelte';
 
@@ -28,7 +28,7 @@
 </script>
 
 <div class="card shadow-xl bg-primary text-primary-content">
-	<figure class="px-10 pt-10">
+	<figure class="px-8 pt-8">
 		<RoleImage {role} />
 	</figure>
 
@@ -36,7 +36,7 @@
 		<h2 class="card-title">{title}</h2>
 		<p class="max-w-sm">{t(`narrator.${role.name}.description`)}</p>
 
-		<div class="w-full mt-6 grid grid-flow-col gap-4">
+		<div class="w-full mt-3 grid grid-flow-col gap-4">
 			{#if prevRole}
 				<button onclick={() => showRole(prevRole)} class="btn btn-secondary w-full">
 					{t('narrator.prev')}

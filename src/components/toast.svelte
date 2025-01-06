@@ -4,7 +4,7 @@
 	const toasts = $derived(Object.values($toastStore));
 </script>
 
-<div class="toast toast-top toast-center w-9/12 text-center">
+<div class="toast toast-bottom toast-center w-9/12 text-center bottom-20">
 	{#each toasts as toast}
 		{#if 'href' in toast}
 			<a target="_blank" rel="noreferrer" href={toast.href}>
