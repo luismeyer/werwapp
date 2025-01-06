@@ -10,7 +10,7 @@
 	const { role, onclick }: Props = $props();
 </script>
 
-<button class="avatar indicator w-full" {onclick}>
+<button class="avatar indicator w-full p-0" {onclick}>
 	<div class="rounded w-8">
 		<img alt="{role.name} character image" src={role.image} />
 	</div>

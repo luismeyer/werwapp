@@ -15,7 +15,7 @@
 	<button
 		disabled={indicatorDisabled}
 		onclick={onIndicatorClick}
-		class="indicator-item badge badge-secondary"
+		class="indicator-item badge badge-secondary w-6 h-6"
 	>
 		{role.amount}
 	</button>

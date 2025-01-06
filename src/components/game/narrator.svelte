@@ -1,17 +1,23 @@
 <script lang="ts">
 	import { getActiveGameRoles, getUtilityRole } from '$lib/roles.svelte';
 	import { gameState } from '$lib/stores/game.svelte';
-	import { t } from '$lib/stores/translations.svelte';
 
 	import RoleUtilCard from '../role/util-card.svelte';
 	import RoleGameCard from '../role/game-card.svelte';
+	import { onMount } from 'svelte';
 
 	const cardElements: Record<string, HTMLDivElement> = $state({});
 
-	const closeLayer = () => {
-		gameState.isNarratorVisible = false;
-	};
+	// instant scroll if user is navigating
+	onMount(() => {
+		if (!gameState.currentRole) {
+			return;
+		}
 
+		cardElements[gameState.currentRole.id]?.scrollIntoView();
+	});
+
+	// smooth scroll if user is on page
 	$effect(() => {
 		if (!gameState.currentRole) {
 			return;
@@ -34,7 +40,7 @@
 	const activeGameRoles = $derived(getActiveGameRoles());
 </script>
 
-<div class="flex flex-col justify-between h-screen pb-4">
+<div class="flex flex-col justify-between pb-4 h-full">
 	<div class="overflow-hidden">
 		{#each activeGameRoles as role}
 			<div bind:this={cardElements[role.id]} class="flex items-center justify-center h-full p-4">
@@ -46,8 +52,7 @@
 			</div>
 		{/each}
 	</div>
-
-	<div class="p-4">
-		<button class="btn w-full" onclick={closeLayer}>{t('narrator.close')}</button>
-	</div>
 </div>
+
+<style>
+</style>

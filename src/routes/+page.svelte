@@ -14,6 +14,7 @@
 
 	import RoleImage from '../components/role/image.svelte';
 	import RoleListItem from '../components/role/list-item.svelte';
+	import { goto } from '$app/navigation';
 
 	const playerRoles = $derived(getPlayerRoles());
 
@@ -70,14 +71,14 @@
 					}}
 					onclick={() => {
 						gameState.currentRole = role;
-						gameState.isNarratorVisible = true;
+						goto('/narrator');
 					}}
 				/>
 			{/each}
 		</div>
 	</div>
 
-	<div class="flex gap-5">
+	<div class="flex gap-5 items-center">
 		<button
 			class="btn btn-primary"
 			disabled={!playerRolesValid || !$ready}
@@ -86,8 +87,8 @@
 			{t('game.start')}
 		</button>
 
-		<div class="dropdown dropdown-top dropdown-end">
-			<div tabindex="0" role="button" class="btn btn-primary">
+		<details class="dropdown dropdown-top dropdown-end">
+			<summary class="btn btn-secondary m-1">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -99,12 +100,13 @@
 						d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-10h4V7h2v4h4v2h-4v4h-2v-4H7v-2z"
 					/>
 				</svg>
-			</div>
+			</summary>
 
-			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-			<ul tabindex="0" class="dropdown-content menu p-2 w-52 shadow rounded-box mb-1 z-[1]">
+			<ul
+				class="dropdown-content menu p-2 w-52 shadow-sm rounded-box z-[100] bg-secondary text-secondary-content gap-3 p-3"
+			>
 				{#each addablePlayerRoles as role}
-					<li class="mb-1">
+					<li>
 						<RoleListItem
 							{role}
 							onclick={() => {
@@ -114,7 +116,7 @@
 					</li>
 				{/each}
 			</ul>
-		</div>
+		</details>
 	</div>
 </div>
 
