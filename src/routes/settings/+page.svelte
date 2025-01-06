@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { t } from '$lib/stores/translations.svelte';
 	import { wakelockAvailable } from '$lib/wakelock';
 
 	import SettingsI18n from '../../components/settings/i18n.svelte';
@@ -9,14 +8,6 @@
 </script>
 
 <div class="px-5 pb-20 h-full flex flex-col">
-	<div class="text-xl font-extrabold">{t('settings')}</div>
-
-	<div class="text-base-content/70 my-4 text-xs">
-		{t('settings.discribtion')}
-	</div>
-
-	<div class="divider"></div>
-
 	<SettingsI18n />
 
 	<div class="divider"></div>
