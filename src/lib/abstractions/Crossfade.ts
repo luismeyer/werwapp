@@ -1,4 +1,4 @@
-import type { AudioPlayer } from './AudioPlayer';
+import type { AudioPlayer } from './AudioPlayer.svelte';
 
 const FADE_STEPS = 0.01;
 const FADE_INTERVAL = 60;

@@ -21,8 +21,6 @@
 	const roleAmount = $derived(playerRoles.reduce((acc, role) => acc + role.amount, 0));
 	const usedRoles = $derived(playerRoles.filter(({ amount }) => amount > 0));
 
-	const { ready } = nightPlayer;
-
 	const playerRolesValid = $derived.by(() => {
 		const evils = evilRolesCount(playerRoles);
 		const innocents = innocentRolesCount(playerRoles);
@@ -81,7 +79,7 @@
 	<div class="flex gap-5 items-center">
 		<button
 			class="btn btn-primary"
-			disabled={!playerRolesValid || !$ready}
+			disabled={!playerRolesValid || !nightPlayer.ready}
 			onclick={startFirstNightPhase}
 		>
 			{t('game.start')}

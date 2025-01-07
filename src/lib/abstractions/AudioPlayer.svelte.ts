@@ -8,26 +8,68 @@ import { createAudio, type AudioInterface } from './audio';
 export class AudioPlayer {
 	private audio: AudioInterface;
 	private song?: Song;
-	public readonly ready = writable(false);
+	public ready = $state(false);
 
 	private nextAudio?: string;
 	private nextSong?: Song;
-	public readonly nextReady = writable(false);
+	public nextReady = $state(false);
 
-	constructor(private songRepository: SongRepository) {
+	public playing = $state(false);
+	public duration = $state(0);
+	public progress = $state(0);
+	constructor(
+		private songRepository: SongRepository,
+		private displayName: string
+	) {
 		this.audio = createAudio(songRepository);
 		this.audio.autoplay = false;
 
-		this.progress.subscribe((progress) => {
-			if (!this.song || Number.isNaN(this.audio.duration)) {
-				return;
-			}
+		$effect.root(() => {
+			$effect(() => {
+				// play next song ends
+				if (this.playing && this.progress >= this.audio.duration) {
+					this.next();
+				}
+			});
 
-			if (progress < this.audio.duration) {
-				return;
-			}
+			$effect(() => {
+				const updatePlaying = () => {
+					this.playing = !this.audio.paused;
+				};
 
-			this.next();
+				this.audio.addEventListener('play', updatePlaying);
+				this.audio.addEventListener('pause', updatePlaying);
+
+				return () => {
+					this.audio.removeEventListener('play', updatePlaying);
+					this.audio.removeEventListener('pause', updatePlaying);
+				};
+			});
+
+			$effect(() => {
+				const updateDuration = () => {
+					this.duration = this.audio.duration;
+					console.info('durationchange', this.audio.duration);
+				};
+
+				this.audio.addEventListener('durationchange', updateDuration);
+
+				return () => {
+					this.audio.removeEventListener('durationchange', updateDuration);
+				};
+			});
+
+			$effect(() => {
+				const updateProgress = () => {
+					this.progress = this.audio.currentTime;
+				};
+
+				this.audio.addEventListener('timeupdate', updateProgress);
+
+				return () => {
+					this.audio.removeEventListener('timeupdate', updateProgress);
+				};
+			});
 		});
 	}
 
@@ -40,19 +82,19 @@ export class AudioPlayer {
 	private async loadNextSong() {
 		const song = await this.songRepository.getSong();
 
-		this.nextReady.set(false);
+		this.nextReady = false;
 
 		const src = await this.loadAudio(song.songUrl);
 
 		this.nextAudio = src;
 		this.nextSong = song;
-		this.nextReady.set(true);
+		this.nextReady = true;
 	}
 
 	public async loadSong() {
 		const song = this.nextSong ?? (await this.songRepository.getSong());
 
-		this.ready.set(false);
+		this.ready = false;
 
 		const src = this.nextAudio ?? (await this.loadAudio(song.songUrl));
 
@@ -62,15 +104,15 @@ export class AudioPlayer {
 		return new Promise((resolve, reject) => {
 			this.audio.oncanplay = () => {
 				this.song = song;
-				this.ready.set(true);
+				this.ready = true;
 
-				this.loadNextSong();
+				void this.loadNextSong();
 
 				resolve(true);
 			};
 
 			this.audio.onerror = (error) => {
-				this.ready.set(false);
+				this.ready = false;
 
 				reject(error);
 			};
@@ -98,7 +140,7 @@ export class AudioPlayer {
 		this.audio.pause();
 		this.audio.currentTime = 0;
 
-		this.ready.set(false);
+		this.ready = false;
 	}
 
 	public async next() {
@@ -107,52 +149,6 @@ export class AudioPlayer {
 		await this.loadSong();
 
 		this.play();
-	}
-
-	public get duration(): Readable<number> {
-		const defaultDuration = Number.isNaN(this.audio.duration) ? 0 : this.audio.duration;
-
-		return readable(defaultDuration, (set) => {
-			const updateDuration = () => {
-				set(this.audio.duration);
-			};
-
-			this.audio.addEventListener('durationchange', updateDuration);
-
-			return () => {
-				this.audio.removeEventListener('durationchange', updateDuration);
-			};
-		});
-	}
-
-	public get progress(): Readable<number> {
-		return readable(this.audio.currentTime, (set) => {
-			const updateProgress = () => {
-				set(this.audio.currentTime);
-			};
-
-			this.audio.addEventListener('timeupdate', updateProgress);
-
-			return () => {
-				this.audio.removeEventListener('timeupdate', updateProgress);
-			};
-		});
-	}
-
-	public get playing(): Readable<boolean> {
-		return readable(!this.audio.paused, (set) => {
-			const updatePlaying = () => {
-				set(!this.audio.paused);
-			};
-
-			this.audio.addEventListener('play', updatePlaying);
-			this.audio.addEventListener('pause', updatePlaying);
-
-			return () => {
-				this.audio.removeEventListener('play', updatePlaying);
-				this.audio.removeEventListener('pause', updatePlaying);
-			};
-		});
 	}
 
 	public get volume() {
