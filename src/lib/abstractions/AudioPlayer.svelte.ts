@@ -45,7 +45,6 @@ export class AudioPlayer {
 			$effect(() => {
 				const updateDuration = () => {
 					this.duration = this.audio.duration;
-					console.info('durationchange', this.audio.duration);
 				};
 
 				this.audio.addEventListener('durationchange', updateDuration);
