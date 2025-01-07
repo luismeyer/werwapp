@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { gameState } from '$lib/stores/game.svelte';
-	import { isFading, getNextPlayer } from '$lib/stores/player.svelte';
+	import { getNextPlayer } from '$lib/stores/player.svelte';
 
 	const nextPlayer = getNextPlayer();
 
-	const disabled = $derived(!nextPlayer.ready || $isFading);
+	const disabled = $derived(!nextPlayer.ready || gameState.isFading);
 	const disabledClass = $derived(disabled ? 'disabled' : '');
 
 	let moonClass = $state('out-top');
@@ -12,13 +12,13 @@
 
 	// disable the transition after animation so the
 	// in- and out- class switch will not get animated
-	const transitionClass = $derived($isFading ? 'transition' : '');
+	const transitionClass = $derived(gameState.isFading ? 'transition' : '');
 
 	// the class if running is always the target position of
 	// the animation. the class if not running is the starting
 	// position of the next animation
-	const enterScreenClass = $derived($isFading ? 'in-top' : 'out-top');
-	const leaveScreenClass = $derived($isFading ? 'out-bottom' : 'in-bottom');
+	const enterScreenClass = $derived(gameState.isFading ? 'in-top' : 'out-top');
+	const leaveScreenClass = $derived(gameState.isFading ? 'out-bottom' : 'in-bottom');
 
 	$effect(() => {
 		sunClass = gameState.phase === 'day' ? enterScreenClass : leaveScreenClass;

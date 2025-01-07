@@ -12,6 +12,7 @@ export type Role = PlayerRole | UtilityRoleDef;
 export type GameStore = {
 	state: 'setup' | 'running' | 'finished';
 	phase: 'day' | 'night';
+	isFading: boolean;
 	nightCount: number;
 	roles: Role[];
 	currentRole?: Role;
@@ -25,6 +26,7 @@ const init: GameStore = {
 	state: 'setup',
 	phase: 'night',
 	nightCount: 1,
+	isFading: false,
 	roles: defaultRoles,
 	currentRole: undefined
 };
@@ -37,6 +39,7 @@ export function resetGame() {
 	gameState.nightCount = init.nightCount;
 	gameState.roles = init.roles;
 	gameState.currentRole = init.currentRole;
+	gameState.isFading = init.isFading;
 }
 
 $effect.root(() => {

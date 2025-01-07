@@ -1,5 +1,5 @@
 import { gameState } from '$lib/stores/game.svelte';
-import { nightPlayer, isFading, dayPlayer, getNextPlayer } from '$lib/stores/player.svelte';
+import { nightPlayer, dayPlayer, getNextPlayer } from '$lib/stores/player.svelte';
 
 import { goto } from '$app/navigation';
 import { Crossfade } from './abstractions/Crossfade';
@@ -26,7 +26,7 @@ export const startNextGamePhase = async () => {
 		gameState.nightCount = gameState.nightCount + 1;
 	}
 
-	isFading.set(true);
+	gameState.isFading = true;
 
 	const playerA = nextPhase === 'day' ? nightPlayer : dayPlayer;
 	const playerB = nextPhase === 'day' ? dayPlayer : nightPlayer;
@@ -34,7 +34,7 @@ export const startNextGamePhase = async () => {
 	const crossfade = new Crossfade(playerA, playerB);
 	await crossfade.run();
 
-	isFading.set(false);
+	gameState.isFading = false;
 
 	const player = getNextPlayer();
 	player.loadSong();

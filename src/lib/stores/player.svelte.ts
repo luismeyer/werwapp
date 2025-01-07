@@ -1,10 +1,6 @@
-import { writable } from 'svelte/store';
-
 import { AudioPlayer } from '../abstractions/AudioPlayer.svelte';
 import { DaySongs, NightSongs } from '../abstractions/SongRepository';
 import { gameState } from './game.svelte';
-
-export const isFading = writable(false);
 
 const daySongs = new DaySongs();
 const nightSongs = new NightSongs();
