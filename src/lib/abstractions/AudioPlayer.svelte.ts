@@ -1,4 +1,4 @@
-import { showSongToast } from '../stores/toast';
+import { showSongToast } from '../stores/toast.svelte';
 import type { SongRepository } from './SongRepository';
 import type { Song } from '../song';
 import { createAudio, type AudioInterface } from './audio';

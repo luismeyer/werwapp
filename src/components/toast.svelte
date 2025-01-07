@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { toastStore } from '$lib/stores/toast';
+	import { toastState } from '$lib/stores/toast.svelte';
 
-	const toasts = $derived(Object.values($toastStore));
+	const toasts = $derived(Object.values(toastState));
 </script>
 
 <div class="toast toast-bottom toast-center w-9/12 text-center bottom-20">
