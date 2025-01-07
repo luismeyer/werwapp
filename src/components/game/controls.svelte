@@ -5,10 +5,9 @@
 	const fillColor = 'hsl(var(--nc) / var(--tw-text-opacity))';
 
 	const currentPlayer = $derived(gameState.phase === 'day' ? dayPlayer : nightPlayer);
-	const { playing, progress, duration, nextReady } = $derived(currentPlayer);
 
 	const togglePlayer = () => {
-		if ($playing) {
+		if (currentPlayer.playing) {
 			currentPlayer.pause();
 		} else {
 			currentPlayer.resume();
@@ -24,7 +23,7 @@
 	<div class="h-full flex gap-2">
 		<div class="btn-group h-full w-full">
 			<button class="btn h-full" onclick={togglePlayer}>
-				{#if $playing}
+				{#if currentPlayer.playing}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="48"
@@ -47,7 +46,7 @@
 				{/if}
 			</button>
 
-			<button class="btn h-full" disabled={!$nextReady} onclick={nextSong}>
+			<button class="btn h-full" disabled={!currentPlayer.nextReady} onclick={nextSong}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="48"
@@ -62,5 +61,6 @@
 		</div>
 	</div>
 
-	<progress class="progress w-full" value={$progress} max={$duration}></progress>
+	<progress class="progress w-full" value={currentPlayer.progress} max={currentPlayer.duration}
+	></progress>
 </div>

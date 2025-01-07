@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-import { AudioPlayer } from '../abstractions/AudioPlayer';
+import { AudioPlayer } from '../abstractions/AudioPlayer.svelte';
 import { DaySongs, NightSongs } from '../abstractions/SongRepository';
 import { gameState } from './game.svelte';
 
