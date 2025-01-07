@@ -1,73 +1,40 @@
 import { browser } from '$app/environment';
+import { cookies } from '$lib/cookies';
+import type { Themes } from '../../const/themes';
 
-const THEME_STORAGE_KEY = 'theme';
+export type Theme = (typeof Themes)[number];
+
+export const THEME_KEY = 'theme';
+
+const ThemeStateDefault = {
+	lightTheme: 'light',
+	darkTheme: 'dark',
+	autoSwitching: true
+};
 
 function init() {
-	const fallback = {
-		lightTheme: 'light',
-		darkTheme: 'dark',
-		autoSwitching: true
-	};
-
 	if (!browser) {
-		return fallback;
+		return ThemeStateDefault;
 	}
 
-	const storageString = localStorage.getItem(THEME_STORAGE_KEY);
+	const storageString = cookies.get(THEME_KEY);
 	if (!storageString) {
-		return fallback;
+		return ThemeStateDefault;
 	}
 
 	return JSON.parse(storageString);
 }
 
-type Theme = {
-	lightTheme: string;
-	darkTheme: string;
+export type ThemeState = {
+	lightTheme: Theme;
+	darkTheme: Theme;
 	autoSwitching: boolean;
 };
 
-export const themeState = $state<Theme>(init());
+export const themeState = $state<ThemeState>(init());
 
 $effect.root(() => {
 	$effect(() => {
-		if (!themeState) {
-			return;
-		}
-
-		localStorage.setItem(THEME_STORAGE_KEY, JSON.stringify(themeState));
+		cookies.set(THEME_KEY, JSON.stringify(themeState));
 	});
 });
-
-// this needs to be in sync with the tailwind.config.js file
-export const themes = [
-	'light',
-	'dark',
-	'cupcake',
-	'bumblebee',
-	'emerald',
-	'corporate',
-	'synthwave',
-	'retro',
-	'cyberpunk',
-	'valentine',
-	'halloween',
-	'garden',
-	'forest',
-	'aqua',
-	'lofi',
-	'pastel',
-	'fantasy',
-	'wireframe',
-	'black',
-	'luxury',
-	'dracula',
-	'cmyk',
-	'autumn',
-	'business',
-	'acid',
-	'lemonade',
-	'night',
-	'coffee',
-	'winter'
-];

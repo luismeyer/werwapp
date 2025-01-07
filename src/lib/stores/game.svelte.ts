@@ -1,5 +1,4 @@
 import { RolesDefinition, type PlayerRoleDef, type UtilityRoleDef } from '../../const/roles';
-import { themeState } from './theme.svelte';
 
 export type PlayerRole = PlayerRoleDef & {
 	amount: number;
@@ -41,14 +40,3 @@ export function resetGame() {
 	gameState.currentRole = init.currentRole;
 	gameState.isFading = init.isFading;
 }
-
-$effect.root(() => {
-	$effect(() => {
-		const currentTheme =
-			themeState.autoSwitching && gameState.phase === 'day'
-				? themeState.lightTheme
-				: themeState.darkTheme;
-
-		document.documentElement.setAttribute('data-theme', currentTheme);
-	});
-});

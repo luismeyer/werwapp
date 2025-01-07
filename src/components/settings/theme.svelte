@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/stores/translations.svelte';
-	import { themes, themeState } from '$lib/stores/theme.svelte';
+	import { type Theme, themeState } from '$lib/stores/theme.svelte';
+	import { DarkThemes, LightThemes } from '../../const/themes';
 
 	const themeNameInUpper = (name: string) => name[0]?.toUpperCase() + name.slice(1);
 </script>
@@ -19,12 +20,11 @@
 	<div class="flex flex-col gap-1">
 		<span class="label-text">{t('settings.nighttheme')}</span>
 		<select
-			value={themeState.darkTheme}
 			class="select select-primary"
-			onchange={(e) => (themeState.darkTheme = e.currentTarget.value)}
+			onchange={(e) => (themeState.darkTheme = e.currentTarget.value as Theme)}
 		>
-			{#each themes as theme}
-				<option value={theme}>
+			{#each DarkThemes as theme}
+				<option selected={themeState.darkTheme === theme} value={theme}>
 					{themeNameInUpper(theme)}
 				</option>
 			{/each}
@@ -35,12 +35,11 @@
 		<div class="flex flex-col gap-1">
 			<span class="label-text">{t('settings.daytheme')}</span>
 			<select
-				value={themeState.lightTheme}
 				class="select select-primary"
-				onchange={(e) => (themeState.lightTheme = e.currentTarget.value)}
+				onchange={(e) => (themeState.lightTheme = e.currentTarget.value as Theme)}
 			>
-				{#each themes as theme}
-					<option value={theme}>
+				{#each LightThemes as theme}
+					<option selected={themeState.lightTheme === theme} value={theme}>
 						{themeNameInUpper(theme)}
 					</option>
 				{/each}

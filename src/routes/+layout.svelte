@@ -14,6 +14,7 @@
 	import type { LayoutData } from './$types';
 	import { localeState } from '$lib/stores/i18n.svelte';
 	import { wakeLockState } from '$lib/stores/wakelock.svelte';
+	import { themeState } from '$lib/stores/theme.svelte';
 
 	const { data, children }: { data: LayoutData; children: Snippet } = $props();
 
@@ -22,6 +23,12 @@
 	if (data.wakelock) {
 		wakeLockState.enabled = data.wakelock.enabled;
 		wakeLockState.supported = data.wakelock.supported;
+	}
+
+	if (data.theme) {
+		themeState.lightTheme = data.theme.lightTheme;
+		themeState.darkTheme = data.theme.darkTheme;
+		themeState.autoSwitching = data.theme.autoSwitching;
 	}
 
 	const tabs = [
@@ -61,6 +68,12 @@
 			changeTab(activeTab - 1);
 		}
 	});
+
+	const currentTheme = $derived(
+		themeState.autoSwitching && gameState.phase === 'day'
+			? themeState.lightTheme
+			: themeState.darkTheme
+	);
 </script>
 
 <main class="page pt-5 w-screen">
@@ -133,6 +146,8 @@
 </div>
 
 <Toast />
+
+<input type="checkbox" checked value={currentTheme} class="toggle theme-controller hidden" />
 
 <style>
 	.page {
