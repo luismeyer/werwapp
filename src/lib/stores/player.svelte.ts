@@ -9,8 +9,8 @@ export const isFading = writable(false);
 const daySongs = new DaySongs();
 const nightSongs = new NightSongs();
 
-export const nightPlayer = new AudioPlayer(nightSongs, 'Night');
-export const dayPlayer = new AudioPlayer(daySongs, 'Day');
+export const nightPlayer = new AudioPlayer(nightSongs);
+export const dayPlayer = new AudioPlayer(daySongs);
 
 const nextPlayer = $derived(gameState.phase === 'day' ? nightPlayer : dayPlayer);
 

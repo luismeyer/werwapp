@@ -1,5 +1,3 @@
-import { readable, writable, type Readable } from 'svelte/store';
-
 import { showSongToast } from '../stores/toast';
 import type { SongRepository } from './SongRepository';
 import type { Song } from '../song';
@@ -17,10 +15,8 @@ export class AudioPlayer {
 	public playing = $state(false);
 	public duration = $state(0);
 	public progress = $state(0);
-	constructor(
-		private songRepository: SongRepository,
-		private displayName: string
-	) {
+
+	constructor(private songRepository: SongRepository) {
 		this.audio = createAudio(songRepository);
 		this.audio.autoplay = false;
 
