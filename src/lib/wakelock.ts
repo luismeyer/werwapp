@@ -1,4 +1,10 @@
+import { browser } from '$app/environment';
+
 export const wakelockAvailable = () => {
+	if (!browser) {
+		return false;
+	}
+
 	try {
 		return 'wakeLock' in navigator;
 	} catch {

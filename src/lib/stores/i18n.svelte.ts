@@ -14,7 +14,7 @@ const init = (): LocaleState => {
 		return { locale: 'de' };
 	}
 
-	const customLocale = cookies().get(LOCALE_KEY);
+	const customLocale = cookies.get(LOCALE_KEY);
 	const navigatorLocale = navigator.language.split('-')[0];
 
 	const storedLocale = customLocale ?? navigatorLocale;
@@ -31,6 +31,6 @@ export const localeState = $state<LocaleState>(init());
 
 $effect.root(() => {
 	$effect(() => {
-		document.cookie = `locale=${localeState.locale}; path=/`;
+		cookies.set(LOCALE_KEY, localeState.locale);
 	});
 });

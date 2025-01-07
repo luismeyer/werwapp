@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 
-	import { onMount, type Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
 
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
@@ -13,10 +13,16 @@
 	import { registerSwipeGestures } from '$lib/swipe';
 	import type { LayoutData } from './$types';
 	import { localeState } from '$lib/stores/i18n.svelte';
+	import { wakeLockState } from '$lib/stores/wakelock.svelte';
 
 	const { data, children }: { data: LayoutData; children: Snippet } = $props();
 
 	localeState.locale = data.locale;
+
+	if (data.wakelock) {
+		wakeLockState.enabled = data.wakelock.enabled;
+		wakeLockState.supported = data.wakelock.supported;
+	}
 
 	const tabs = [
 		{ route: ['narrator'], name: 'narrator' },
