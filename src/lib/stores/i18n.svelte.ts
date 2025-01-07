@@ -1,23 +1,24 @@
 import { browser } from '$app/environment';
+import { cookies } from '$lib/cookies';
 
 export type Locale = 'en' | 'de';
 
 export const locales: Locale[] = ['en', 'de'];
 
-const isLocale = (input?: string): input is Locale => input === 'de' || input === 'en';
+export const isLocale = (input?: string): input is Locale => input === 'de' || input === 'en';
 
-const LOCALE_STORAGE_KEY = 'locale';
+export const LOCALE_KEY = 'locale';
 
 const init = (): LocaleState => {
 	if (!browser) {
 		return { locale: 'de' };
 	}
 
-	const customLocale = localStorage.getItem(LOCALE_STORAGE_KEY);
+	const customLocale = cookies().get(LOCALE_KEY);
 	const navigatorLocale = navigator.language.split('-')[0];
 
-	const defaultLocale = 'de';
 	const storedLocale = customLocale ?? navigatorLocale;
+	const defaultLocale = 'de';
 
 	return { locale: isLocale(storedLocale) ? storedLocale : defaultLocale };
 };
@@ -30,6 +31,6 @@ export const localeState = $state<LocaleState>(init());
 
 $effect.root(() => {
 	$effect(() => {
-		localStorage.setItem(LOCALE_STORAGE_KEY, JSON.stringify(localeState));
+		document.cookie = `locale=${localeState.locale}; path=/`;
 	});
 });

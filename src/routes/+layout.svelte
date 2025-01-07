@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 
-	import { onMount } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
@@ -11,12 +11,12 @@
 
 	import { gameState } from '$lib/stores/game.svelte';
 	import { registerSwipeGestures } from '$lib/swipe';
+	import type { LayoutData } from './$types';
+	import { localeState } from '$lib/stores/i18n.svelte';
 
-	interface Props {
-		children?: import('svelte').Snippet;
-	}
+	const { data, children }: { data: LayoutData; children: Snippet } = $props();
 
-	const { children }: Props = $props();
+	localeState.locale = data.locale;
 
 	const tabs = [
 		{ route: ['narrator'], name: 'narrator' },
@@ -39,23 +39,21 @@
 		goto(route);
 	};
 
-	onMount(() => {
-		registerSwipeGestures({
-			handleLeft: () => {
-				if (activeTab >= 2) {
-					return;
-				}
-
-				changeTab(activeTab + 1);
-			},
-			handleRight: () => {
-				if (activeTab <= 0) {
-					return;
-				}
-
-				changeTab(activeTab - 1);
+	registerSwipeGestures({
+		handleLeft: () => {
+			if (activeTab >= 2) {
+				return;
 			}
-		});
+
+			changeTab(activeTab + 1);
+		},
+		handleRight: () => {
+			if (activeTab <= 0) {
+				return;
+			}
+
+			changeTab(activeTab - 1);
+		}
 	});
 </script>
 

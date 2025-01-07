@@ -1,3 +1,5 @@
+import { browser } from '$app/environment';
+
 type SwipeOptions = {
 	handleLeft?: () => void;
 	handleRight?: () => void;
@@ -49,6 +51,10 @@ const handleTouchMove = (options: SwipeOptions) => (evt: TouchEvent) => {
 };
 
 export const registerSwipeGestures = (options: SwipeOptions) => {
+	if (!browser) {
+		return;
+	}
+
 	document.addEventListener('touchstart', handleTouchStart, false);
 	document.addEventListener('touchmove', handleTouchMove(options), false);
 };
