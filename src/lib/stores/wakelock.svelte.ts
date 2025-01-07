@@ -1,40 +1,45 @@
 import { browser } from '$app/environment';
-import { releaseWakeLock, requestWakeLock } from '$lib/wakelock';
+import { cookies } from '$lib/cookies';
+import { releaseWakeLock, requestWakeLock, wakelockAvailable } from '$lib/wakelock';
 
-type WakeLockStore = {
+export type WakeLockState = {
+	supported: boolean;
 	enabled: boolean;
 	wakeLockSentinel?: WakeLockSentinel;
 };
 
-const WAKELOCK_STORAGE_KEY = 'wakelock';
+export const WAKELOCK_KEY = 'wakelock';
 
-const initState = async () => {
+const init = async (): Promise<void> => {
 	if (!browser) {
 		return;
 	}
 
-	const enabled: boolean | undefined = JSON.parse(localStorage.getItem(WAKELOCK_STORAGE_KEY) ?? '');
+	const custom = cookies.get(WAKELOCK_KEY);
+	const state: WakeLockState | undefined = JSON.parse(custom ?? '');
 
-	if (enabled) {
-		const wakeLockSentinel = await requestWakeLock();
-		wakeLockState.enabled = true;
-		wakeLockState.wakeLockSentinel = wakeLockSentinel;
-	} else {
-		wakeLockState.enabled = false;
+	if (state) {
+		wakeLockState.enabled = state.enabled;
+		wakeLockState.supported = state.supported;
+
+		if (state.enabled) {
+			wakeLockState.wakeLockSentinel = await requestWakeLock();
+		}
 	}
 };
 
-export const wakeLockState = $state<WakeLockStore>({
-	enabled: false
+export const wakeLockState = $state<WakeLockState>({
+	enabled: false,
+	supported: wakelockAvailable()
 });
+
+void init();
 
 $effect.root(() => {
 	$effect(() => {
-		localStorage.setItem(WAKELOCK_STORAGE_KEY, JSON.stringify(wakeLockState.enabled));
+		cookies.set(WAKELOCK_KEY, JSON.stringify(wakeLockState));
 	});
 });
-
-void initState();
 
 export const enableWakelock = async () => {
 	if (wakeLockState.enabled) {

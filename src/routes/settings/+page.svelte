@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { wakelockAvailable } from '$lib/wakelock';
-
+	import { wakeLockState } from '$lib/stores/wakelock.svelte';
 	import SettingsI18n from '../../components/settings/i18n.svelte';
 	import SettingsItems from '../../components/settings/items.svelte';
 	import SettingsTheme from '../../components/settings/theme.svelte';
@@ -20,7 +19,7 @@
 
 	<div class="divider"></div>
 
-	{#if wakelockAvailable()}
+	{#if wakeLockState.supported}
 		<SettingsWakelock />
 	{/if}
 </div>
