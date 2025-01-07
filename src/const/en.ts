@@ -19,6 +19,7 @@ export const EN: Translations = {
 	'settings.theme.toggle': 'Automatic color scheme',
 	'settings.daytheme': 'Day Theme',
 	'settings.nighttheme': 'Night Theme',
+	'settings.theme': 'Theme',
 	'settings.qa': 'Any Questions?',
 	'settings.support': 'Support pls!',
 	'settings.about.label': 'Wanna know more?',

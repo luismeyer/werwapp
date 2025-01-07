@@ -18,6 +18,7 @@ export const DE: Translations = {
 	'settings.theme.toggle': 'Dynamischer Farbschemawechsel',
 	'settings.daytheme': 'Tag-Theme',
 	'settings.nighttheme': 'Nacht-Theme',
+	'settings.theme': 'Theme',
 	'settings.qa': 'Hast du Fragen?',
 	'settings.support': 'Hilfe bitte!',
 	'settings.about.label': 'Du willst mehr wissen?',

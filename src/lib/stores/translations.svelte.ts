@@ -21,6 +21,7 @@ export type Translations = {
 	'settings.theme.toggle': string;
 	'settings.daytheme': string;
 	'settings.nighttheme': string;
+	'settings.theme': string;
 	'settings.qa': string;
 	'settings.support': string;
 	'settings.about.label': string;
