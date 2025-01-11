@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"@vercel/analytics": "^1.1.1",
-		"@vercel/speed-insights": "^1.0.2",
+		"@vercel/speed-insights": "^1.1.0",
 		"daisyui": "^4.12.23",
 		"js-cookie": "^3.0.5",
 		"string-similarity": "^4.0.4"
