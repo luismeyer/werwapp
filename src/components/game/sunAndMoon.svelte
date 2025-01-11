@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { gameState } from '$lib/stores/game.svelte';
 	import { getNextPlayer } from '$lib/stores/player.svelte';
+	import { startNextGamePhase } from '$lib/game';
 
 	const nextPlayer = getNextPlayer();
 
@@ -24,16 +25,10 @@
 		sunClass = gameState.phase === 'day' ? enterScreenClass : leaveScreenClass;
 		moonClass = gameState.phase === 'night' ? enterScreenClass : leaveScreenClass;
 	});
-
-	type Props = {
-		onclick?: () => void;
-	};
-
-	const { onclick }: Props = $props();
 </script>
 
 <div class="w-full h-full relative">
-	<button {onclick} {disabled}>
+	<button onmousedown={startNextGamePhase} {disabled}>
 		<svg
 			class={`icon ${disabledClass} ${moonClass} ${transitionClass}`}
 			xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +44,7 @@
 		</svg>
 	</button>
 
-	<button {onclick} {disabled}>
+	<button onmousedown={startNextGamePhase} {disabled}>
 		<svg
 			class={`icon ${disabledClass} ${sunClass} ${transitionClass}`}
 			xmlns="http://www.w3.org/2000/svg"

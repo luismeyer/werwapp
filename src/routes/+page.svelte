@@ -13,7 +13,7 @@
 	import { t } from '$lib/stores/translations.svelte';
 
 	import RoleImage from '../components/role/image.svelte';
-	import RoleListItem from '../components/role/list-item.svelte';
+	import PlayerListItem from '../components/role/player-list-item.svelte';
 	import { goto } from '$app/navigation';
 
 	const playerRoles = $derived(getPlayerRoles());
@@ -47,6 +47,10 @@
 	);
 
 	onMount(async () => {
+		if (nightPlayer.ready) {
+			return;
+		}
+
 		nightPlayer.loadSong();
 	});
 </script>
@@ -67,7 +71,7 @@
 
 						role.amount = role.amount - 1;
 					}}
-					onclick={() => {
+					onImageClick={() => {
 						gameState.currentRole = role;
 						goto('/narrator');
 					}}
@@ -80,7 +84,7 @@
 		<button
 			class="btn btn-primary"
 			disabled={!playerRolesValid || !nightPlayer.ready}
-			onclick={startFirstNightPhase}
+			onmousedown={startFirstNightPhase}
 		>
 			{t('game.start')}
 		</button>
@@ -101,13 +105,13 @@
 			</summary>
 
 			<ul
-				class="dropdown-content menu p-2 w-52 shadow-sm rounded-box z-[100] bg-secondary text-secondary-content gap-3 p-3"
+				class="dropdown-content menu w-52 shadow-sm rounded-box z-[100] bg-secondary text-secondary-content gap-3 p-3"
 			>
 				{#each addablePlayerRoles as role}
 					<li>
-						<RoleListItem
+						<PlayerListItem
 							{role}
-							onclick={() => {
+							onAdd={() => {
 								role.amount = (role.amount ?? 0) + 1;
 							}}
 						/>

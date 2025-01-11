@@ -1,4 +1,4 @@
-import { RolesDefinition, type PlayerRoleDef, type UtilityRoleDef } from '../../const/roles';
+import { RoleDefinitions, type PlayerRoleDef, type UtilityRoleDef } from '../../const/roles';
 
 export type PlayerRole = PlayerRoleDef & {
 	amount: number;
@@ -17,9 +17,9 @@ export type GameStore = {
 	currentRole?: Role;
 };
 
-const defaultRoles = RolesDefinition.sort((a, b) => a.order - b.order).map((role) =>
-	role.type === 'player' ? { ...role, amount: 1 } : role
-);
+const defaultRoles = Object.values(RoleDefinitions)
+	.sort((a, b) => a.order - b.order)
+	.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role));
 
 const init: GameStore = {
 	state: 'setup',

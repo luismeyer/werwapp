@@ -47,7 +47,7 @@ export const DE: Translations = {
 		'Wenn du das Spiel zurücksetzt, dann geht der aktuelle Spielstand verloren. Du musst wieder in der ersten Nacht anfangen.',
 	'reset.yes': 'Trotzdem',
 	'reset.no': 'Lieber nicht',
-	'narrator.selected': 'Ausgewählt Rollen:',
+	'narrator.selected': 'Ausgewählt Rollen',
 	'narrator.next': 'weiter',
 	'narrator.prev': 'zurück',
 	'narrator.close': 'schließen',

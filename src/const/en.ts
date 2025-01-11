@@ -45,7 +45,7 @@ export const EN: Translations = {
 		'When you reset the Game the current state will be lost and you have to start the game with the first night again.',
 	'reset.yes': 'Yes go ahead!',
 	'reset.no': 'NoNoNoNo',
-	'narrator.selected': 'Selected Roles:',
+	'narrator.selected': 'Selected Roles',
 	'narrator.next': 'next',
 	'narrator.prev': 'back',
 	'narrator.close': 'close',

@@ -22,7 +22,7 @@
 <div class="h-full flex flex-col gap-2">
 	<div class="h-full flex gap-2">
 		<div class="btn-group h-full w-full">
-			<button class="btn h-full" onclick={togglePlayer}>
+			<button class="btn h-full" onmousedown={togglePlayer}>
 				{#if currentPlayer.playing}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@
 				{/if}
 			</button>
 
-			<button class="btn h-full" disabled={!currentPlayer.nextReady} onclick={nextSong}>
+			<button class="btn h-full" disabled={!currentPlayer.nextReady} onmousedown={nextSong}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="48"

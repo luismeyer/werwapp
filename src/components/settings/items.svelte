@@ -106,7 +106,7 @@
 		<div class="flex justify-evenly gap-2">
 			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-			<label for="reset-modal" onclick={reset} class="btn">
+			<label for="reset-modal" onmousedown={reset} class="btn">
 				{t('reset.yes')}
 			</label>
 

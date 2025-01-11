@@ -60,7 +60,7 @@
 		onkeypress={onKeyPress}
 	/>
 
-	<button onclick={addQuestion} {disabled} class="btn">
+	<button onmousedown={addQuestion} {disabled} class="btn">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"

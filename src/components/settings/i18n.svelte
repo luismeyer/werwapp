@@ -9,7 +9,7 @@
 			class="tab flex-1"
 			class:tab-active={localeState.locale === l}
 			value={l}
-			onclick={() => (localeState.locale = l)}
+			onmousedown={() => (localeState.locale = l)}
 		>
 			{t(l)}
 		</button>

@@ -3,6 +3,7 @@ import { nightPlayer, dayPlayer, getNextPlayer } from '$lib/stores/player.svelte
 
 import { goto } from '$app/navigation';
 import { Crossfade } from './abstractions/Crossfade';
+import { getUtilityRole, showRole } from './roles.svelte';
 
 export const startFirstNightPhase = async () => {
 	goto('/game');
@@ -24,6 +25,9 @@ export const startNextGamePhase = async () => {
 	gameState.phase = nextPhase;
 	if (nextPhase === 'night') {
 		gameState.nightCount = gameState.nightCount + 1;
+		showRole(getUtilityRole('night'));
+	} else {
+		showRole(getUtilityRole('day'));
 	}
 
 	gameState.isFading = true;

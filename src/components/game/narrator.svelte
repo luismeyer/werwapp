@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getActiveGameRoles, getUtilityRole } from '$lib/roles.svelte';
+	import { getActiveGameRoles } from '$lib/roles.svelte';
 	import { gameState } from '$lib/stores/game.svelte';
 
 	import RoleUtilCard from '../role/util-card.svelte';
@@ -24,17 +24,6 @@
 		}
 
 		cardElements[gameState.currentRole.id]?.scrollIntoView({ behavior: 'smooth' });
-	});
-
-	$effect(() => {
-		const notUtilRole = gameState.currentRole?.type !== 'util';
-		const notSameRole = gameState.phase !== gameState.currentRole?.state;
-		const notSetup = gameState.state !== 'setup';
-
-		// update the current role if user clicked sun or moon
-		if (notUtilRole && notSameRole && notSetup) {
-			gameState.currentRole = getUtilityRole(gameState.phase);
-		}
 	});
 
 	const activeGameRoles = $derived(getActiveGameRoles());

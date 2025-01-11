@@ -85,7 +85,7 @@
 <div class="btm-nav navigation theme">
 	<button
 		class="theme text-primary"
-		onclick={() => changeTab(0)}
+		onmousedown={() => changeTab(0)}
 		class:active={activeTab === 0}
 		aria-label="narrator"
 	>
@@ -104,7 +104,7 @@
 
 	<button
 		class="theme text-primary"
-		onclick={() => changeTab(1)}
+		onmousedown={() => changeTab(1)}
 		class:active={activeTab === 1}
 		aria-label="game"
 	>
@@ -124,7 +124,7 @@
 
 	<button
 		class="theme text-primary"
-		onclick={() => changeTab(2)}
+		onmousedown={() => changeTab(2)}
 		class:active={activeTab === 2}
 		aria-label="settings"
 	>

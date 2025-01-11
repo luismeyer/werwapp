@@ -38,7 +38,7 @@
 
 		<div class="w-full mt-3 grid grid-flow-col gap-4">
 			{#if prevRole}
-				<button onclick={() => showRole(prevRole)} class="btn btn-secondary w-full">
+				<button onmousedown={() => showRole(prevRole)} class="btn btn-secondary w-full">
 					{t('narrator.prev')}
 				</button>
 			{/if}
@@ -48,7 +48,7 @@
 					<span class="indicator-item badge badge-accent bounce">1</span>
 				{/if}
 
-				<button onclick={() => showRole(nextRole)} class="btn btn-secondary w-full">
+				<button onmousedown={() => showRole(nextRole)} class="btn btn-secondary w-full">
 					{t('narrator.next')}
 				</button>
 			</div>

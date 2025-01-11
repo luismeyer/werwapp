@@ -13,11 +13,6 @@
 	const nextRole = $derived(getNextGameRole(role));
 
 	const title = role.name === 'day' ? t('narrator.headline.day') : t('narrator.headline.night');
-
-	const changeMusic = async () => {
-		gameState.currentRole = nextRole;
-		await startNextGamePhase();
-	};
 </script>
 
 <div class="card shadow-xl bg-primary text-primary-content">
@@ -26,13 +21,13 @@
 
 		<div class="card-actions w-full mt-6">
 			{#if gameState.phase === role.name}
-				<button class="btn btn-secondary w-full" onclick={() => showRole(nextRole)}>
+				<button class="btn btn-secondary w-full" onmousedown={() => showRole(nextRole)}>
 					{t('narrator.next')}
 				</button>
 			{/if}
 
 			{#if gameState.phase !== role.name}
-				<button class="btn btn-secondary w-full" onclick={changeMusic}>
+				<button class="btn btn-secondary w-full" onmousedown={startNextGamePhase}>
 					{t('narrator.music.button')}
 				</button>
 			{/if}
