@@ -46,6 +46,10 @@
 	);
 
 	onMount(async () => {
+		if (gameState.state === 'running') {
+			goto('/game');
+		}
+
 		if (nightPlayer.ready) {
 			return;
 		}

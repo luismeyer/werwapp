@@ -64,8 +64,14 @@ function serializeGameState() {
 	cookies.set(GAME_KEY, JSON.stringify(serializedGame));
 }
 
-export function deserializeGameState(raw: string) {
+export function parseGameState(raw: string) {
 	const serializedGameState: SerializedGameState = JSON.parse(raw);
+
+	return serializedGameState;
+}
+
+export function deserializeGameState(raw: string) {
+	const serializedGameState = parseGameState(raw);
 
 	gameState.state = serializedGameState.state;
 	gameState.phase = serializedGameState.phase;
