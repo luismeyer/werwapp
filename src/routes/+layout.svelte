@@ -46,6 +46,7 @@
 		const newTab = tabs[index];
 
 		let route = `/${newTab.route[0]}`;
+
 		if (newTab.name === 'game' && gameState.state === 'running') {
 			route = '/game';
 		}
