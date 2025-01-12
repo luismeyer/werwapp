@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { PlayerRole } from '$lib/stores/game.svelte';
+	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
 	import { t } from '$lib/stores/translations.svelte';
-	import { getNextGameRole, getPrevGameRole, showRole } from '$lib/roles.svelte';
+	import { getNextGameRole, getPrevGameRole } from '$lib/roles.svelte';
 
 	import RoleImage from './image.svelte';
 
@@ -38,7 +38,10 @@
 
 		<div class="w-full mt-3 grid grid-flow-col gap-4">
 			{#if prevRole}
-				<button onmousedown={() => showRole(prevRole)} class="btn btn-secondary w-full">
+				<button
+					onmousedown={() => (gameState.currentRoleId = prevRole.id)}
+					class="btn btn-secondary w-full"
+				>
 					{t('narrator.prev')}
 				</button>
 			{/if}
@@ -48,7 +51,10 @@
 					<span class="indicator-item badge badge-accent bounce">1</span>
 				{/if}
 
-				<button onmousedown={() => showRole(nextRole)} class="btn btn-secondary w-full">
+				<button
+					onmousedown={() => (gameState.currentRoleId = nextRole.id)}
+					class="btn btn-secondary w-full"
+				>
 					{t('narrator.next')}
 				</button>
 			</div>

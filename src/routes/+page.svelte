@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { startFirstNightPhase } from '$lib/game';
 	import {
 		evilRolesCount,
 		getPlayerRoles,
@@ -72,7 +71,7 @@
 						role.amount = role.amount - 1;
 					}}
 					onImageClick={() => {
-						gameState.currentRole = role;
+						gameState.currentRoleId = role.id;
 						goto('/narrator');
 					}}
 				/>
@@ -84,7 +83,10 @@
 		<button
 			class="btn btn-primary"
 			disabled={!playerRolesValid || !nightPlayer.ready}
-			onmousedown={startFirstNightPhase}
+			onmousedown={() => {
+				gameState.state = 'running';
+				goto('/game');
+			}}
 		>
 			{t('game.start')}
 		</button>

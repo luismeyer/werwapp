@@ -1,4 +1,5 @@
 import { browser } from '$app/environment';
+import { wakeLockState } from './stores/wakelock.svelte';
 
 export const wakelockAvailable = () => {
 	if (!browser) {
@@ -14,7 +15,6 @@ export const wakelockAvailable = () => {
 
 export const requestWakeLock = async () => {
 	if (!wakelockAvailable()) {
-		console.info('Wakelock Api not available in this Browser');
 		return;
 	}
 
@@ -27,4 +27,28 @@ export const requestWakeLock = async () => {
 
 export const releaseWakeLock = (wakeLockSentinal: WakeLockSentinel) => {
 	return wakeLockSentinal.release();
+};
+
+export const enableWakelock = async () => {
+	if (wakeLockState.enabled) {
+		return;
+	}
+
+	const wakeLockSentinel = await requestWakeLock();
+	if (!wakeLockSentinel) {
+		return { state: 'disabled' };
+	}
+
+	wakeLockState.enabled = true;
+	wakeLockState.wakeLockSentinel = wakeLockSentinel;
+};
+
+export const disableWakelock = async () => {
+	if (!wakeLockState.enabled || !wakeLockState.wakeLockSentinel) {
+		return;
+	}
+
+	await releaseWakeLock(wakeLockState.wakeLockSentinel);
+
+	wakeLockState.enabled = false;
 };

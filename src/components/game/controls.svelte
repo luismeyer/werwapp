@@ -1,21 +1,20 @@
 <script lang="ts">
-	import { gameState } from '$lib/stores/game.svelte';
-	import { dayPlayer, nightPlayer } from '$lib/stores/player.svelte';
+	import { getPlayer } from '$lib/stores/player.svelte';
 
 	const fillColor = 'hsl(var(--nc) / var(--tw-text-opacity))';
 
-	const currentPlayer = $derived(gameState.phase === 'day' ? dayPlayer : nightPlayer);
+	const player = $derived(getPlayer());
 
 	const togglePlayer = () => {
-		if (currentPlayer.playing) {
-			currentPlayer.pause();
+		if (player.playing) {
+			player.pause();
 		} else {
-			currentPlayer.resume();
+			player.resume();
 		}
 	};
 
 	const nextSong = () => {
-		currentPlayer.next();
+		player.next();
 	};
 </script>
 
@@ -23,7 +22,7 @@
 	<div class="h-full flex gap-2">
 		<div class="btn-group h-full w-full">
 			<button class="btn h-full" onmousedown={togglePlayer}>
-				{#if currentPlayer.playing}
+				{#if player.playing}
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="48"
@@ -46,7 +45,7 @@
 				{/if}
 			</button>
 
-			<button class="btn h-full" disabled={!currentPlayer.nextReady} onmousedown={nextSong}>
+			<button class="btn h-full" disabled={!player.nextReady} onmousedown={nextSong}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="48"
@@ -61,6 +60,5 @@
 		</div>
 	</div>
 
-	<progress class="progress w-full" value={currentPlayer.progress} max={currentPlayer.duration}
-	></progress>
+	<progress class="progress w-full" value={player.progress} max={player.duration}></progress>
 </div>

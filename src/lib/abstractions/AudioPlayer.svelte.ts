@@ -120,7 +120,7 @@ export class AudioPlayer {
 		}
 
 		showSongToast(this.song);
-		this.audio.play();
+		await this.audio.play();
 	}
 
 	public resume() {

@@ -9,26 +9,27 @@
 	import Forest from '../components/forest.svelte';
 	import Toast from '../components/toast.svelte';
 
-	import { gameState } from '$lib/stores/game.svelte';
+	import { deserializeGameState, gameState } from '$lib/stores/game.svelte';
 	import { registerSwipeGestures } from '$lib/swipe';
 	import type { LayoutData } from './$types';
 	import { localeState } from '$lib/stores/i18n.svelte';
-	import { wakeLockState } from '$lib/stores/wakelock.svelte';
-	import { themeState } from '$lib/stores/theme.svelte';
+	import { deserializeThemeState, themeState } from '$lib/stores/theme.svelte';
+	import { deserializeWakelockState } from '$lib/stores/wakelock.svelte';
 
 	const { data, children }: { data: LayoutData; children: Snippet } = $props();
 
 	localeState.locale = data.locale;
 
 	if (data.wakelock) {
-		wakeLockState.enabled = data.wakelock.enabled;
-		wakeLockState.supported = data.wakelock.supported;
+		deserializeWakelockState(data.wakelock);
 	}
 
 	if (data.theme) {
-		themeState.lightTheme = data.theme.lightTheme;
-		themeState.darkTheme = data.theme.darkTheme;
-		themeState.autoSwitching = data.theme.autoSwitching;
+		deserializeThemeState(data.theme);
+	}
+
+	if (data.game) {
+		deserializeGameState(data.game);
 	}
 
 	const tabs = [
