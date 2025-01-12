@@ -10,27 +10,27 @@
 
 	// instant scroll if user is navigating
 	onMount(() => {
-		if (!gameState.currentRole) {
+		if (!gameState.currentRoleId) {
 			return;
 		}
 
-		cardElements[gameState.currentRole.id]?.scrollIntoView();
+		cardElements[gameState.currentRoleId]?.scrollIntoView();
 	});
 
 	// smooth scroll if user is on page
 	$effect(() => {
-		if (!gameState.currentRole) {
+		if (!gameState.currentRoleId) {
 			return;
 		}
 
-		cardElements[gameState.currentRole.id]?.scrollIntoView({ behavior: 'smooth' });
+		cardElements[gameState.currentRoleId]?.scrollIntoView({ behavior: 'smooth' });
 	});
 
 	const activeGameRoles = $derived(getActiveGameRoles());
 </script>
 
 <div class="flex flex-col justify-between pb-4 h-full">
-	<div class="overflow-hidden">
+	<div class="overflow-hidden" style="off">
 		{#each activeGameRoles as role}
 			<div bind:this={cardElements[role.id]} class="flex items-center justify-center h-full p-4">
 				{#if role.type === 'util'}

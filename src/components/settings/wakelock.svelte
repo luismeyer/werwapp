@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { t } from '$lib/stores/translations.svelte';
-	import { disableWakelock, enableWakelock, wakeLockState } from '$lib/stores/wakelock.svelte';
+	import { wakeLockState } from '$lib/stores/wakelock.svelte';
+	import { disableWakelock, enableWakelock } from '$lib/wakelock';
 
 	const handleChange = async () => {
 		if (wakeLockState.enabled) {

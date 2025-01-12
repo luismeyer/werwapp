@@ -1,4 +1,3 @@
-import { browser } from '$app/environment';
 import { cookies } from '$lib/cookies';
 import type { Themes } from '../../const/themes';
 
@@ -10,20 +9,7 @@ const ThemeStateDefault = {
 	lightTheme: 'light',
 	darkTheme: 'dark',
 	autoSwitching: true
-};
-
-function init() {
-	if (!browser) {
-		return ThemeStateDefault;
-	}
-
-	const storageString = cookies.get(THEME_KEY);
-	if (!storageString) {
-		return ThemeStateDefault;
-	}
-
-	return JSON.parse(storageString);
-}
+} as const;
 
 export type ThemeState = {
 	lightTheme: Theme;
@@ -31,7 +17,15 @@ export type ThemeState = {
 	autoSwitching: boolean;
 };
 
-export const themeState = $state<ThemeState>(init());
+export const themeState = $state<ThemeState>(ThemeStateDefault);
+
+export function deserializeThemeState(raw: string) {
+	const serializedGameState: ThemeState = JSON.parse(raw);
+
+	themeState.autoSwitching = serializedGameState.autoSwitching;
+	themeState.lightTheme = serializedGameState.lightTheme;
+	themeState.darkTheme = serializedGameState.darkTheme;
+}
 
 $effect.root(() => {
 	$effect(() => {

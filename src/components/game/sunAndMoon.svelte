@@ -8,9 +8,6 @@
 	const disabled = $derived(!nextPlayer.ready || gameState.isFading);
 	const disabledClass = $derived(disabled ? 'disabled' : '');
 
-	let moonClass = $state('out-top');
-	let sunClass = $state('in-bottom');
-
 	// disable the transition after animation so the
 	// in- and out- class switch will not get animated
 	const transitionClass = $derived(gameState.isFading ? 'transition' : '');
@@ -21,10 +18,8 @@
 	const enterScreenClass = $derived(gameState.isFading ? 'in-top' : 'out-top');
 	const leaveScreenClass = $derived(gameState.isFading ? 'out-bottom' : 'in-bottom');
 
-	$effect(() => {
-		sunClass = gameState.phase === 'day' ? enterScreenClass : leaveScreenClass;
-		moonClass = gameState.phase === 'night' ? enterScreenClass : leaveScreenClass;
-	});
+	const moonClass = $derived(gameState.phase === 'night' ? enterScreenClass : leaveScreenClass);
+	const sunClass = $derived(gameState.phase === 'day' ? enterScreenClass : leaveScreenClass);
 </script>
 
 <div class="w-full h-full relative">

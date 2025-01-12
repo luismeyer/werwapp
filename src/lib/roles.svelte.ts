@@ -21,13 +21,13 @@ export const innocentRolesCount = (roles: Role[]) =>
 const activeGameRoles = $derived(
 	gameState.roles.filter(
 		(role) =>
-			(gameState.state === 'running' && role.type === 'util') ||
+			role.type === 'util' ||
 			// player
 			(role.type === 'player' &&
 				// user selected the role in setup
 				role.amount > 0 &&
 				// role is active in current night
-				(!role.activeNights || role.activeNights?.includes(gameState.nightCount)))
+				(!role.activeNights || role.activeNights.includes(gameState.nightCount)))
 	)
 );
 
@@ -85,16 +85,12 @@ export const getPrevGameRole = (role: Role): Role | undefined => {
 
 	const previousRole = activeGameRoles[currentIndex - 1];
 
-	// can't go back to util
-	if (!previousRole || previousRole.type === 'util') {
+	// can't go back to util if game is running
+	if (!previousRole || (previousRole.type === 'util' && gameState.state === 'running')) {
 		return;
 	}
 
 	return previousRole;
-};
-
-export const showRole = (role?: Role) => {
-	gameState.currentRole = role;
 };
 
 const getRole = (name: string): Role => {

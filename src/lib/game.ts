@@ -1,22 +1,23 @@
 import { gameState } from '$lib/stores/game.svelte';
-import { nightPlayer, dayPlayer, getNextPlayer } from '$lib/stores/player.svelte';
+import { nightPlayer, dayPlayer, getNextPlayer, getPlayer } from '$lib/stores/player.svelte';
 
-import { goto } from '$app/navigation';
 import { Crossfade } from './abstractions/Crossfade';
-import { getUtilityRole, showRole } from './roles.svelte';
+import { getUtilityRole } from './roles.svelte';
 
-export const startFirstNightPhase = async () => {
-	goto('/game');
-
-	gameState.currentRole = undefined;
-	gameState.state = 'running';
-	gameState.phase = 'night';
+export const startCurrentPhase = async () => {
+	if (gameState.phase === 'night') {
+		gameState.currentRoleId = getUtilityRole('night').id;
+	} else {
+		gameState.currentRoleId = getUtilityRole('day').id;
+	}
 
 	// start the music
-	nightPlayer.play();
+	const currentPlayer = getPlayer();
+	void currentPlayer.play();
 
 	// prepare the day
-	dayPlayer.loadSong();
+	const nextPlayer = getNextPlayer();
+	void nextPlayer.loadSong();
 };
 
 export const startNextGamePhase = async () => {
@@ -25,9 +26,10 @@ export const startNextGamePhase = async () => {
 	gameState.phase = nextPhase;
 	if (nextPhase === 'night') {
 		gameState.nightCount = gameState.nightCount + 1;
-		showRole(getUtilityRole('night'));
+
+		gameState.currentRoleId = getUtilityRole('night').id;
 	} else {
-		showRole(getUtilityRole('day'));
+		gameState.currentRoleId = getUtilityRole('day').id;
 	}
 
 	gameState.isFading = true;
