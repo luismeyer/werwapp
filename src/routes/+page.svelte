@@ -89,6 +89,9 @@
 			disabled={!playerRolesValid || !nightPlayer.ready}
 			onmousedown={() => {
 				gameState.state = 'running';
+
+				void nightPlayer.play();
+
 				goto('/game');
 			}}
 		>

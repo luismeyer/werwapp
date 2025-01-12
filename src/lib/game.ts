@@ -4,20 +4,22 @@ import { nightPlayer, dayPlayer, getNextPlayer, getPlayer } from '$lib/stores/pl
 import { Crossfade } from './abstractions/Crossfade';
 import { getUtilityRole } from './roles.svelte';
 
-export const startCurrentPhase = async () => {
+export const syncCurrentPhase = async () => {
 	if (gameState.phase === 'night') {
 		gameState.currentRoleId = getUtilityRole('night').id;
 	} else {
 		gameState.currentRoleId = getUtilityRole('day').id;
 	}
 
-	// start the music
 	const currentPlayer = getPlayer();
-	void currentPlayer.play();
+	if (!currentPlayer.ready) {
+		void currentPlayer.loadSong();
+	}
 
-	// prepare the day
 	const nextPlayer = getNextPlayer();
-	void nextPlayer.loadSong();
+	if (!nextPlayer.ready) {
+		void nextPlayer.loadSong();
+	}
 };
 
 export const startNextGamePhase = async () => {
