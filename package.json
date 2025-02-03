@@ -23,7 +23,7 @@
 		"string-similarity": "^4.0.4"
 	},
 	"devDependencies": {
-		"@eslint/compat": "^1.2.3",
+		"@eslint/compat": "^1.2.6",
 		"@sveltejs/adapter-vercel": "^5.5.2",
 		"@sveltejs/kit": "^2.5.27",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
