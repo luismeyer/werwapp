@@ -9,7 +9,6 @@ export type PlayerRoleDef = {
 	prefix: 'feminimum' | 'masculinum' | 'neutrum';
 	isEvil: boolean;
 	activeNights?: number[];
-	order: number;
 };
 
 export type UtilityRoleDef = {
@@ -17,31 +16,18 @@ export type UtilityRoleDef = {
 	type: 'util';
 	state: 'day' | 'night';
 	name: string;
-	order: number;
 };
 
 type RoleDef = PlayerRoleDef | UtilityRoleDef;
 
-export const RoleDefinitions: Record<string, RoleDef> = {
-	'8613e9de': {
+export const RoleDefinitions: RoleDef[] = [
+	{
 		id: '8613e9de',
 		type: 'util',
 		state: 'night',
-		name: 'night',
-		order: 0
+		name: 'night'
 	},
-	b512eaf4: {
-		id: 'b512eaf4',
-		type: 'player',
-		image: '/roles/thief.png',
-		state: 'night',
-		name: 'thief',
-		addable: false,
-		prefix: 'masculinum',
-		isEvil: false,
-		order: 1
-	},
-	'9de93fb7': {
+	{
 		id: '9de93fb7',
 		type: 'player',
 		image: '/roles/amor.png',
@@ -50,10 +36,19 @@ export const RoleDefinitions: Record<string, RoleDef> = {
 		addable: false,
 		prefix: 'masculinum',
 		isEvil: false,
-		activeNights: [1],
-		order: 2
+		activeNights: [1]
 	},
-	'03be69e0': {
+	{
+		id: 't77wuhfbiu4uy2789',
+		type: 'player',
+		image: '/roles/bitch.png',
+		state: 'night',
+		name: 'bitch',
+		addable: false,
+		prefix: 'feminimum',
+		isEvil: false
+	},
+	{
 		id: '03be69e0',
 		type: 'player',
 		image: '/roles/werewolf.png',
@@ -62,10 +57,9 @@ export const RoleDefinitions: Record<string, RoleDef> = {
 		addable: true,
 		combinedWith: 'none',
 		prefix: 'masculinum',
-		isEvil: true,
-		order: 3
+		isEvil: true
 	},
-	'15dff4b1': {
+	{
 		id: '15dff4b1',
 		type: 'player',
 		image: '/roles/girl.png',
@@ -74,10 +68,9 @@ export const RoleDefinitions: Record<string, RoleDef> = {
 		addable: false,
 		combinedWith: 'werewolf',
 		prefix: 'neutrum',
-		isEvil: false,
-		order: 4
+		isEvil: false
 	},
-	'4b51b239': {
+	{
 		id: '4b51b239',
 		type: 'player',
 		image: '/roles/witch.png',
@@ -85,10 +78,9 @@ export const RoleDefinitions: Record<string, RoleDef> = {
 		name: 'witch',
 		addable: false,
 		prefix: 'feminimum',
-		isEvil: false,
-		order: 5
+		isEvil: false
 	},
-	ba12b9ba: {
+	{
 		id: 'ba12b9ba',
 		type: 'player',
 		image: '/roles/seer.png',
@@ -96,17 +88,25 @@ export const RoleDefinitions: Record<string, RoleDef> = {
 		name: 'seer',
 		addable: false,
 		prefix: 'feminimum',
-		isEvil: false,
-		order: 6
+		isEvil: false
 	},
-	b532caf3: {
+	{
+		id: 'b512eaf4',
+		type: 'player',
+		image: '/roles/thief.png',
+		state: 'night',
+		name: 'thief',
+		addable: false,
+		prefix: 'masculinum',
+		isEvil: false
+	},
+	{
 		id: 'b532caf3',
 		type: 'util',
 		state: 'day',
-		name: 'day',
-		order: 7
+		name: 'day'
 	},
-	'314e331c': {
+	{
 		id: '314e331c',
 		type: 'player',
 		image: '/roles/hunter.png',
@@ -114,10 +114,9 @@ export const RoleDefinitions: Record<string, RoleDef> = {
 		name: 'hunter',
 		addable: false,
 		prefix: 'masculinum',
-		isEvil: false,
-		order: 8
+		isEvil: false
 	},
-	'9a757abb': {
+	{
 		id: '9a757abb',
 		type: 'player',
 		image: '/roles/villager.png',
@@ -125,7 +124,6 @@ export const RoleDefinitions: Record<string, RoleDef> = {
 		name: 'villager',
 		addable: true,
 		prefix: 'feminimum',
-		isEvil: false,
-		order: 9
+		isEvil: false
 	}
-};
+];

@@ -88,5 +88,9 @@ export const DE: Translations = {
 	'narrator.thief.description':
 		'Der Dieb erwacht und darf die eigene Identität mit einer andere Person tauschen. Nach dem tausch erwacht das Dorf erneut und überprüft erneut die Rollen. Nach der ersten Nacht ist die Rolle der Diebes die eines normalen Dorfbewohners.',
 	'narrator.thief.name': 'Dieb',
-	'narrator.amor.name.plural': 'Amore'
+	'narrator.amor.name.plural': 'Amore',
+	'narrator.bitch.name': 'Dorfmatratze',
+	'narrator.bitch.name.plural': 'Dorfmatratzen',
+	'narrator.bitch.description':
+		'Die Dorfmatratze kann sich in jeder Nacht entscheiden, mit welchem anderen Spieler sie die Nacht verbringt. Versuchen die Werwölfe sie zu töten stirbt sie nicht, denn sie ist ja nicht zuhause. Töten die Werwölfe den Spieler bei dem sie übernachtet, stirbt die Prostituierte zusammen mit dem Spieler.'
 };

@@ -87,5 +87,9 @@ export const EN: Translations = {
 	'narrator.thief.description':
 		'The thief can change their own identity with somebody else. Afterwards everybody awakens and checks for the new roles. After the first night the thief will act as a normal villager.',
 	'narrator.thief.name': 'Thief',
-	'narrator.thief.name.plural': 'Thiefs'
+	'narrator.thief.name.plural': 'Thiefs',
+	'narrator.bitch.name': 'Village Slut',
+	'narrator.bitch.name.plural': 'Village Sluts',
+	'narrator.bitch.description':
+		'The Village Slut can choose to spend the night with any other player. If the werewolves try to kill her, she survives because she is not at home. If the werewolves kill the player she is staying with, the Village Slut dies together with that player.'
 };

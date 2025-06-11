@@ -21,7 +21,7 @@
 	</button>
 
 	<button onmousedown={onImageClick} class="avatar">
-		<div class="rounded w-24">
+		<div class="rounded w-24 border">
 			<img alt="{role.name} character image" src={role.image} />
 		</div>
 	</button>

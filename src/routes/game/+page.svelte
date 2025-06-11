@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { syncCurrentPhase } from '$lib/game';
 	import { gameState } from '$lib/stores/game.svelte';
-	import { getPlayer } from '$lib/stores/player.svelte';
 	import Controls from '../../components/game/controls.svelte';
 	import Counter from '../../components/game/counter.svelte';
 	import SunAndMoon from '../../components/game/sunAndMoon.svelte';

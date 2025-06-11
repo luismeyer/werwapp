@@ -20,14 +20,14 @@ export type GameSate = {
 	currentRoleId?: string;
 };
 
-const Roles = Object.values(RoleDefinitions)
-	.sort((a, b) => a.order - b.order)
-	.map((role) => (role.type === 'player' ? { ...role, amount: 1 } : role));
+const Roles = RoleDefinitions.map((role) =>
+	role.type === 'player' ? { ...role, amount: 1 } : role
+);
 
 const GameStateDefault: GameSate = {
 	state: 'setup',
-	phase: 'night',
-	nightCount: 1,
+	phase: 'day',
+	nightCount: 0,
 	isFading: false,
 	roles: Roles,
 	currentRoleId: undefined

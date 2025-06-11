@@ -7,13 +7,13 @@
 		innocentRolesCount,
 		playerRoleRemovable
 	} from '$lib/roles.svelte';
-	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
-	import { nightPlayer } from '$lib/stores/player.svelte';
+	import { gameState, resetGame, type PlayerRole } from '$lib/stores/game.svelte';
+	import { dayPlayer } from '$lib/stores/player.svelte';
 	import { t } from '$lib/stores/translations.svelte';
-
 	import RoleImage from '../components/role/image.svelte';
 	import PlayerListItem from '../components/role/player-list-item.svelte';
 	import { goto } from '$app/navigation';
+	import { Plus as AddIcon, RotateCcw as ResetIcon } from '@lucide/svelte';
 
 	const playerRoles = $derived(getPlayerRoles());
 
@@ -50,11 +50,11 @@
 			goto('/game');
 		}
 
-		if (nightPlayer.ready) {
+		if (dayPlayer.ready) {
 			return;
 		}
 
-		nightPlayer.loadSong();
+		dayPlayer.loadSong();
 	});
 </script>
 
@@ -83,14 +83,14 @@
 		</div>
 	</div>
 
-	<div class="flex gap-5 items-center">
+	<div class="flex gap-4 items-center pb-8">
 		<button
 			class="btn btn-primary"
-			disabled={!playerRolesValid || !nightPlayer.ready}
+			disabled={!playerRolesValid || !dayPlayer.ready}
 			onmousedown={() => {
 				gameState.state = 'running';
 
-				void nightPlayer.play();
+				void dayPlayer.play();
 
 				goto('/game');
 			}}
@@ -98,19 +98,18 @@
 			{t('game.start')}
 		</button>
 
+		<button
+			class="btn btn-primary"
+			onmousedown={() => {
+				resetGame();
+			}}
+		>
+			<ResetIcon />
+		</button>
+
 		<details class="dropdown dropdown-top dropdown-end">
-			<summary class="btn btn-secondary m-1">
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill={'hsl(var(--nc) / var(--tw-text-opacity))'}
-				>
-					<path
-						d="M5 21h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2zm2-10h4V7h2v4h4v2h-4v4h-2v-4H7v-2z"
-					/>
-				</svg>
+			<summary class="btn btn-secondary">
+				<AddIcon />
 			</summary>
 
 			<ul

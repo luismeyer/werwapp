@@ -78,6 +78,9 @@ export type Translations = {
 	'narrator.thief.description': string;
 	'narrator.thief.name': string;
 	'narrator.thief.name.plural': string;
+	'narrator.bitch.name': string;
+	'narrator.bitch.name.plural': string;
+	'narrator.bitch.description': string;
 };
 
 export const t = (key: string, vars: Record<string, string> = {}) => {
