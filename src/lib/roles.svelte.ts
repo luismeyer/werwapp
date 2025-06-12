@@ -27,7 +27,7 @@ const activeGameRoles = $derived(
 				// user selected the role in setup
 				role.amount > 0 &&
 				// role is active in current night
-				(!role.activeNights || role.activeNights.includes(gameState.nightCount)))
+				(role.activeNights ? role.activeNights.includes(gameState.nightCount) : true))
 	)
 );
 
@@ -93,7 +93,19 @@ export const getPrevGameRole = (role: Role): Role | undefined => {
 	return previousRole;
 };
 
-const getRole = (name: string): Role => {
+export const getRoleById = (id: string): Role => {
+	const { roles } = gameState;
+
+	const searchedRole = [...roles].find((role) => role.id === id);
+
+	if (!searchedRole) {
+		throw new Error(`Missing role ${id}`);
+	}
+
+	return searchedRole;
+};
+
+const getRoleByName = (name: string): Role => {
 	const { roles } = gameState;
 
 	const searchedRole = [...roles].find((role) => role.name === name);
@@ -106,7 +118,7 @@ const getRole = (name: string): Role => {
 };
 
 export const getUtilityRole = (name: string): UtilityRole => {
-	const role = getRole(name);
+	const role = getRoleByName(name);
 
 	if (role.type === 'player') {
 		throw new Error(`Missing util role ${name}`);

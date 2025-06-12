@@ -1,7 +1,8 @@
 <script lang="ts">
+	import forest from './forest.svg';
 </script>
 
-<img src="/forest.svg" alt="Forest silhouette" class="forest" />
+<img src={forest} alt="Forest silhouette" class="forest" />
 
 <style>
 	.forest {

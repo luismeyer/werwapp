@@ -2,13 +2,15 @@ import { gameState } from '$lib/stores/game.svelte';
 import { nightPlayer, dayPlayer, getNextPlayer, getPlayer } from '$lib/stores/player.svelte';
 
 import { Crossfade } from './abstractions/Crossfade';
-import { getUtilityRole } from './roles.svelte';
+import { getRoleById, getUtilityRole } from './roles.svelte';
 
 export const syncCurrentPhase = async () => {
-	if (gameState.phase === 'night') {
-		gameState.currentRoleId = getUtilityRole('night').id;
-	} else {
-		gameState.currentRoleId = getUtilityRole('day').id;
+	if (gameState.currentRoleId) {
+		const currentRole = getRoleById(gameState.currentRoleId);
+
+		if (gameState.phase !== currentRole.state) {
+			gameState.currentRoleId = getUtilityRole(gameState.phase).id;
+		}
 	}
 
 	const currentPlayer = getPlayer();

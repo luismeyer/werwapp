@@ -1,3 +1,13 @@
+import amorImage from './roles/amor.png';
+import bitchImage from './roles/bitch.png';
+import werewolfImage from './roles/werewolf.png';
+import girlImage from './roles/girl.png';
+import witchImage from './roles/witch.png';
+import seerImage from './roles/seer.png';
+import thiefImage from './roles/thief.png';
+import hunterImage from './roles/hunter.png';
+import villagerImage from './roles/villager.png';
+
 export type PlayerRoleDef = {
 	id: string;
 	type: 'player';
@@ -30,7 +40,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: '9de93fb7',
 		type: 'player',
-		image: '/roles/amor.png',
+		image: amorImage,
 		state: 'night',
 		name: 'amor',
 		addable: false,
@@ -41,7 +51,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: 't77wuhfbiu4uy2789',
 		type: 'player',
-		image: '/roles/bitch.png',
+		image: bitchImage,
 		state: 'night',
 		name: 'bitch',
 		addable: false,
@@ -51,7 +61,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: '03be69e0',
 		type: 'player',
-		image: '/roles/werewolf.png',
+		image: werewolfImage,
 		state: 'night',
 		name: 'werewolf',
 		addable: true,
@@ -62,7 +72,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: '15dff4b1',
 		type: 'player',
-		image: '/roles/girl.png',
+		image: girlImage,
 		state: 'night',
 		name: 'girl',
 		addable: false,
@@ -73,7 +83,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: '4b51b239',
 		type: 'player',
-		image: '/roles/witch.png',
+		image: witchImage,
 		state: 'night',
 		name: 'witch',
 		addable: false,
@@ -83,7 +93,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: 'ba12b9ba',
 		type: 'player',
-		image: '/roles/seer.png',
+		image: seerImage,
 		state: 'night',
 		name: 'seer',
 		addable: false,
@@ -93,7 +103,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: 'b512eaf4',
 		type: 'player',
-		image: '/roles/thief.png',
+		image: thiefImage,
 		state: 'night',
 		name: 'thief',
 		addable: false,
@@ -109,7 +119,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: '314e331c',
 		type: 'player',
-		image: '/roles/hunter.png',
+		image: hunterImage,
 		state: 'day',
 		name: 'hunter',
 		addable: false,
@@ -119,7 +129,7 @@ export const RoleDefinitions: RoleDef[] = [
 	{
 		id: '9a757abb',
 		type: 'player',
-		image: '/roles/villager.png',
+		image: villagerImage,
 		state: 'day',
 		name: 'villager',
 		addable: true,
