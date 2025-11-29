@@ -26,7 +26,7 @@
 		cardElements[gameState.currentRoleId]?.scrollIntoView({ behavior: 'smooth' });
 	});
 
-	const activeGameRoles = $derived(getActiveGameRoles());
+	const activeGameRoles = getActiveGameRoles();
 </script>
 
 <div class="flex flex-col justify-between pb-4 h-full">
