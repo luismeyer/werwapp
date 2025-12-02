@@ -80,7 +80,7 @@ export function deserializeGameState(raw: string) {
 	gameState.state = serializedGameState.state;
 	gameState.phase = serializedGameState.phase;
 	gameState.nightCount = serializedGameState.nightCount;
-	gameState.isFading = serializedGameState.isFading;
+	gameState.isFading = false;
 	gameState.currentRoleId = serializedGameState.currentRoleId;
 
 	for (const role of gameState.roles) {

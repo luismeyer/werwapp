@@ -4,7 +4,7 @@ import { toastState } from "$lib/stores/toast.svelte";
 const toasts = $derived(Object.values(toastState));
 </script>
 
-<div class="toast toast-bottom toast-center w-9/12 text-center bottom-20">
+<div class="toast toast-bottom toast-center w-9/12 text-center bottom-24">
 	{#each toasts as toast}
 		{#if 'href' in toast}
 			<a target="_blank" rel="noreferrer" href={toast.href}>

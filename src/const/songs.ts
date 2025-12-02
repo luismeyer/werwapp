@@ -149,7 +149,7 @@ export const Songs: Song[] = [
 		id: 17,
 		type: "day",
 		artist: "Lobo Loco",
-		title: "Another Knight Rider (ID 1887)",
+		title: "Another Knight Rider",
 		songUrl: "/songs/17.mp3",
 		songPage:
 			"https://freemusicarchive.org/music/Lobo_Loco/traces-1/another-knight-rider-id-1887/",
@@ -206,5 +206,78 @@ export const Songs: Song[] = [
 		songUrl: "/songs/23.mp3",
 		songPage:
 			"https://freemusicarchive.org/music/universfield/dark-ambient/in-the-spooky-woods-at-night/",
+	},
+	{
+		id: 24,
+		type: "night",
+		artist: "Soularflair",
+		title:
+			"Cue 1 - ambient, drone, slightly dark, evolving to emotive, spacy, beautiful - (Ephemera)",
+		songUrl: "/songs/24.mp3",
+		songPage:
+			"https://freemusicarchive.org/music/Soularflair/soundtrack-2023/cue-1-ambient-drone-slightly-dark-evolving-to-emotive-spacy-beautiful-ephemera-1/",
+	},
+	{
+		id: 25,
+		type: "night",
+		artist: "YuraSoop",
+		title: "Dark Ambient",
+		songUrl: "/songs/25.mp3",
+		songPage:
+			"https://freemusicarchive.org/music/yurasoop/single/dark-ambient/",
+	},
+	{
+		id: 26,
+		type: "night",
+		artist: "Alex-Productions",
+		title: "Dark Ambient | Deep",
+		songUrl: "/songs/26.mp3",
+		songPage:
+			"https://freemusicarchive.org/music/alex-productions/single/dark-ambient-deep/",
+	},
+	{
+		id: 27,
+		type: "night",
+		artist: "Sound Of Freedom",
+		title: "Scary Ambient Atmosphere",
+		songUrl: "/songs/27.mp3",
+		songPage:
+			"https://freemusicarchive.org/music/sound-of-freedom/single/scary-ambient-atmospheremp3/",
+	},
+	{
+		id: 28,
+		type: "day",
+		artist: "MASERPAN",
+		title: "Medieval Modernity",
+		songUrl: "/songs/28.mp3",
+		songPage:
+			"https://freemusicarchive.org/music/maserpan/ambient-soundtracks/medieval-modernity/",
+	},
+	{
+		id: 29,
+		type: "day",
+		artist: "Nutmeg",
+		title: "Medieval Knieval",
+		songUrl: "/songs/29.mp3",
+		songPage:
+			"https://freemusicarchive.org/music/Nutmeg/hey-nonny-yes-medieval-songs-from-merrie-england/medieval-knieval/",
+	},
+	{
+		id: 30,
+		type: "day",
+		artist: "Damiano Baldoni",
+		title: "09-medieval age",
+		songUrl: "/songs/30.mp3",
+		songPage:
+			"https://freemusicarchive.org/music/Damiano_Baldoni/single/09-medieval-age/",
+	},
+	{
+		id: 31,
+		type: "day",
+		artist: "LaFaena",
+		title: "Is a Beautiful Day in The Medieval City",
+		songUrl: "/songs/31.mp3",
+		songPage:
+			"https://freemusicarchive.org/music/lafaena/no-shield-for-wizards/is-a-beautiful-day-in-the-medieval-city/",
 	},
 ];
