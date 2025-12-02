@@ -1,4 +1,4 @@
-import type { AudioPlayer } from './AudioPlayer.svelte';
+import type { AudioPlayer } from "./AudioPlayer.svelte";
 
 const FADE_STEPS = 0.01;
 const FADE_INTERVAL = 60;
@@ -8,11 +8,12 @@ export const FADE_DURATION = (1 / FADE_STEPS) * FADE_INTERVAL;
 export class Crossfade {
 	constructor(
 		private playerA: AudioPlayer,
-		private playerB: AudioPlayer
+		private playerB: AudioPlayer,
 	) {}
 
 	private get iOS() {
-		const touch = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+		const touch =
+			navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
 		const agent = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 		return touch || agent;

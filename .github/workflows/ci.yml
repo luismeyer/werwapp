@@ -27,8 +27,5 @@ jobs:
       - name: Check
         run: pnpm run check
 
-      - name: Lint check
-        run: pnpm lint:check
-
-      - name: Prettier check
-        run: pnpm prettier:check
+      - name: Biome check
+        run: pnpm biome check

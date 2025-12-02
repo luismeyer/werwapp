@@ -1,14 +1,15 @@
 <script lang="ts">
-	import type { PlayerRole } from '$lib/stores/game.svelte';
+import type { PlayerRole } from "$lib/stores/game.svelte";
 
-	interface Props {
-		role: PlayerRole;
-		onImageClick?: () => void;
-		indicatorDisabled?: boolean;
-		onIndicatorClick?: () => void;
-	}
+interface Props {
+	role: PlayerRole;
+	onImageClick?: () => void;
+	indicatorDisabled?: boolean;
+	onIndicatorClick?: () => void;
+}
 
-	const { role, onImageClick, onIndicatorClick, indicatorDisabled }: Props = $props();
+const { role, onImageClick, onIndicatorClick, indicatorDisabled }: Props =
+	$props();
 </script>
 
 <div class="indicator">

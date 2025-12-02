@@ -1,32 +1,31 @@
 <script lang="ts">
-	import { getActiveGameRoles } from '$lib/roles.svelte';
-	import { gameState } from '$lib/stores/game.svelte';
+import { onMount } from "svelte";
+import { getActiveGameRoles } from "$lib/roles.svelte";
+import { gameState } from "$lib/stores/game.svelte";
+import RoleGameCard from "../role/game-card.svelte";
+import RoleUtilCard from "../role/util-card.svelte";
 
-	import RoleUtilCard from '../role/util-card.svelte';
-	import RoleGameCard from '../role/game-card.svelte';
-	import { onMount } from 'svelte';
+const cardElements: Record<string, HTMLDivElement> = $state({});
 
-	const cardElements: Record<string, HTMLDivElement> = $state({});
+// instant scroll if user is navigating
+onMount(() => {
+	if (!gameState.currentRoleId) {
+		return;
+	}
 
-	// instant scroll if user is navigating
-	onMount(() => {
-		if (!gameState.currentRoleId) {
-			return;
-		}
+	cardElements[gameState.currentRoleId]?.scrollIntoView();
+});
 
-		cardElements[gameState.currentRoleId]?.scrollIntoView();
-	});
+// smooth scroll if user is on page
+$effect(() => {
+	if (!gameState.currentRoleId) {
+		return;
+	}
 
-	// smooth scroll if user is on page
-	$effect(() => {
-		if (!gameState.currentRoleId) {
-			return;
-		}
+	cardElements[gameState.currentRoleId]?.scrollIntoView({ behavior: "smooth" });
+});
 
-		cardElements[gameState.currentRoleId]?.scrollIntoView({ behavior: 'smooth' });
-	});
-
-	const activeGameRoles = getActiveGameRoles();
+const activeGameRoles = getActiveGameRoles();
 </script>
 
 <div class="flex flex-col justify-between pb-4 h-full">

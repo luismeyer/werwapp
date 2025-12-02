@@ -1,7 +1,12 @@
-import { gameState, type PlayerRole, type Role, type UtilityRole } from './stores/game.svelte';
+import {
+	gameState,
+	type PlayerRole,
+	type Role,
+	type UtilityRole,
+} from "./stores/game.svelte";
 
 const playerRoles = $derived(
-	gameState.roles.filter((role): role is PlayerRole => role.type === 'player')
+	gameState.roles.filter((role): role is PlayerRole => role.type === "player"),
 );
 
 export function getPlayerRoles() {
@@ -10,25 +15,29 @@ export function getPlayerRoles() {
 
 export const evilRolesCount = (roles: Role[]) =>
 	roles
-		.filter((role): role is PlayerRole => role.type === 'player' && role.isEvil)
+		.filter((role): role is PlayerRole => role.type === "player" && role.isEvil)
 		.reduce((acc, { amount = 0 }) => acc + amount, 0);
 
 export const innocentRolesCount = (roles: Role[]) =>
 	roles
-		.filter((role): role is PlayerRole => role.type === 'player' && !role.isEvil)
+		.filter(
+			(role): role is PlayerRole => role.type === "player" && !role.isEvil,
+		)
 		.reduce((acc, { amount = 0 }) => acc + amount, 0);
 
 const activeGameRoles = $derived(
 	gameState.roles.filter(
 		(role) =>
-			role.type === 'util' ||
+			role.type === "util" ||
 			// player
-			(role.type === 'player' &&
+			(role.type === "player" &&
 				// user selected the role in setup
 				role.amount > 0 &&
 				// role is active in current night
-				(role.activeNights ? role.activeNights.includes(gameState.nightCount) : true))
-	)
+				(role.activeNights
+					? role.activeNights.includes(gameState.nightCount)
+					: true)),
+	),
 );
 
 export const getActiveGameRoles = () => activeGameRoles;
@@ -48,7 +57,7 @@ export const playerRoleRemovable = (role: PlayerRole): boolean => {
 
 const firstRole = (roles: Role[]) => {
 	if (!roles[0]) {
-		throw new Error('Missing first role');
+		throw new Error("Missing first role");
 	}
 
 	return roles[0];
@@ -69,7 +78,7 @@ export const getNextGameRole = (role: Role) => {
 
 	const nextRole = activeGameRoles[currentIndex + 1];
 	if (!nextRole) {
-		throw new Error('No next role');
+		throw new Error("No next role");
 	}
 
 	return nextRole;
@@ -86,7 +95,10 @@ export const getPrevGameRole = (role: Role): Role | undefined => {
 	const previousRole = activeGameRoles[currentIndex - 1];
 
 	// can't go back to util if game is running
-	if (!previousRole || (previousRole.type === 'util' && gameState.state === 'running')) {
+	if (
+		!previousRole ||
+		(previousRole.type === "util" && gameState.state === "running")
+	) {
 		return;
 	}
 
@@ -120,7 +132,7 @@ const getRoleByName = (name: string): Role => {
 export const getUtilityRole = (name: string): UtilityRole => {
 	const role = getRoleByName(name);
 
-	if (role.type === 'player') {
+	if (role.type === "player") {
 		throw new Error(`Missing util role ${name}`);
 	}
 

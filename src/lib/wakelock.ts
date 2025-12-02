@@ -1,5 +1,5 @@
-import { browser } from '$app/environment';
-import { wakeLockState } from './stores/wakelock.svelte';
+import { browser } from "$app/environment";
+import { wakeLockState } from "./stores/wakelock.svelte";
 
 export const wakelockAvailable = () => {
 	if (!browser) {
@@ -7,7 +7,7 @@ export const wakelockAvailable = () => {
 	}
 
 	try {
-		return 'wakeLock' in navigator;
+		return "wakeLock" in navigator;
 	} catch {
 		return false;
 	}
@@ -19,7 +19,7 @@ export const requestWakeLock = async () => {
 	}
 
 	try {
-		return navigator.wakeLock.request('screen');
+		return navigator.wakeLock.request("screen");
 	} catch (err) {
 		console.info(`Wakelock error: ${err}`);
 	}
@@ -36,7 +36,7 @@ export const enableWakelock = async () => {
 
 	const wakeLockSentinel = await requestWakeLock();
 	if (!wakeLockSentinel) {
-		return { state: 'disabled' };
+		return { state: "disabled" };
 	}
 
 	wakeLockState.enabled = true;

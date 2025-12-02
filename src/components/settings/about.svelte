@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { t } from '$lib/stores/translations.svelte';
-	import { Licenses } from '../../const/licenses';
+import { t } from "$lib/stores/translations.svelte";
+import { Licenses } from "../../const/licenses";
 
-	const formatLink = (link: string): string => {
-		const columIndex = link.indexOf(':');
-		const lastDot = link.lastIndexOf('.');
+const formatLink = (link: string): string => {
+	const columIndex = link.indexOf(":");
+	const lastDot = link.lastIndexOf(".");
 
-		return `https${link.substring(columIndex, lastDot)}`;
-	};
+	return `https${link.substring(columIndex, lastDot)}`;
+};
 </script>
 
-<div class="flex flex-col gap-5">
+<div class="flex flex-col gap-5 max-h-64 overflow-scroll">
 	<h3 class="text-lg font-bold">{t('about.title')}</h3>
 
 	<a
@@ -23,11 +23,11 @@
 	</a>
 
 	<div>
-		<h4 class="mb-1">{t('about.licenses.title')}</h4>
+		<h4 class="mb-8">{t('about.licenses.title')}</h4>
 
-		<div class="overflow-y-scroll overflow-x-hidden flex flex-col gap-8 max-h-64">
+		<div class="flex flex-col gap-4">
 			{#each Licenses as license}
-				<div class="card bg-neutral shadow-xl">
+				<div class="card bg-base-100 card-xs shadow-sm">
 					<div class="card-body">
 						<h2 class="card-title">{license.name}</h2>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import forest from './forest.svg';
+import forest from "./forest.svg";
 </script>
 
 <img src={forest} alt="Forest silhouette" class="forest" />

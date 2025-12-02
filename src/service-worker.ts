@@ -1,15 +1,16 @@
-import { build, files, version } from '$service-worker';
+import { build, files, version } from "$service-worker";
 
 // Create a unique cache name for this deployment
 const CACHE = `cache-${version}`;
 
 const ASSETS = [
 	...build, // the app itself
-	...files // everything in `static`
+	...files, // everything in `static`
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-self.addEventListener('install', (event: any) => {
+self.addEventListener("install", (e: Event) => {
+	const event = e as unknown as { waitUntil: (promise: Promise<void>) => void };
+
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {
 		const cache = await caches.open(CACHE);
@@ -19,8 +20,9 @@ self.addEventListener('install', (event: any) => {
 	event.waitUntil(addFilesToCache());
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-self.addEventListener('activate', (event: any) => {
+self.addEventListener("activate", (e: Event) => {
+	const event = e as unknown as { waitUntil: (promise: Promise<void>) => void };
+
 	// Remove previous cached data from disk
 	async function deleteOldCaches() {
 		for (const key of await caches.keys()) {
@@ -31,10 +33,14 @@ self.addEventListener('activate', (event: any) => {
 	event.waitUntil(deleteOldCaches());
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-self.addEventListener('fetch', (event: any) => {
+self.addEventListener("fetch", (e: Event) => {
+	const event = e as unknown as {
+		request: Request;
+		respondWith: (response: Promise<Response | undefined>) => void;
+	};
+
 	// ignore POST requests etc
-	if (event.request.method !== 'GET') return;
+	if (event.request.method !== "GET") return;
 
 	async function respond() {
 		const url = new URL(event.request.url);
@@ -46,7 +52,7 @@ self.addEventListener('fetch', (event: any) => {
 		}
 
 		// cache songs
-		if (url.pathname.startsWith('storage-freemusicarchive-org')) {
+		if (url.pathname.startsWith("storage-freemusicarchive-org")) {
 			const cachedSong = await cache.match(event.request);
 			if (cachedSong) {
 				return cachedSong;
@@ -54,7 +60,7 @@ self.addEventListener('fetch', (event: any) => {
 		}
 
 		// cache avatar images
-		if (url.host.includes('utfs.io')) {
+		if (url.host.includes("utfs.io")) {
 			const cachedImage = await cache.match(event.request);
 
 			if (cachedImage) {

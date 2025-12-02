@@ -1,19 +1,22 @@
 <script lang="ts">
-	import { startNextGamePhase } from '$lib/game';
-	import { gameState, type UtilityRole } from '$lib/stores/game.svelte';
-	import { t } from '$lib/stores/translations.svelte';
-	import { getNextGameRole, getPrevGameRole } from '$lib/roles.svelte';
+import { startNextGamePhase } from "$lib/game";
+import { getNextGameRole, getPrevGameRole } from "$lib/roles.svelte";
+import { gameState, type UtilityRole } from "$lib/stores/game.svelte";
+import { t } from "$lib/stores/translations.svelte";
 
-	interface Props {
-		role: UtilityRole;
-	}
+interface Props {
+	role: UtilityRole;
+}
 
-	const { role }: Props = $props();
+const { role }: Props = $props();
 
-	const prevRole = $derived(getPrevGameRole(role));
-	const nextRole = $derived(getNextGameRole(role));
+const prevRole = $derived(getPrevGameRole(role));
+const nextRole = $derived(getNextGameRole(role));
 
-	const title = role.name === 'day' ? t('narrator.headline.day') : t('narrator.headline.night');
+const title =
+	role.name === "day"
+		? t("narrator.headline.day")
+		: t("narrator.headline.night");
 </script>
 
 <div class="card shadow-xl bg-primary text-primary-content">

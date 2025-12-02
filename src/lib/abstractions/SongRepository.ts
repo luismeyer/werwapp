@@ -1,5 +1,5 @@
-import { Songs } from '../../const/songs';
-import type { Song } from '../song';
+import { Songs } from "../../const/songs";
+import type { Song } from "../song";
 
 export interface SongRepository {
 	name: string;
@@ -9,14 +9,16 @@ export interface SongRepository {
 class SongRepositoryBase {
 	private songHistory: Song[] = [];
 
-	private fetchRandomSong = async (type: 'day' | 'night') => {
+	private fetchRandomSong = async (type: "day" | "night") => {
 		const exclude = this.songHistory.map(({ id }) => id);
-		const songs = Songs.filter((song) => song.type === type && !exclude?.includes(song.id));
+		const songs = Songs.filter(
+			(song) => song.type === type && !exclude?.includes(song.id),
+		);
 
 		const song = songs[Math.floor(Math.random() * songs.length)];
 
 		if (!song) {
-			throw new Error('No new song');
+			throw new Error("No new song");
 		}
 
 		return song;
@@ -30,7 +32,7 @@ class SongRepositoryBase {
 		}
 	}
 
-	protected async loadSong(type: 'day' | 'night') {
+	protected async loadSong(type: "day" | "night") {
 		const song = await this.fetchRandomSong(type);
 
 		this.pushSongHistory(song);
@@ -40,17 +42,17 @@ class SongRepositoryBase {
 }
 
 export class DaySongs extends SongRepositoryBase implements SongRepository {
-	public name = 'day';
+	public name = "day";
 
 	public async getSong() {
-		return this.loadSong('day');
+		return this.loadSong("day");
 	}
 }
 
 export class NightSongs extends SongRepositoryBase implements SongRepository {
-	public name = 'night';
+	public name = "night";
 
 	public getSong() {
-		return this.loadSong('night');
+		return this.loadSong("night");
 	}
 }

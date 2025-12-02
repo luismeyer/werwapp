@@ -1,7 +1,11 @@
-import { cookies } from '$lib/cookies';
-import { RoleDefinitions, type PlayerRoleDef, type UtilityRoleDef } from '../../const/roles';
+import { cookies } from "$lib/cookies";
+import {
+	type PlayerRoleDef,
+	RoleDefinitions,
+	type UtilityRoleDef,
+} from "../../const/roles";
 
-export const GAME_KEY = 'werwapp-game';
+export const GAME_KEY = "werwapp-game";
 
 export type PlayerRole = PlayerRoleDef & {
 	amount: number;
@@ -12,8 +16,8 @@ export type UtilityRole = UtilityRoleDef;
 export type Role = PlayerRole | UtilityRoleDef;
 
 export type GameSate = {
-	state: 'setup' | 'running' | 'finished';
-	phase: 'day' | 'night';
+	state: "setup" | "running" | "finished";
+	phase: "day" | "night";
 	isFading: boolean;
 	nightCount: number;
 	roles: Role[];
@@ -21,16 +25,16 @@ export type GameSate = {
 };
 
 const Roles = RoleDefinitions.map((role) =>
-	role.type === 'player' ? { ...role, amount: 1 } : role
+	role.type === "player" ? { ...role, amount: 1 } : role,
 );
 
 const GameStateDefault: GameSate = {
-	state: 'setup',
-	phase: 'day',
+	state: "setup",
+	phase: "day",
 	nightCount: 0,
 	isFading: false,
 	roles: Roles,
-	currentRoleId: undefined
+	currentRoleId: undefined,
 };
 
 export const gameState = $state<GameSate>(GameStateDefault);
@@ -44,21 +48,21 @@ export function resetGame() {
 	gameState.isFading = GameStateDefault.isFading;
 }
 
-type SerializedGameState = Omit<GameSate, 'roles' | 'currentRole'> & {
+type SerializedGameState = Omit<GameSate, "roles" | "currentRole"> & {
 	currentRoleId?: string;
 	roles: Record<string, number>;
 };
 
 function serializeGameState() {
 	const roles: Record<string, number> = {};
-	for (const role of gameState.roles.filter((role) => role.type === 'player')) {
+	for (const role of gameState.roles.filter((role) => role.type === "player")) {
 		roles[role.id] = role.amount;
 	}
 
 	const serializedGame: SerializedGameState = {
 		...gameState,
 		currentRoleId: gameState.currentRoleId,
-		roles
+		roles,
 	};
 
 	cookies.set(GAME_KEY, JSON.stringify(serializedGame));
@@ -80,7 +84,7 @@ export function deserializeGameState(raw: string) {
 	gameState.currentRoleId = serializedGameState.currentRoleId;
 
 	for (const role of gameState.roles) {
-		if (role.type === 'player') {
+		if (role.type === "player") {
 			role.amount = serializedGameState.roles[role.id];
 		}
 	}

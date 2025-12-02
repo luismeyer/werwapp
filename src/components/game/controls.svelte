@@ -1,22 +1,22 @@
 <script lang="ts">
-	import { getPlayer } from '$lib/stores/player.svelte';
-	import { Pause, Play, SkipForward } from '@lucide/svelte';
+import { Pause, Play, SkipForward } from "@lucide/svelte";
+import { getPlayer } from "$lib/stores/player.svelte";
 
-	const fillColor = 'hsl(var(--nc) / var(--tw-text-opacity))';
+const fillColor = "hsl(var(--nc) / var(--tw-text-opacity))";
 
-	const player = $derived(getPlayer());
+const player = $derived(getPlayer());
 
-	const togglePlayer = () => {
-		if (player.playing) {
-			player.pause();
-		} else {
-			player.resume();
-		}
-	};
+const togglePlayer = () => {
+	if (player.playing) {
+		player.pause();
+	} else {
+		player.resume();
+	}
+};
 
-	const nextSong = () => {
-		player.next();
-	};
+const nextSong = () => {
+	player.next();
+};
 </script>
 
 <div class="h-full flex flex-col gap-2">

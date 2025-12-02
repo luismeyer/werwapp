@@ -1,40 +1,43 @@
 <script lang="ts">
-	import { findAnswer } from '$lib/support';
-	import { t } from '$lib/stores/translations.svelte';
+import { t } from "$lib/stores/translations.svelte";
+import { findAnswer } from "$lib/support";
 
-	let inputValue = $state('');
+let inputValue = $state("");
 
-	let bubbleContainer: HTMLDivElement;
+let bubbleContainer: HTMLDivElement;
 
-	let bubbles = $state([{ left: true, text: t('support.welcome') }]);
+let bubbles = $state([{ left: true, text: t("support.welcome") }]);
 
-	let disabled = $state(false);
+let disabled = $state(false);
 
-	const onKeyPress = (e: KeyboardEvent) => {
-		if (e.code !== 'Enter') {
-			return;
-		}
+const onKeyPress = (e: KeyboardEvent) => {
+	if (e.code !== "Enter") {
+		return;
+	}
 
-		addQuestion();
-	};
+	addQuestion();
+};
 
-	const addQuestion = () => {
-		disabled = true;
+const addQuestion = () => {
+	disabled = true;
 
-		const parsedInput = inputValue.toLowerCase();
+	const parsedInput = inputValue.toLowerCase();
 
-		bubbles = [...bubbles, { left: false, text: inputValue }];
-		inputValue = '';
+	bubbles = [...bubbles, { left: false, text: inputValue }];
+	inputValue = "";
 
-		const answer = findAnswer(parsedInput);
-		bubbles = [...bubbles, { left: true, text: t(answer) }];
+	const answer = findAnswer(parsedInput);
+	bubbles = [...bubbles, { left: true, text: t(answer) }];
 
-		disabled = false;
-	};
+	disabled = false;
+};
 
-	$effect(() => {
-		bubbleContainer.scroll({ top: bubbleContainer.scrollHeight, behavior: 'smooth' });
+$effect(() => {
+	bubbleContainer.scroll({
+		top: bubbleContainer.scrollHeight,
+		behavior: "smooth",
 	});
+});
 </script>
 
 <h3 class="text-lg font-bold pb-5">{t('support.headline')}</h3>

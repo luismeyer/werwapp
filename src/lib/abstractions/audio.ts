@@ -1,13 +1,17 @@
-import { browser } from '$app/environment';
-import type { SongRepository } from './SongRepository';
+import { browser } from "$app/environment";
+import type { SongRepository } from "./SongRepository";
 
 export type AudioInterface = HTMLAudioElement;
 
 export function createAudio(songRepository: SongRepository): AudioInterface {
 	if (!browser) {
 		return {
-			addEventListener: () => {},
-			removeEventListener: () => {}
+			addEventListener: () => {
+				// no-op
+			},
+			removeEventListener: () => {
+				// no-op
+			},
 		} as unknown as HTMLAudioElement;
 	}
 

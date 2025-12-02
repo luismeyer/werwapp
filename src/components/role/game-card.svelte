@@ -1,30 +1,32 @@
 <script lang="ts">
-	import { gameState, type PlayerRole } from '$lib/stores/game.svelte';
-	import { t } from '$lib/stores/translations.svelte';
-	import { getNextGameRole, getPrevGameRole } from '$lib/roles.svelte';
+import { getNextGameRole, getPrevGameRole } from "$lib/roles.svelte";
+import { gameState, type PlayerRole } from "$lib/stores/game.svelte";
+import { t } from "$lib/stores/translations.svelte";
 
-	import RoleImage from './image.svelte';
+import RoleImage from "./image.svelte";
 
-	interface Props {
-		role: PlayerRole;
-	}
+interface Props {
+	role: PlayerRole;
+}
 
-	const { role }: Props = $props();
+const { role }: Props = $props();
 
-	const nextRole = $derived(getNextGameRole(role));
-	const prevRole = $derived(getPrevGameRole(role));
+const nextRole = $derived(getNextGameRole(role));
+const prevRole = $derived(getPrevGameRole(role));
 
-	const title = $derived(
-		t(
-			role.amount === 1 ? `narrator.headline.singular.${role.prefix}` : 'narrator.headline.plural',
-			{
-				role:
-					role.amount === 1
-						? t(`narrator.${role.name}.name`)
-						: t(`narrator.${role.name}.name.plural`)
-			}
-		)
-	);
+const title = $derived(
+	t(
+		role.amount === 1
+			? `narrator.headline.singular.${role.prefix}`
+			: "narrator.headline.plural",
+		{
+			role:
+				role.amount === 1
+					? t(`narrator.${role.name}.name`)
+					: t(`narrator.${role.name}.name.plural`),
+		},
+	),
+);
 </script>
 
 <div class="card shadow-xl bg-primary text-primary-content">

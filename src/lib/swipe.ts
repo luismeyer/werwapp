@@ -1,4 +1,4 @@
-import { browser } from '$app/environment';
+import { browser } from "$app/environment";
 
 type SwipeOptions = {
 	handleLeft?: () => void;
@@ -55,6 +55,6 @@ export const registerSwipeGestures = (options: SwipeOptions) => {
 		return;
 	}
 
-	document.addEventListener('touchstart', handleTouchStart, false);
-	document.addEventListener('touchmove', handleTouchMove(options), false);
+	document.addEventListener("touchstart", handleTouchStart, false);
+	document.addEventListener("touchmove", handleTouchMove(options), false);
 };

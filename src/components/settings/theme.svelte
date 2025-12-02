@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { t } from '$lib/stores/translations.svelte';
-	import { type Theme, themeState } from '$lib/stores/theme.svelte';
-	import { DarkThemes, LightThemes, Themes } from '../../const/themes';
+import { type Theme, themeState } from "$lib/stores/theme.svelte";
+import { t } from "$lib/stores/translations.svelte";
+import { DarkThemes, LightThemes, Themes } from "../../const/themes";
 
-	const themeNameInUpper = (name: string) => name[0]?.toUpperCase() + name.slice(1);
+const themeNameInUpper = (name: string) =>
+	name[0]?.toUpperCase() + name.slice(1);
 </script>
 
 <label class="flex justify-between items-center mb-2 cursor-pointer">

@@ -1,5 +1,5 @@
 export type Song = {
-	type: 'day' | 'night';
+	type: "day" | "night";
 	id: number;
 	title: string;
 	songPage: string;

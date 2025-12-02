@@ -1,14 +1,14 @@
-import { cookies } from '$lib/cookies';
-import type { Themes } from '../../const/themes';
+import { cookies } from "$lib/cookies";
+import type { Themes } from "../../const/themes";
 
 export type Theme = (typeof Themes)[number];
 
-export const THEME_KEY = 'theme';
+export const THEME_KEY = "theme";
 
 const ThemeStateDefault = {
-	lightTheme: 'light',
-	darkTheme: 'dark',
-	autoSwitching: true
+	lightTheme: "light",
+	darkTheme: "dark",
+	autoSwitching: true,
 } as const;
 
 export type ThemeState = {

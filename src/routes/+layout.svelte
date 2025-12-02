@@ -1,82 +1,79 @@
 <script lang="ts">
-	import '../app.css';
+import "../app.css";
 
-	import type { Snippet } from 'svelte';
+import { BookOpen, Play, Settings } from "@lucide/svelte";
+import type { Snippet } from "svelte";
+import { goto } from "$app/navigation";
+import { page } from "$app/state";
+import { deserializeGameState, gameState } from "$lib/stores/game.svelte";
+import { localeState } from "$lib/stores/i18n.svelte";
+import { deserializeThemeState, themeState } from "$lib/stores/theme.svelte";
+import { deserializeWakelockState } from "$lib/stores/wakelock.svelte";
+import { registerSwipeGestures } from "$lib/swipe";
+import Forest from "../components/forest.svelte";
+import Toast from "../components/toast.svelte";
+import type { LayoutData } from "./$types";
 
-	import { goto } from '$app/navigation';
-	import { page } from '$app/state';
+const { data, children }: { data: LayoutData; children: Snippet } = $props();
 
-	import Forest from '../components/forest.svelte';
-	import Toast from '../components/toast.svelte';
+localeState.locale = data.locale;
 
-	import { deserializeGameState, gameState } from '$lib/stores/game.svelte';
-	import { registerSwipeGestures } from '$lib/swipe';
-	import type { LayoutData } from './$types';
-	import { localeState } from '$lib/stores/i18n.svelte';
-	import { deserializeThemeState, themeState } from '$lib/stores/theme.svelte';
-	import { deserializeWakelockState } from '$lib/stores/wakelock.svelte';
-	import { BookOpen, Play, Settings } from '@lucide/svelte';
+if (data.wakelock) {
+	deserializeWakelockState(data.wakelock);
+}
 
-	const { data, children }: { data: LayoutData; children: Snippet } = $props();
+if (data.theme) {
+	deserializeThemeState(data.theme);
+}
 
-	localeState.locale = data.locale;
+if (data.game) {
+	deserializeGameState(data.game);
+}
 
-	if (data.wakelock) {
-		deserializeWakelockState(data.wakelock);
+const tabs = [
+	{ route: ["narrator"], name: "narrator" },
+	{ route: ["", "game"], name: "game" },
+	{ route: ["settings"], name: "settings" },
+];
+
+const activeTab = $derived(
+	tabs.findIndex(({ route }) => route.includes(page.url.pathname.slice(1))),
+);
+
+const changeTab = (index: number) => {
+	const newTab = tabs[index];
+
+	let route = `/${newTab.route[0]}`;
+
+	if (newTab.name === "game" && gameState.state === "running") {
+		route = "/game";
 	}
 
-	if (data.theme) {
-		deserializeThemeState(data.theme);
-	}
+	goto(route);
+};
 
-	if (data.game) {
-		deserializeGameState(data.game);
-	}
-
-	const tabs = [
-		{ route: ['narrator'], name: 'narrator' },
-		{ route: ['', 'game'], name: 'game' },
-		{ route: ['settings'], name: 'settings' }
-	];
-
-	const activeTab = $derived(
-		tabs.findIndex(({ route }) => route.includes(page.url.pathname.slice(1)))
-	);
-
-	const changeTab = (index: number) => {
-		const newTab = tabs[index];
-
-		let route = `/${newTab.route[0]}`;
-
-		if (newTab.name === 'game' && gameState.state === 'running') {
-			route = '/game';
+registerSwipeGestures({
+	handleLeft: () => {
+		if (activeTab >= 2) {
+			return;
 		}
 
-		goto(route);
-	};
-
-	registerSwipeGestures({
-		handleLeft: () => {
-			if (activeTab >= 2) {
-				return;
-			}
-
-			changeTab(activeTab + 1);
-		},
-		handleRight: () => {
-			if (activeTab <= 0) {
-				return;
-			}
-
-			changeTab(activeTab - 1);
+		changeTab(activeTab + 1);
+	},
+	handleRight: () => {
+		if (activeTab <= 0) {
+			return;
 		}
-	});
 
-	const currentTheme = $derived(
-		themeState.autoSwitching && gameState.phase === 'day'
-			? themeState.lightTheme
-			: themeState.darkTheme
-	);
+		changeTab(activeTab - 1);
+	},
+});
+
+const currentTheme = $derived(
+	themeState.autoSwitching && gameState.phase === "day"
+		? themeState.lightTheme
+		: themeState.darkTheme,
+);
 </script>
 
 <main class="page pt-5 w-screen">
@@ -85,7 +82,7 @@
 
 <Forest />
 
-<div class="btm-nav navigation theme">
+<div class="navigation theme bg-current">
 	<button
 		class="theme text-primary"
 		onmousedown={() => changeTab(0)}
@@ -125,8 +122,38 @@
 	}
 
 	.navigation {
-		margin: auto;
 		/* Safe space for mobile devices with home bar */
 		bottom: 1rem;
+
+		position: fixed;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: env(safe-area-inset-bottom);
+    height: 4rem;
+    color: currentcolor;
+		background-color: var(--color-base-100);
+	}
+
+	.navigation>* {
+    position: relative;
+    display: flex;
+    height: 100%;
+    flex-basis: 100%;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .25rem;
+		border-color: transparent;
+		border-top-width: 2px;
+	}
+	
+	.navigation>*:where(.active) {
+		border-color: currentColor;
 	}
 </style>

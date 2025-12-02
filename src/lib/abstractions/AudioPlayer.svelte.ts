@@ -1,7 +1,7 @@
-import { showSongToast } from '../stores/toast.svelte';
-import type { SongRepository } from './SongRepository';
-import type { Song } from '../song';
-import { createAudio, type AudioInterface } from './audio';
+import type { Song } from "../song";
+import { showSongToast } from "../stores/toast.svelte";
+import { type AudioInterface, createAudio } from "./audio";
+import type { SongRepository } from "./SongRepository";
 
 export class AudioPlayer {
 	private audio: AudioInterface;
@@ -33,12 +33,12 @@ export class AudioPlayer {
 					this.playing = !this.audio.paused;
 				};
 
-				this.audio.addEventListener('play', updatePlaying);
-				this.audio.addEventListener('pause', updatePlaying);
+				this.audio.addEventListener("play", updatePlaying);
+				this.audio.addEventListener("pause", updatePlaying);
 
 				return () => {
-					this.audio.removeEventListener('play', updatePlaying);
-					this.audio.removeEventListener('pause', updatePlaying);
+					this.audio.removeEventListener("play", updatePlaying);
+					this.audio.removeEventListener("pause", updatePlaying);
 				};
 			});
 
@@ -47,10 +47,10 @@ export class AudioPlayer {
 					this.duration = this.audio.duration;
 				};
 
-				this.audio.addEventListener('durationchange', updateDuration);
+				this.audio.addEventListener("durationchange", updateDuration);
 
 				return () => {
-					this.audio.removeEventListener('durationchange', updateDuration);
+					this.audio.removeEventListener("durationchange", updateDuration);
 				};
 			});
 
@@ -59,10 +59,10 @@ export class AudioPlayer {
 					this.progress = this.audio.currentTime;
 				};
 
-				this.audio.addEventListener('timeupdate', updateProgress);
+				this.audio.addEventListener("timeupdate", updateProgress);
 
 				return () => {
-					this.audio.removeEventListener('timeupdate', updateProgress);
+					this.audio.removeEventListener("timeupdate", updateProgress);
 				};
 			});
 		});

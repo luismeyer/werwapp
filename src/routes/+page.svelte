@@ -1,61 +1,62 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+import { Plus as AddIcon, RotateCcw as ResetIcon } from "@lucide/svelte";
+import { onMount } from "svelte";
+import { goto } from "$app/navigation";
+import {
+	evilRolesCount,
+	getPlayerRoles,
+	innocentRolesCount,
+	playerRoleRemovable,
+} from "$lib/roles.svelte";
+import { gameState, type PlayerRole, resetGame } from "$lib/stores/game.svelte";
+import { dayPlayer } from "$lib/stores/player.svelte";
+import { t } from "$lib/stores/translations.svelte";
+import RoleImage from "../components/role/image.svelte";
+import PlayerListItem from "../components/role/player-list-item.svelte";
 
-	import {
-		evilRolesCount,
-		getPlayerRoles,
-		innocentRolesCount,
-		playerRoleRemovable
-	} from '$lib/roles.svelte';
-	import { gameState, resetGame, type PlayerRole } from '$lib/stores/game.svelte';
-	import { dayPlayer } from '$lib/stores/player.svelte';
-	import { t } from '$lib/stores/translations.svelte';
-	import RoleImage from '../components/role/image.svelte';
-	import PlayerListItem from '../components/role/player-list-item.svelte';
-	import { goto } from '$app/navigation';
-	import { Plus as AddIcon, RotateCcw as ResetIcon } from '@lucide/svelte';
+const playerRoles = $derived(getPlayerRoles());
 
-	const playerRoles = $derived(getPlayerRoles());
+const roleAmount = $derived(
+	playerRoles.reduce((acc, role) => acc + role.amount, 0),
+);
+const usedRoles = $derived(playerRoles.filter(({ amount }) => amount > 0));
 
-	const roleAmount = $derived(playerRoles.reduce((acc, role) => acc + role.amount, 0));
-	const usedRoles = $derived(playerRoles.filter(({ amount }) => amount > 0));
+const playerRolesValid = $derived.by(() => {
+	const evils = evilRolesCount(playerRoles);
+	const innocents = innocentRolesCount(playerRoles);
 
-	const playerRolesValid = $derived.by(() => {
+	return evils > 0 && innocents > 0 && innocents > evils;
+});
+
+const addablePlayerRoles = $derived(
+	playerRoles.filter((role: PlayerRole): boolean => {
 		const evils = evilRolesCount(playerRoles);
 		const innocents = innocentRolesCount(playerRoles);
 
-		return evils > 0 && innocents > 0 && innocents > evils;
-	});
-
-	const addablePlayerRoles = $derived(
-		playerRoles.filter((role: PlayerRole): boolean => {
-			const evils = evilRolesCount(playerRoles);
-			const innocents = innocentRolesCount(playerRoles);
-
-			if (!role.addable) {
-				return role.amount === 0;
-			}
-
-			if (role.isEvil) {
-				// there is alway one more werewolf than other roles
-				return innocents > evils + 1;
-			}
-
-			return true;
-		})
-	);
-
-	onMount(async () => {
-		if (gameState.state === 'running') {
-			goto('/game');
+		if (!role.addable) {
+			return role.amount === 0;
 		}
 
-		if (dayPlayer.ready) {
-			return;
+		if (role.isEvil) {
+			// there is alway one more werewolf than other roles
+			return innocents > evils + 1;
 		}
 
-		dayPlayer.loadSong();
-	});
+		return true;
+	}),
+);
+
+onMount(async () => {
+	if (gameState.state === "running") {
+		goto("/game");
+	}
+
+	if (dayPlayer.ready) {
+		return;
+	}
+
+	dayPlayer.loadSong();
+});
 </script>
 
 <div class="h-full flex flex-col items-center justify-between">
@@ -83,9 +84,9 @@
 		</div>
 	</div>
 
-	<div class="flex gap-4 items-center pb-8">
+	<div class="flex gap-2 items-center pb-8">
 		<button
-			class="btn btn-primary"
+			class="btn btn-primary m-1"
 			disabled={!playerRolesValid || !dayPlayer.ready}
 			onmousedown={() => {
 				gameState.state = 'running';
@@ -99,7 +100,7 @@
 		</button>
 
 		<button
-			class="btn btn-primary"
+			class="btn btn-primary m-1"
 			onmousedown={() => {
 				resetGame();
 			}}
@@ -107,13 +108,13 @@
 			<ResetIcon />
 		</button>
 
-		<details class="dropdown dropdown-top dropdown-end">
-			<summary class="btn btn-secondary">
+		<details class="dropdown dropdown-end dropdown-top">
+			<summary class="btn btn-secondary m-1">
 				<AddIcon />
 			</summary>
 
 			<ul
-				class="dropdown-content menu w-52 shadow-sm rounded-box z-[100] bg-secondary text-secondary-content gap-3 p-3"
+				class="dropdown-content menu w-52 shadow-sm rounded-box z-100 bg-secondary text-secondary-content gap-1"
 			>
 				{#each addablePlayerRoles as role}
 					<li>

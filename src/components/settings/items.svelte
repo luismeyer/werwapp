@@ -1,26 +1,22 @@
 <script lang="ts">
-	import { resetGame } from '$lib/stores/game.svelte';
-	import { t } from '$lib/stores/translations.svelte';
-	import { dayPlayer, nightPlayer } from '$lib/stores/player.svelte';
+import { Headset, Info, RotateCcw } from "@lucide/svelte";
+import { goto } from "$app/navigation";
+import { resetGame } from "$lib/stores/game.svelte";
+import { dayPlayer, nightPlayer } from "$lib/stores/player.svelte";
+import { t } from "$lib/stores/translations.svelte";
+import About from "./about.svelte";
+import Support from "./support.svelte";
 
-	import About from './about.svelte';
-	import Support from './support.svelte';
-	import { goto } from '$app/navigation';
-	import { Headset, Info, RotateCcw } from '@lucide/svelte';
+let isAboutModalOpen = $state(false);
 
-	const iconColor = 'hsl(var(--pc) / var(--tw-text-opacity))';
+const reset = () => {
+	resetGame();
 
-	// biome-ignore lint/style/useConst: TODO: fix
-	let isAboutModalOpen = $state(false);
+	dayPlayer.stop();
+	nightPlayer.stop();
 
-	const reset = () => {
-		resetGame();
-
-		dayPlayer.stop();
-		nightPlayer.stop();
-
-		goto('/');
-	};
+	goto("/");
+};
 </script>
 
 <div class="grid grid-cols-2 sm:grid-cols-3 gap-7">

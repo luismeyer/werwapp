@@ -1,20 +1,20 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { syncCurrentPhase } from '$lib/game';
-	import { gameState } from '$lib/stores/game.svelte';
-	import Controls from '../../components/game/controls.svelte';
-	import Counter from '../../components/game/counter.svelte';
-	import SunAndMoon from '../../components/game/sunAndMoon.svelte';
-	import { onMount } from 'svelte';
+import { onMount } from "svelte";
+import { goto } from "$app/navigation";
+import { syncCurrentPhase } from "$lib/game";
+import { gameState } from "$lib/stores/game.svelte";
+import Controls from "../../components/game/controls.svelte";
+import Counter from "../../components/game/counter.svelte";
+import SunAndMoon from "../../components/game/sunAndMoon.svelte";
 
-	onMount(() => {
-		if (gameState.state !== 'running') {
-			goto('/');
-			return;
-		}
+onMount(() => {
+	if (gameState.state !== "running") {
+		goto("/");
+		return;
+	}
 
-		void syncCurrentPhase();
-	});
+	void syncCurrentPhase();
+});
 </script>
 
 <div class="game">

@@ -1,15 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
 
 .theme {
-	/* time = FadeDuration / 2 */
-	transition:
-		background-color 3s ease,
-		fill 3s ease;
+  /* time = FadeDuration / 2 */
+  transition: background-color 3s ease, fill 3s ease;
 }
 
 body {
-	height: 100dvh;
-	overflow: hidden;
+  height: 100dvh;
+  overflow: hidden;
 }

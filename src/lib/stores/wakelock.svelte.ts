@@ -1,5 +1,5 @@
-import { cookies } from '$lib/cookies';
-import { requestWakeLock, wakelockAvailable } from '$lib/wakelock';
+import { cookies } from "$lib/cookies";
+import { requestWakeLock, wakelockAvailable } from "$lib/wakelock";
 
 export type WakeLockState = {
 	supported: boolean;
@@ -7,19 +7,19 @@ export type WakeLockState = {
 	wakeLockSentinel?: WakeLockSentinel;
 };
 
-export const WAKELOCK_KEY = 'wakelock';
+export const WAKELOCK_KEY = "wakelock";
 
 export const wakeLockState = $state<WakeLockState>({
 	enabled: false,
-	supported: wakelockAvailable()
+	supported: wakelockAvailable(),
 });
 
-type SerializedWakeLockState = Omit<WakeLockState, 'wakeLockSentinel'>;
+type SerializedWakeLockState = Omit<WakeLockState, "wakeLockSentinel">;
 
 function serializeWakelockState() {
 	const serialized: SerializedWakeLockState = {
 		enabled: wakeLockState.enabled,
-		supported: wakeLockState.supported
+		supported: wakeLockState.supported,
 	};
 
 	cookies.set(WAKELOCK_KEY, JSON.stringify(serialized));

@@ -1,25 +1,31 @@
 <script lang="ts">
-	import { gameState } from '$lib/stores/game.svelte';
-	import { getNextPlayer } from '$lib/stores/player.svelte';
-	import { startNextGamePhase } from '$lib/game';
+import { startNextGamePhase } from "$lib/game";
+import { gameState } from "$lib/stores/game.svelte";
+import { getNextPlayer } from "$lib/stores/player.svelte";
 
-	const nextPlayer = getNextPlayer();
+const nextPlayer = getNextPlayer();
 
-	const disabled = $derived(!nextPlayer.ready || gameState.isFading);
-	const disabledClass = $derived(disabled ? 'disabled' : '');
+const disabled = $derived(!nextPlayer.ready || gameState.isFading);
+const disabledClass = $derived(disabled ? "disabled" : "");
 
-	// disable the transition after animation so the
-	// in- and out- class switch will not get animated
-	const transitionClass = $derived(gameState.isFading ? 'transition' : '');
+// disable the transition after animation so the
+// in- and out- class switch will not get animated
+const transitionClass = $derived(gameState.isFading ? "transition" : "");
 
-	// the class if running is always the target position of
-	// the animation. the class if not running is the starting
-	// position of the next animation
-	const enterScreenClass = $derived(gameState.isFading ? 'in-top' : 'out-top');
-	const leaveScreenClass = $derived(gameState.isFading ? 'out-bottom' : 'in-bottom');
+// the class if running is always the target position of
+// the animation. the class if not running is the starting
+// position of the next animation
+const enterScreenClass = $derived(gameState.isFading ? "in-top" : "out-top");
+const leaveScreenClass = $derived(
+	gameState.isFading ? "out-bottom" : "in-bottom",
+);
 
-	const moonClass = $derived(gameState.phase === 'night' ? enterScreenClass : leaveScreenClass);
-	const sunClass = $derived(gameState.phase === 'day' ? enterScreenClass : leaveScreenClass);
+const moonClass = $derived(
+	gameState.phase === "night" ? enterScreenClass : leaveScreenClass,
+);
+const sunClass = $derived(
+	gameState.phase === "day" ? enterScreenClass : leaveScreenClass,
+);
 </script>
 
 <div class="w-full h-full relative">

@@ -1,12 +1,12 @@
 import amorImage from "./roles/amor.png";
 import bitchImage from "./roles/bitch.png";
-import werewolfImage from "./roles/werewolf.png";
 import girlImage from "./roles/girl.png";
-import witchImage from "./roles/witch.png";
+import hunterImage from "./roles/hunter.png";
 import seerImage from "./roles/seer.png";
 import thiefImage from "./roles/thief.png";
-import hunterImage from "./roles/hunter.png";
 import villagerImage from "./roles/villager.png";
+import werewolfImage from "./roles/werewolf.png";
+import witchImage from "./roles/witch.png";
 
 export type PlayerRoleDef = {
 	id: string;
