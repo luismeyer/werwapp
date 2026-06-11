@@ -93,4 +93,7 @@ export const EN: Translations = {
 	"narrator.bitch.name.plural": "Village Sluts",
 	"narrator.bitch.description":
 		"The Village Slut can choose to spend the night with any other player. If the werewolves try to kill her, she survives because she is not at home. If the werewolves kill the player she is staying with, the Village Slut dies together with that player.",
+	"narrator.white werewolf.name": "White Werewolf",
+	"narrator.white werewolf.name.plural": "White Werewolves",
+	"narrator.white werewolf.description": "test",
 };

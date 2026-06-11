@@ -95,4 +95,7 @@ export const DE: Translations = {
 	"narrator.bitch.name.plural": "Dorfmatratzen",
 	"narrator.bitch.description":
 		"Die Dorfmatratze kann sich in jeder Nacht entscheiden, mit welchem anderen Spieler sie die Nacht verbringt. Versuchen die Werwölfe sie zu töten stirbt sie nicht, denn sie ist ja nicht zuhause. Töten die Werwölfe den/die Spieler*in bei dem sie übernachtet, stirbt die Dorfmatratze ebenfalls.",
+	"narrator.white werewolf.name": "Weißer Werwolf",
+	"narrator.white werewolf.name.plural": "Weiße Werwölfe",
+	"narrator.white werewolf.description": "test",
 };

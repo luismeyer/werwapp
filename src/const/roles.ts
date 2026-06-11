@@ -7,6 +7,7 @@ import thiefImage from "./roles/thief.png";
 import villagerImage from "./roles/villager.png";
 import werewolfImage from "./roles/werewolf.png";
 import witchImage from "./roles/witch.png";
+import whiteWerewolfImage from "./roles/white-werewolf.png";
 
 export type PlayerRoleDef = {
 	id: string;
@@ -70,13 +71,24 @@ export const RoleDefinitions: RoleDef[] = [
 		isEvil: true,
 	},
 	{
+		id: "5a12b9ba",
+		type: "player",
+		image: whiteWerewolfImage,
+		state: "night",
+		name: "white werewolf",
+		addable: false,
+		combinedWith: "werewolf",
+		prefix: "neutrum",
+		isEvil: true,
+	},
+	{
 		id: "15dff4b1",
 		type: "player",
 		image: girlImage,
 		state: "night",
 		name: "girl",
 		addable: false,
-		combinedWith: "werewolf",
+		combinedWith: "white werewolf",
 		prefix: "neutrum",
 		isEvil: false,
 	},

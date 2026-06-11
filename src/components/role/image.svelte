@@ -22,7 +22,7 @@ const { role, onImageClick, onIndicatorClick, indicatorDisabled }: Props =
 	</button>
 
 	<button onmousedown={onImageClick} class="avatar" aria-label="role image">
-		<div class="rounded w-24 border">
+		<div class="rounded w-24">
 			<img alt="{role.name} character image" src={role.image} />
 		</div>
 	</button>

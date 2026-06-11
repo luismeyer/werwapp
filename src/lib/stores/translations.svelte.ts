@@ -81,6 +81,9 @@ export type Translations = {
 	"narrator.bitch.name": string;
 	"narrator.bitch.name.plural": string;
 	"narrator.bitch.description": string;
+	"narrator.white werewolf.name": string;
+	"narrator.white werewolf.name.plural": string;
+	"narrator.white werewolf.description": string;
 };
 
 export const t = (key: string, vars: Record<string, string> = {}) => {
